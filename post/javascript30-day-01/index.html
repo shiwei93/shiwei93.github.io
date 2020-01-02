@@ -37,7 +37,16 @@
             <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#key-point">Key Point</a></li>
+<li><a href="#%E6%8A%80%E6%9C%AF%E8%A6%81%E7%82%B9">技术要点</a></li>
+<li><a href="#%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC">事件监听</a></li>
+<li><a href="#%E9%9F%B3%E9%A2%91%E6%92%AD%E6%94%BE">音频播放</a></li>
+<li><a href="#css-%E5%8A%A8%E7%94%BB%E7%9A%84%E6%B7%BB%E5%8A%A0%E4%B8%8E%E7%A7%BB%E9%99%A4">CSS 动画的添加与移除</a></li>
+<li><a href="#css-%E5%8C%BA%E5%88%AB-pxemrem">CSS 区别 px/em/rem</a>
+<ul>
+<li><a href="#%E5%8C%BA%E5%88%AB">区别</a></li>
+</ul>
+</li>
+<li><a href="#%E8%B5%84%E6%BA%90%E7%BD%91%E7%AB%99">资源网站</a></li>
 </ul>
 </li>
 </ul>
@@ -86,45 +95,78 @@
 <div class="mask" onclick="closeMenu()">
 </div>
       <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
-        <h1 class="text-3xl font-bold lg:mt-16">JavaScript30 Day 12</h1>
+        <h1 class="text-3xl font-bold lg:mt-16">JavaScript30 Day 01</h1>
         <div class="text-sm text-gray-700 lg:my-8">
-          2019-04-29 / 2 min read
+          2019-04-17 / 4 min read
         </div>
         
         <div class="post-content yue">
-          <p>第十二天实现了一个键盘事件监听，当输入了特定字符串后，在页面上添加一些特殊效果。</p>
-<h2 id="key-point">Key Point</h2>
+          <div class="gallery">
+![day-01](https://res.cloudinary.com/dxe4zc5py/image/upload/v1555667105/Blog/day-01.png)
+</div>
+</br>
+<p><a href="https://github.com/shiwei93/JavaScript30/tree/master/01%20-%20Drum%20Kit">GitHub 地址</a></p>
+<p>使用 JavaScript 实现爵士鼓的页面，通过敲击键盘上对应的按键，来播放不同的音调。</p>
+<h2 id="技术要点">技术要点</h2>
 <ul>
-<li>全局绑定 <code>'keyup'</code> 事件，通过 <code>e.key</code> 获取用户输入</li>
-<li>截取与 <code>secretCode</code> 相同长度的用户输入字符串，比较两者，相同出发添加效果</li>
+<li>事件监听</li>
+<li>音频播放</li>
+<li>CSS 动画的添加与移除</li>
+<li>CSS 区别 px/em/rem</li>
 </ul>
-<!--- more --->
-<pre><code class="language-javascript">const pressed = [];
-const secretCode = 'jerry';
-
-window.addEventListener('keyup', (e) =&gt; {
-    console.log(e.key);
-    pressed.push(e.key);
-    pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
-    if (pressed.join('').includes(secretCode)) {
-        console.log('DING DING!');
-        cornify_add();
-    }
-    console.log(pressed);
-});
+<!-- more -->
+<h2 id="事件监听">事件监听</h2>
+<p>监听全局的事件通过在 <strong>window</strong> 上添加事件监听，为了监听键盘的输入事件，需要监听 <code>&quot;keydown&quot;</code>。<code>addEventListener</code> 传递的第一个参数为需要监听的事件类型，第二个参数，传递接收事件回调的函数。</p>
+<p>为了能够在相应按键的动画结束后移除添加的动画属性，需要监听 <code>&quot;transitionend&quot;</code> 事件，通过 <code>querySelectorAll</code> 可以选出所有满足条件的元素。</p>
+<pre><code class="language-javascript">const keys = Array.from(document.querySelectorAll('.key')); // 选出所有属性包含 key 的元素
 </code></pre>
-<p>截取字符串操作，对用户输入的按键字符数组用到了 <code>Array.prototype.splice()</code> 方法，第一个参数传入了需要删除的起始位置下标，如果设置了负数就表示从后往前删除。第二个参数传入的是需要删除的长度。示例如下</p>
-<pre><code class="language-javascript">var months = ['Jan', 'March', 'April', 'June'];
-months.splice(1, 0, 'Feb', 'August');
-// inserts at 1st index position
-console.log(months);
-// expected output: Array ['Jan', 'Feb', 'August', 'March', 'April', 'June']
-
-months.splice(4, 1, 'May');
-// replaces 1 element at 4th index
-console.log(months);
-// expected output: Array ['Jan', 'Feb', 'March', 'April', 'May']
+<p>之后通过 <code>forEach</code> 遍历 <code>key</code> 添加事件监听，这里使用了箭头函数，优化了代码结构。例如</p>
+<pre><code class="language-javascript">array.map(x =&gt; x * 2); // 使用箭头函数可以优化代码结构，增强代码的可读性
 </code></pre>
+<h2 id="音频播放">音频播放</h2>
+<p>页面中，通过 <code>data-key</code> 将页面元素与 <code>audio</code> 绑定起来。<code>data-key</code> 属于 <code>data-*</code> 一类的自定义属性。<a href="https://html.spec.whatwg.org/dev/dom.html#embedding-custom-non-visible-data-with-the-data-*-attributes">参考资料</a></p>
+<blockquote>
+<p>Custom data attributes are intended to store custom data, state, annotations, and similar, private to the page or application, for which there are no more appropriate attributes or elements.</p>
+</blockquote>
+<p>简单说就是，当没有合适的属性或元素可以来存储自定义的数据、状态、声明等数据时，可以使用自定义的 <code>data-*</code> 属性。</p>
+<pre><code class="language-javascript">const audio = document.querySelector(`audio[data-key=&quot;${event.keyCode}&quot;]`);
+</code></pre>
+<p>通过当前键盘按键的 <strong>keyCode</strong> 通过 <code>querySelector</code> 获取相应的 <strong>audio</strong> 标签，<a href="http://keycode.info/">可以在这里找到键盘按键的 keyCode</a>。通过 ES6 的模板字符串 <code>${event.keyCode}</code>，可以动态的传入 keyCode。<strong>Attention:</strong> 模板字符串必须使用 <strong>`</strong> 包裹，而不是使用 <strong>&quot;</strong>。</p>
+<p>通过 <code>audio.play()</code> 播放相对应的音频，注意到上一行的 <code>audio.currentTime = 0</code>，重置了音频的播放时间，这是因为，如果当前有音频播放，多次调用 <code>audio.play()</code> 不会起作用。</p>
+<h2 id="css-动画的添加与移除">CSS 动画的添加与移除</h2>
+<p>当我们获取到需要添加的 CSS 样式的标签时，可以通过 <code>Element.classList.add()</code> 以及 <code>Element.classList.remove()</code> 来添加和移除动画。</p>
+<pre><code class="language-javascript">function removeTransition(event) {
+    if (event.propertyName !== 'transform') return; // skip it if it's not a transform 如果不是一个 transform 就忽略它
+    this.classList.remove('playing') // 移除了添加的 playing 样式
+}
+</code></pre>
+<blockquote>
+<p>如果无法确定 <code>this</code> 指代的什么，那就打印它</p>
+</blockquote>
+<h2 id="css-区别-pxemrem">CSS 区别 px/em/rem</h2>
+<p>刚刚接触前端，在之前看到的教程中，像素单位大多使用 <em>px</em>。在 <strong>JavaScript 30</strong> 看到了 <strong>rem</strong> 单位，查阅了一些资料，整理如下。</p>
+<h3 id="区别">区别</h3>
+<ul>
+<li><strong>px</strong> 在缩放页面时无法动态调整</li>
+<li><strong>em</strong> 值不固定，相对于父级元素的大小，表示倍数</li>
+<li><strong>rem</strong> 值不固定，始终基于根元素 <code>&lt;html&gt;</code> 的大小，表示倍数</li>
+</ul>
+<p>由于 em 是相对于父级字体的倍数，所以在多层嵌套内容时，使用 em 分别给它们设置字体大小时，往往需要重新计算。例如</p>
+<pre><code class="language-html">&lt;span&gt;Outer &lt;span&gt;Innter&lt;/span&gt; Outer&lt;/span&gt;
+</code></pre>
+<pre><code class="language-css">span { font-size: 1.6em; }
+</code></pre>
+<p>结果是，外层 <code>span</code> 中的字体大小基于父级 <code>body</code> 标签字体大小的 1.6 倍，内层的 <code>span</code> 标签字体大小又基于外层的 <code>span</code> 标签，即 <code>body</code> 字体大小的 1.6 * 1.6 倍。WTF！！！</p>
+<p><strong>rem</strong> 的出现，完美的解决需要重复计算的问题，因为它始终基于根元素 <code>&lt;html&gt;</code></p>
+<blockquote>
+<p>r (root) em</p>
+</blockquote>
+<p><strong>Attention:</strong></p>
+<p>为了兼容不支持 rem 的浏览器，需要在使用了 rem 的地方前面，写上对应的 px 值，不支持的浏览器也可以降级使用。</p>
+<h2 id="资源网站">资源网站</h2>
+<ol>
+<li><a href="https://caniuse.com/">查阅浏览器兼容性</a></li>
+</ol>
 
         </div>
 
@@ -138,10 +180,10 @@ console.log(months);
         <div class="flex justify-between py-8">
           
             <div class="prev-post">
-              <a href="https://shiwei93.github.io/post/javascript30-day-13">
+              <a href="https://shiwei93.github.io/post/javascript30-day-02">
                 <h3 class="post-title">
                   <i class="remixicon-arrow-left-line"></i>
-                  Javascript30 Day 13
+                  JavaScript30 Day 02
                 </h3>
               </a>
             </div>
@@ -149,9 +191,9 @@ console.log(months);
 
           
             <div class="next-post">
-              <a href="https://shiwei93.github.io/post/javascript30-day-11">
+              <a href="https://shiwei93.github.io/post/whats-new-in-swift-5-0">
                 <h3 class="post-title">
-                  JavaScript30 Day 11
+                  Swift 5.0 语言新特性
                   <i class="remixicon-arrow-right-line"></i>
                 </h3>
               </a>

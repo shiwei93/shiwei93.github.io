@@ -108,103 +108,187 @@
 </div>
       <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
         <h2 class="text-lg text-gray-700 mb-8">
-          <i class="remixicon-bookmark-line"></i> iOS
+          <i class="remixicon-bookmark-line"></i> FrontEnd
         </h2>
         
   <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${0 * 0.2}s` }">
     
     <div class="content">
-      <a href="https://shiwei93.github.io/post/thin-space">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">中西文中间添加 Thin space U+2009</h2>
+      <a href="https://shiwei93.github.io/post/javascript30-day-09">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">Javascript30 Day 09</h2>
       </a>
       <div class="post-abstract text-gray-700 font-light my-4">
         
       </div>
-      <div class="text-gray-400 text-sm font-light">2019-06-20 / 4 min read</div>
+      <div class="text-gray-400 text-sm font-light">2019-04-25 / 3 min read</div>
     </div>
   </section>
 
   <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${1 * 0.2}s` }">
     
     <div class="content">
-      <a href="https://shiwei93.github.io/post/debugging-swift-code-with-lldb">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">【译】使用 LLDB 调试 Swift 代码</h2>
+      <a href="https://shiwei93.github.io/post/javascript30-day-08">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">Javascript30 Day 08</h2>
       </a>
       <div class="post-abstract text-gray-700 font-light my-4">
-        <div class="gallery">
-![glasses](https://res.cloudinary.com/dxe4zc5py/image/upload/v1541745037/Blog/mike-marquez-601957-unsplash.jpg)
-</div>
-</br>
+        <p><a href="https://github.com/shiwei93/JavaScript30/tree/master/08%20-%20Fun%20with%20HTML5%20Canvas">GitHub 地址</a></p>
+<p>第 8 天的练习是使用 HTML5 新增的 <strong>Canvas</strong>，创建一个简单的画板。画笔的颜色呈彩虹色渐变，画笔的粗细也会渐变循环。</p>
 <blockquote>
-<p><a href="https://medium.com/flawless-app-stories/debugging-swift-code-with-lldb-b30c5cf2fd49">原文地址</a></p>
+<p><strong>Canvas</strong> 和 iOS 开发中常用的 <strong>Core Graphics</strong> 有许多相似的地方。</p>
 </blockquote>
-<p>作为工程师，我们会花费 70% 的时间来调试。剩下的 20% 用于思考架构和与同事交流，最后的 10% 才是真正用于编码的时间。</p>
-<blockquote>
-<p>调试就像是在犯罪电影中同时扮演侦探和嫌疑人。</p>
-<p>-- <a href="https://twitter.com/fortes"><u><em>Filipe Fortes</em></u></a> <em>via Twitter</em></p>
-</blockquote>
-<p>因此，如何让 70% 的调试时间尽可能的愉快，就显得及其重要。LLDB 因此应运而生。Xcode 的 UI 调试工具展示了所有有用的调试信息，而不用敲任何 LLDB 指令。然而，控制台在我们日常工作中仍然扮演了重要的角色，下面介绍一些笔者在日常调试工作中经常使用的 LLDB 小技巧。</p>
+<p>在页面中使用 <strong>Canvas</strong>，只需要添加 <code>&lt;canvas&gt;</code> 标签即可。本例中，添加了如下标签</p>
+<pre><code class="language-HTML">&lt;canvas id=&quot;draw&quot;&gt;&lt;/canvas&gt;
+</code></pre>
+<p>JavaScript 中，通过 <code>querySelector('#draw')</code> 获取到 canvas 页面元素。接下来通过 <code>HTMLCanvasElement.getContext()</code> 方法获取上下文，这一点与 iOS 中的 <code>UIGraphicsGetCurrentContext()</code> 一样。不同的是 <code>HTMLCanvasElement.getContext()</code> 有两个可选参数，<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/getContext">具体解释</a>。下面简单列举一下 <code>contextType</code> 的属性</p>
 
       </div>
-      <div class="text-gray-400 text-sm font-light">2018-09-30 / 15 min read</div>
+      <div class="text-gray-400 text-sm font-light">2019-04-24 / 4 min read</div>
     </div>
   </section>
 
   <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${2 * 0.2}s` }">
     
     <div class="content">
-      <a href="https://shiwei93.github.io/post/swift-extension">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">Swift Extension</h2>
+      <a href="https://shiwei93.github.io/post/javascript30-day-07">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 07</h2>
       </a>
       <div class="post-abstract text-gray-700 font-light my-4">
-        <div class="gallery">
-![foster](https://res.cloudinary.com/dxe4zc5py/image/upload/v1534413125/foster.jpg)
-</div>
-</br>
-<p>前些日子准备周会关于 <strong>Swift Extension</strong> 的分享时，翻看自己之前写过的 Extension 时。发现有些在可扩展性，以及易用性上并不尽如人意，这也让我在周会讨论中加入了如下议题。</p>
-<ul>
-<li>如何评判一个 Extension 是必要的，且有价值的</li>
-<li>编写 Extension 需要遵循哪些原则</li>
-</ul>
-
+        
       </div>
-      <div class="text-gray-400 text-sm font-light">2018-08-16 / 9 min read</div>
+      <div class="text-gray-400 text-sm font-light">2019-04-23 / 2 min read</div>
     </div>
   </section>
 
   <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${3 * 0.2}s` }">
     
     <div class="content">
-      <a href="https://shiwei93.github.io/post/linkblock-iOS">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">Swift &amp; Objective-C 中的链式调用</h2>
+      <a href="https://shiwei93.github.io/post/javascript30-day-06">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 06</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        <div class="day-03">
+![day-06](https://res.cloudinary.com/dxe4zc5py/image/upload/v1555924940/Blog/day-06.png)
+</div>
+</br>
+<p><a href="https://github.com/shiwei93/JavaScript30/tree/master/06%20-%20Type%20Ahead">GitHub 地址</a></p>
+<p>第 6 天的练习，查找含有输入字母的美国城市或者州名。<a href="https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json">数据接口</a></p>
+<h2 id="技术要点">技术要点</h2>
+<ul>
+<li>数据请求 - fetch / promise</li>
+<li>数据处理 - 正则 / filter</li>
+<li>数据展示</li>
+</ul>
+
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-04-22 / 4 min read</div>
+    </div>
+  </section>
+
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${4 * 0.2}s` }">
+    
+    <div class="content">
+      <a href="https://shiwei93.github.io/post/javascript30-day-05">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 05</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-04-21 / 1 min read</div>
+    </div>
+  </section>
+
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${5 * 0.2}s` }">
+    
+    <div class="content">
+      <a href="https://shiwei93.github.io/post/javascript30-day-04">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 04</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-04-20 / 3 min read</div>
+    </div>
+  </section>
+
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${6 * 0.2}s` }">
+    
+    <div class="content">
+      <a href="https://shiwei93.github.io/post/javascript30-day-03">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 03</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        <div class="day-03">
+![day-03](https://res.cloudinary.com/dxe4zc5py/image/upload/v1555667488/Blog/day-03.png)
+</div>
+</br>
+<p><a href="https://github.com/shiwei93/JavaScript30/tree/master/03%20-%20CSS%20Variables%20and%20JS">GitHub 地址</a></p>
+<p>使用 JavaScript 实时修改 CSS 的属性，本例中修改了图片的 padding，背景色以及高斯模糊的 blur 值。</p>
+<h2 id="技术要点">技术要点</h2>
+<ol>
+<li><strong>:root</strong> 伪类</li>
+<li><strong>data-*</strong> 自定义属性的集合 <code>dataset</code></li>
+</ol>
+
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-04-19 / 2 min read</div>
+    </div>
+  </section>
+
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${7 * 0.2}s` }">
+    
+    <div class="content">
+      <a href="https://shiwei93.github.io/post/javascript30-day-02">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 02</h2>
       </a>
       <div class="post-abstract text-gray-700 font-light my-4">
         <div class="gallery">
-![sky](https://res.cloudinary.com/dxe4zc5py/image/upload/v1533545660/Blog/sky_blog.jpg)
+![day-02](https://res.cloudinary.com/dxe4zc5py/image/upload/v1555667395/Blog/day-02.png)
 </div>
 </br>
-<p>在 <a href="https://github.com/shiwei93/Goku">Goku</a> 的实现中，尝试了使用类似于 <strong>SnapKit</strong> 中，链式调用的方式，来构建 <em>AlertView</em> 的样式。具体使用如下</p>
-<pre><code class="language-swift">self.goku.presentAlert(animated: true, closure: { (make) in
-	make.theme
-	   .actionSheet
-	   .title(&quot;Okay/Cancel&quot;)
-	   .message(&quot;A customizable action sheet message.&quot;)
-	   .cancel(&quot;Cancel&quot;)
-	   .destructive(&quot;OK&quot;)
-	   .normal([&quot;Button1&quot;, &quot;Button2&quot;])
-	   .tapped({ (index) in
-	       print(&quot;Tapped index is \(index)&quot;)
-	   }
-	)
-})
+<p><a href="https://github.com/shiwei93/JavaScript30/tree/master/02%20-%20CSS%20%2B%20JS%20Clock">GitHub 地址</a></p>
+<p>使用 CSS + JS 实现的时钟，实时显示当前的时间。这里没有仿照 JavaScript 30 的样式制作，而是选择了 <a href="https://cssanimation.rocks/clocks/">这篇</a> 进行了一些简化和修改。</p>
+<h2 id="技术要点">技术要点</h2>
+<p>时钟的项目，技术难点不在 JavaScript 中，实际 JavaScript 涉及的内容并不多。主要的代码和 <a href="https://github.com/shiwei93/JavaScript30/tree/master/01%20-%20Drum%20Kit">Day 01 Drum Kit</a> 类似，需要注意的是秒针在 59s 到 0s 时切换。由于为了实现更自然的秒针移动效果，动画使用了贝塞尔曲线，并设置了动画时间 <code>transition: all .2s cubic-bezier(0.4, 2.08, 0.55, .44)</code> 会导致秒钟角度从 354° 切换到 0° 时由于动画时长的 0.2s 会有在 0.2s 内指针旋转一周的问题。解决方式如下</p>
+<pre><code class="language-javascript">const container = document.querySelector(`.${hand.hand}-keyframes`);
+if (hand.hand === 'seconds') {
+    container.style.transition = 'all ' + (hand.angle === 0 ? 0 : 0.2) + 's cubic-bezier(0.4, 2.08, 0.55, .44)';
+}
 </code></pre>
 
       </div>
-      <div class="text-gray-400 text-sm font-light">2018-08-06 / 3 min read</div>
+      <div class="text-gray-400 text-sm font-light">2019-04-18 / 5 min read</div>
+    </div>
+  </section>
+
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${8 * 0.2}s` }">
+    
+    <div class="content">
+      <a href="https://shiwei93.github.io/post/javascript30-day-01">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 01</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        <div class="gallery">
+![day-01](https://res.cloudinary.com/dxe4zc5py/image/upload/v1555667105/Blog/day-01.png)
+</div>
+</br>
+<p><a href="https://github.com/shiwei93/JavaScript30/tree/master/01%20-%20Drum%20Kit">GitHub 地址</a></p>
+<p>使用 JavaScript 实现爵士鼓的页面，通过敲击键盘上对应的按键，来播放不同的音调。</p>
+<h2 id="技术要点">技术要点</h2>
+<ul>
+<li>事件监听</li>
+<li>音频播放</li>
+<li>CSS 动画的添加与移除</li>
+<li>CSS 区别 px/em/rem</li>
+</ul>
+
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-04-17 / 4 min read</div>
     </div>
   </section>
 
         <div class="pagination-container animated fadeIn">
+  
+    <a href="https://shiwei93.github.io/tag/gdhVsG-eO2" class="page-btn"><i class="remixicon-arrow-left-line"></i> 上一页</a>
   
   
 </div>

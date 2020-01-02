@@ -31,38 +31,20 @@
       
         <div class="animated fadeInLeft" style="animation-delay: 0.4s">
           <p class="my-4 text-gray-600 font-light hidden lg:block">
-            浪花有意千重雪，桃李无言一队春
+            文章目录
           </p>
-          <div class="animated fadeInLeft social-container hidden lg:block" style="animation-delay: 0.6s">
-            
-              
-                <a href="https://github.com/shiwei93" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-github-line"></i>
-                </a>
-              
-            
-              
-                <a href="https://twitter.com/swmagicswift" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-twitter-line"></i>
-                </a>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%8A%80%E6%9C%AF%E8%A6%81%E7%82%B9">技术要点</a></li>
+<li><a href="#%E4%BC%AA%E7%B1%BB-root">伪类 <strong>:root</strong></a></li>
+<li><a href="#data-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7%E7%9A%84%E9%9B%86%E5%90%88-dataset">data-* 自定义属性的集合 <code>dataset</code></a></li>
+<li><a href="#documentqueryselectorall-%E4%B8%8D%E6%98%AF%E4%B8%80%E4%B8%AA-array">document.querySelectorAll() 不是一个 Array</a></li>
+</ul>
+</li>
+</ul>
+
           </div>
         </div>
       
@@ -106,108 +88,88 @@
 </div>
 <div class="mask" onclick="closeMenu()">
 </div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
-        <h2 class="text-lg text-gray-700 mb-8">
-          <i class="remixicon-bookmark-line"></i> iOS
-        </h2>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">JavaScript30 Day 03</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2019-04-19 / 2 min read
+        </div>
         
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${0 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://shiwei93.github.io/post/thin-space">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">中西文中间添加 Thin space U+2009</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-06-20 / 4 min read</div>
-    </div>
-  </section>
-
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${1 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://shiwei93.github.io/post/debugging-swift-code-with-lldb">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">【译】使用 LLDB 调试 Swift 代码</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        <div class="gallery">
-![glasses](https://res.cloudinary.com/dxe4zc5py/image/upload/v1541745037/Blog/mike-marquez-601957-unsplash.jpg)
+        <div class="post-content yue">
+          <div class="day-03">
+![day-03](https://res.cloudinary.com/dxe4zc5py/image/upload/v1555667488/Blog/day-03.png)
 </div>
 </br>
-<blockquote>
-<p><a href="https://medium.com/flawless-app-stories/debugging-swift-code-with-lldb-b30c5cf2fd49">原文地址</a></p>
-</blockquote>
-<p>作为工程师，我们会花费 70% 的时间来调试。剩下的 20% 用于思考架构和与同事交流，最后的 10% 才是真正用于编码的时间。</p>
-<blockquote>
-<p>调试就像是在犯罪电影中同时扮演侦探和嫌疑人。</p>
-<p>-- <a href="https://twitter.com/fortes"><u><em>Filipe Fortes</em></u></a> <em>via Twitter</em></p>
-</blockquote>
-<p>因此，如何让 70% 的调试时间尽可能的愉快，就显得及其重要。LLDB 因此应运而生。Xcode 的 UI 调试工具展示了所有有用的调试信息，而不用敲任何 LLDB 指令。然而，控制台在我们日常工作中仍然扮演了重要的角色，下面介绍一些笔者在日常调试工作中经常使用的 LLDB 小技巧。</p>
+<p><a href="https://github.com/shiwei93/JavaScript30/tree/master/03%20-%20CSS%20Variables%20and%20JS">GitHub 地址</a></p>
+<p>使用 JavaScript 实时修改 CSS 的属性，本例中修改了图片的 padding，背景色以及高斯模糊的 blur 值。</p>
+<h2 id="技术要点">技术要点</h2>
+<ol>
+<li><strong>:root</strong> 伪类</li>
+<li><strong>data-*</strong> 自定义属性的集合 <code>dataset</code></li>
+</ol>
+<!-- more -->
+<h2 id="伪类-root">伪类 <strong>:root</strong></h2>
+<p><code>:root</code> 匹配了 DOM 的根元素。对于 HTML 来说，<code>:root</code> 表示的是 <code>&lt;html&gt;</code> 元素，除了具有更高的优先级之外，与 <code>html</code> 选择器相同。</p>
+<p>示例中，通过 <code>:root</code> 伪类，定义了全局的 CSS 变量：</p>
+<pre><code class="language-CSS">:root {
+    --base: #ffc600;
+    --spacing: 10px;
+    --blur: 0px;
+}
 
-      </div>
-      <div class="text-gray-400 text-sm font-light">2018-09-30 / 15 min read</div>
-    </div>
-  </section>
-
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${2 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://shiwei93.github.io/post/swift-extension">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">Swift Extension</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        <div class="gallery">
-![foster](https://res.cloudinary.com/dxe4zc5py/image/upload/v1534413125/foster.jpg)
-</div>
-</br>
-<p>前些日子准备周会关于 <strong>Swift Extension</strong> 的分享时，翻看自己之前写过的 Extension 时。发现有些在可扩展性，以及易用性上并不尽如人意，这也让我在周会讨论中加入了如下议题。</p>
-<ul>
-<li>如何评判一个 Extension 是必要的，且有价值的</li>
-<li>编写 Extension 需要遵循哪些原则</li>
-</ul>
-
-      </div>
-      <div class="text-gray-400 text-sm font-light">2018-08-16 / 9 min read</div>
-    </div>
-  </section>
-
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${3 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://shiwei93.github.io/post/linkblock-iOS">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">Swift &amp; Objective-C 中的链式调用</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        <div class="gallery">
-![sky](https://res.cloudinary.com/dxe4zc5py/image/upload/v1533545660/Blog/sky_blog.jpg)
-</div>
-</br>
-<p>在 <a href="https://github.com/shiwei93/Goku">Goku</a> 的实现中，尝试了使用类似于 <strong>SnapKit</strong> 中，链式调用的方式，来构建 <em>AlertView</em> 的样式。具体使用如下</p>
-<pre><code class="language-swift">self.goku.presentAlert(animated: true, closure: { (make) in
-	make.theme
-	   .actionSheet
-	   .title(&quot;Okay/Cancel&quot;)
-	   .message(&quot;A customizable action sheet message.&quot;)
-	   .cancel(&quot;Cancel&quot;)
-	   .destructive(&quot;OK&quot;)
-	   .normal([&quot;Button1&quot;, &quot;Button2&quot;])
-	   .tapped({ (index) in
-	       print(&quot;Tapped index is \(index)&quot;)
-	   }
-	)
-})
+/* 在用到全局变量的地方的 使用 var(--base) 的形式 */ 
+img {
+    background: var(--base);
+    padding: var(--spacing);
+    filter: blur(var(--blur));
+}
 </code></pre>
+<h2 id="data-自定义属性的集合-dataset">data-* 自定义属性的集合 <code>dataset</code></h2>
+<p>第一天的爵士鼓练习中，用到了 <strong>data-*</strong> 这样的自定义属性，例如有下面这样的 HTML 元素标签</p>
+<pre><code class="language-HTML">&lt;input type=&quot;range&quot; name=&quot;spacing&quot; min=&quot;10&quot; max=&quot;200&quot; value=&quot;10&quot; data-sizing=&quot;px&quot; data-name=&quot;Jerry&quot; data-lan=&quot;js&quot;&gt;
+</code></pre>
+<p><code>this.dataset</code> 获取到的集合如下图</p>
+<figure data-type="image" tabindex="1"><img src="https://res.cloudinary.com/dxe4zc5py/image/upload/v1555659491/Blog/dataset.png" alt="dataset" loading="lazy"></figure>
+<h2 id="documentqueryselectorall-不是一个-array">document.querySelectorAll() 不是一个 Array</h2>
+<p>这里需要提醒一下通过 <code>document.querySelectorAll('xxx')</code> 获取到的不是一个 <code>Array</code> 而是一个 <code>NodeList</code> 类型的对象。可以在控制台中得到验证</p>
+<pre><code class="language-JavaScript">// 可以通过 Array.from 来转换
+Array.from(document.querySelectorAll('.controls input'));
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://res.cloudinary.com/dxe4zc5py/image/upload/v1555659491/Blog/nodelist.png" alt="nodeList" loading="lazy"></figure>
 
-      </div>
-      <div class="text-gray-400 text-sm font-light">2018-08-06 / 3 min read</div>
-    </div>
-  </section>
+        </div>
 
-        <div class="pagination-container animated fadeIn">
-  
-  
-</div>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tag/gdhVsG-eO2">
+            <span class="flex-auto">FrontEnd</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+            <div class="prev-post">
+              <a href="https://shiwei93.github.io/post/javascript30-day-04">
+                <h3 class="post-title">
+                  <i class="remixicon-arrow-left-line"></i>
+                  JavaScript30 Day 04
+                </h3>
+              </a>
+            </div>
+          
+
+          
+            <div class="next-post">
+              <a href="https://shiwei93.github.io/post/javascript30-day-02">
+                <h3 class="post-title">
+                  JavaScript30 Day 02
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
 
       </div>
     </div>

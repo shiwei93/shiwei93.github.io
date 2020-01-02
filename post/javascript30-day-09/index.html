@@ -37,7 +37,19 @@
             <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#key-point">Key Point</a></li>
+<li><a href="#%E9%A1%B5%E9%9D%A2%E6%B7%BB%E5%8A%A0%E6%96%AD%E7%82%B9">页面添加断点</a></li>
+<li><a href="#console">Console</a>
+<ul>
+<li><a href="#consolelog">Console.log()</a></li>
+<li><a href="#warningerrorinfo">Warning/Error/Info</a></li>
+<li><a href="#consoleassert">console.assert()</a></li>
+<li><a href="#clearing">clearing</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B-dom-%E5%85%83%E7%B4%A0">查看 DOM 元素</a></li>
+<li><a href="#%E5%88%86%E7%BB%84%E6%89%93%E5%8D%B0">分组打印</a></li>
+<li><a href="#consolecount-%E8%AE%A1%E6%95%B0">console.count() 计数</a></li>
+<li><a href="#consoletime-%E8%AE%A1%E6%97%B6">console.time() 计时</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -86,45 +98,114 @@
 <div class="mask" onclick="closeMenu()">
 </div>
       <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
-        <h1 class="text-3xl font-bold lg:mt-16">JavaScript30 Day 12</h1>
+        <h1 class="text-3xl font-bold lg:mt-16">Javascript30 Day 09</h1>
         <div class="text-sm text-gray-700 lg:my-8">
-          2019-04-29 / 2 min read
+          2019-04-25 / 3 min read
         </div>
         
         <div class="post-content yue">
-          <p>第十二天实现了一个键盘事件监听，当输入了特定字符串后，在页面上添加一些特殊效果。</p>
-<h2 id="key-point">Key Point</h2>
-<ul>
-<li>全局绑定 <code>'keyup'</code> 事件，通过 <code>e.key</code> 获取用户输入</li>
-<li>截取与 <code>secretCode</code> 相同长度的用户输入字符串，比较两者，相同出发添加效果</li>
-</ul>
+          <p><a href="https://github.com/shiwei93/JavaScript30/tree/master/09%20-%20Must%20Know%20Dev%20Tools%20Tricks">GitHub</a></p>
+<p>第九天的练习，是熟悉一些浏览器调试的小技巧。</p>
+<h2 id="页面添加断点">页面添加断点</h2>
+<p>按下 F12 打开 Chrome 的开发者工具，在 Elements 选项卡中，选择某个标签，右键，<strong>Break On</strong> 下的 <strong>attribute modifications</strong>。就可以为该页面元素添加断点。在本例中 <code>&lt;p onClick=&quot;makeGreen()&quot;&gt;xBREAKxDOWNx&lt;/p&gt;</code> p 标签添加了 <code>onClock</code> 事件，并执行 <code>makeGreen()</code> 方法。添加断点之后就可以在点击时，跳转到 <code>makeGreen()</code> 函数中。</p>
+<h2 id="console">Console</h2>
+<h3 id="consolelog">Console.log()</h3>
+<p>除了直接传入字符串打印外，还可以格式化字符串打印，例如</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Format</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">%s</td>
+<td style="text-align:left">字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">%f</td>
+<td style="text-align:left">浮点数</td>
+</tr>
+<tr>
+<td style="text-align:left">%o</td>
+<td style="text-align:left">对象</td>
+</tr>
+<tr>
+<td style="text-align:left">%d</td>
+<td style="text-align:left">整数</td>
+</tr>
+<tr>
+<td style="text-align:left">%c</td>
+<td style="text-align:left">设定输出样式</td>
+</tr>
+</tbody>
+</table>
 <!--- more --->
-<pre><code class="language-javascript">const pressed = [];
-const secretCode = 'jerry';
+<p>列举一个不曾见过的 <strong>%c</strong> 的例子，</p>
+<pre><code class="language-javascript">console.log('%cThis is a string which has different style.', 'color: #00ffff; font-size: 2rem');
+</code></pre>
+<p>在 Chrome 中，打印的结果如图所示 <img src="https://res.cloudinary.com/dxe4zc5py/image/upload/v1556158117/Blog/console-format.png" alt="format" loading="lazy"></p>
+<h3 id="warningerrorinfo">Warning/Error/Info</h3>
+<pre><code class="language-javascript">// Warning
+console.warn('Whoops!');
 
-window.addEventListener('keyup', (e) =&gt; {
-    console.log(e.key);
-    pressed.push(e.key);
-    pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
-    if (pressed.join('').includes(secretCode)) {
-        console.log('DING DING!');
-        cornify_add();
-    }
-    console.log(pressed);
+// Error
+console.error('Shit!');
+
+// Info
+console.info('OH some information!');
+</code></pre>
+<p>打印结果为 <img src="https://res.cloudinary.com/dxe4zc5py/image/upload/v1556158826/Blog/console-warn-error-info.png" alt="warning/error/info" loading="lazy"></p>
+<blockquote>
+<p>console.info() 的打印结果前面的 (i) icon 去哪了？</p>
+<p>看这个 <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=714235">issue</a></p>
+</blockquote>
+<h3 id="consoleassert">console.assert()</h3>
+<p>与 Swift 中的断言相同，当条件不为 true 时，就会抛出错误并打印出设置的显示信息</p>
+<h3 id="clearing">clearing</h3>
+<p><code>console.clear()</code> 可以清除控制台的打印的信息。</p>
+<h3 id="查看-dom-元素">查看 DOM 元素</h3>
+<p>在获取了 DOM 元素后，可以直接打印输出</p>
+<ul>
+<li><code>console.log()</code> 输出了 DOM 的 HTML 标签</li>
+<li><code>console.dir()</code> 输出了 DOM 元素的属性列表</li>
+</ul>
+<pre><code class="language-javascript">const p = document.querySelector('p');
+console.dir(p);
+console.log(p);
+</code></pre>
+<p>上述代码的执行结果如下图</p>
+<figure data-type="image" tabindex="1"><img src="https://res.cloudinary.com/dxe4zc5py/image/upload/v1556159455/Blog/log-and-dir.png" alt="dir-and-log" loading="lazy"></figure>
+<h3 id="分组打印">分组打印</h3>
+<p>分组打印可以在遍历集合类型时，美化在控制台的显示效果，例如如下的代码片段</p>
+<pre><code class="language-javascript">dogs.forEach(dog =&gt; console.log(`${dog.name} is ${dog.age * 2} years old.`));
+
+dogs.forEach((dog) =&gt; {
+    console.group(`${dog.name}`); 
+    console.log(`${dog.name} is ${dog.age * 2} years old.`);
+    console.groupEnd(`${dog.name}`);
 });
 </code></pre>
-<p>截取字符串操作，对用户输入的按键字符数组用到了 <code>Array.prototype.splice()</code> 方法，第一个参数传入了需要删除的起始位置下标，如果设置了负数就表示从后往前删除。第二个参数传入的是需要删除的长度。示例如下</p>
-<pre><code class="language-javascript">var months = ['Jan', 'March', 'April', 'June'];
-months.splice(1, 0, 'Feb', 'August');
-// inserts at 1st index position
-console.log(months);
-// expected output: Array ['Jan', 'Feb', 'August', 'March', 'April', 'June']
-
-months.splice(4, 1, 'May');
-// replaces 1 element at 4th index
-console.log(months);
-// expected output: Array ['Jan', 'Feb', 'March', 'April', 'May']
+<p>在 Chrome 的 Console 中打执行结果如下</p>
+<figure data-type="image" tabindex="2"><img src="https://res.cloudinary.com/dxe4zc5py/image/upload/v1556159774/Blog/console-group.png" alt="console-group" loading="lazy"></figure>
+<h3 id="consolecount-计数">console.count() 计数</h3>
+<p>通过 console.count() 可以对输出对象进行计数。</p>
+<h3 id="consoletime-计时">console.time() 计时</h3>
+<p>通过 <code>console.time('name')</code> 和 <code>console.timeEnd('name')</code> 控制计时的开始点和结束点。</p>
+<blockquote>
+<p>传入 <code>time()</code> 的名称<strong>必须保持一致</strong>。</p>
+</blockquote>
+<p>例如可以使用 <code>console.time()</code> 计算网络请求返回的事件。</p>
+<pre><code class="language-javascript">console.time('fetch github data');
+fetch('https://api.github.com/users/shiwei93')
+    .then(data =&gt; data.json())
+    .then((json) =&gt; {
+        console.timeEnd('fetch github data');
+        console.log(json);
+    });
 </code></pre>
+<p>等待接口返回之后，在控制台就会打印出 <strong>fetch github data: 1570.6181640625ms</strong></p>
 
         </div>
 
@@ -138,10 +219,10 @@ console.log(months);
         <div class="flex justify-between py-8">
           
             <div class="prev-post">
-              <a href="https://shiwei93.github.io/post/javascript30-day-13">
+              <a href="https://shiwei93.github.io/post/javascript30-day-10">
                 <h3 class="post-title">
                   <i class="remixicon-arrow-left-line"></i>
-                  Javascript30 Day 13
+                  JavaScript30 Day 10
                 </h3>
               </a>
             </div>
@@ -149,9 +230,9 @@ console.log(months);
 
           
             <div class="next-post">
-              <a href="https://shiwei93.github.io/post/javascript30-day-11">
+              <a href="https://shiwei93.github.io/post/javascript30-day-08">
                 <h3 class="post-title">
-                  JavaScript30 Day 11
+                  Javascript30 Day 08
                   <i class="remixicon-arrow-right-line"></i>
                 </h3>
               </a>

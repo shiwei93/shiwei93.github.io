@@ -37,7 +37,13 @@
             <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#key-point">Key Point</a></li>
+<li><a href="#%E6%8A%80%E6%9C%AF%E8%A6%81%E7%82%B9">技术要点</a>
+<ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E8%AF%B7%E6%B1%82">数据请求</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86">数据处理</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E5%B1%95%E7%A4%BA">数据展示</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -86,45 +92,108 @@
 <div class="mask" onclick="closeMenu()">
 </div>
       <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
-        <h1 class="text-3xl font-bold lg:mt-16">JavaScript30 Day 12</h1>
+        <h1 class="text-3xl font-bold lg:mt-16">JavaScript30 Day 06</h1>
         <div class="text-sm text-gray-700 lg:my-8">
-          2019-04-29 / 2 min read
+          2019-04-22 / 4 min read
         </div>
         
         <div class="post-content yue">
-          <p>第十二天实现了一个键盘事件监听，当输入了特定字符串后，在页面上添加一些特殊效果。</p>
-<h2 id="key-point">Key Point</h2>
+          <div class="day-03">
+![day-06](https://res.cloudinary.com/dxe4zc5py/image/upload/v1555924940/Blog/day-06.png)
+</div>
+</br>
+<p><a href="https://github.com/shiwei93/JavaScript30/tree/master/06%20-%20Type%20Ahead">GitHub 地址</a></p>
+<p>第 6 天的练习，查找含有输入字母的美国城市或者州名。<a href="https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json">数据接口</a></p>
+<h2 id="技术要点">技术要点</h2>
 <ul>
-<li>全局绑定 <code>'keyup'</code> 事件，通过 <code>e.key</code> 获取用户输入</li>
-<li>截取与 <code>secretCode</code> 相同长度的用户输入字符串，比较两者，相同出发添加效果</li>
+<li>数据请求 - fetch / promise</li>
+<li>数据处理 - 正则 / filter</li>
+<li>数据展示</li>
 </ul>
-<!--- more --->
-<pre><code class="language-javascript">const pressed = [];
-const secretCode = 'jerry';
-
-window.addEventListener('keyup', (e) =&gt; {
-    console.log(e.key);
-    pressed.push(e.key);
-    pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
-    if (pressed.join('').includes(secretCode)) {
-        console.log('DING DING!');
-        cornify_add();
-    }
-    console.log(pressed);
-});
+<!-- more -->
+<h3 id="数据请求">数据请求</h3>
+<p>Fetch API 提供了一个获取资源的接口，用于替代传统的 XMLHttpRequest 技术。</p>
+<blockquote>
+<p>Ajax 技术基于 XMLHttpRequest</p>
+</blockquote>
+<p><code>fetch()</code> 方法必须接受一个参数 (资源路径)。无论请求成功还是失败，都会返回一个 <code>Promise</code> 对象。对！和 iOS 中的 <code>PromiseKit</code> 类似，可以使用 <code>then</code> 来处理请求结果。</p>
+<pre><code class="language-javascript">fetch(endpoint)
+    .then(blob =&gt; blob.json())
+    .then(data =&gt; cities.push(...data));
 </code></pre>
-<p>截取字符串操作，对用户输入的按键字符数组用到了 <code>Array.prototype.splice()</code> 方法，第一个参数传入了需要删除的起始位置下标，如果设置了负数就表示从后往前删除。第二个参数传入的是需要删除的长度。示例如下</p>
-<pre><code class="language-javascript">var months = ['Jan', 'March', 'April', 'June'];
-months.splice(1, 0, 'Feb', 'August');
-// inserts at 1st index position
-console.log(months);
-// expected output: Array ['Jan', 'Feb', 'August', 'March', 'April', 'June']
-
-months.splice(4, 1, 'May');
-// replaces 1 element at 4th index
-console.log(months);
-// expected output: Array ['Jan', 'Feb', 'March', 'April', 'May']
+<blockquote>
+<p>Tips</p>
+<p>如果忘记了对象包含哪些方法，除了查阅文档，还可以在浏览器中打印这个对象值，在控制台中 <strong><strong>proto</strong></strong> 中查看原型属性。</p>
+</blockquote>
+<p><code>cities.push(...data)</code> 的使用方式是 ES6 添加的特性 --- <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_syntax">展开语法</a>。引用中文翻译，可以在函数调用/数组构造时, 将数组表达式或者 string 在语法层面展开；还可以在构造字面量对象时, 将对象表达式按 key-value 的方式展开。</p>
+<h3 id="数据处理">数据处理</h3>
+<p>练习中使用到了 <strong>RegExp</strong> 来创建正则表达式对象，关于正则表达式的用法，不在这里的讨论范围之内。可以在代码中找到 <code>const regex = new RegExp(this.value, 'gi')</code> 初始化方法的第二个参数，传入了正则表达式的标志，进行高级搜索，下表列举了正则表达式的标志。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">标志</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">g</td>
+<td style="text-align:left">全局搜索</td>
+</tr>
+<tr>
+<td style="text-align:center">i</td>
+<td style="text-align:left">不区分大小写搜索</td>
+</tr>
+<tr>
+<td style="text-align:center">m</td>
+<td style="text-align:left">多行搜索</td>
+</tr>
+<tr>
+<td style="text-align:center">y</td>
+<td style="text-align:left">执行 “粘性” 搜索，匹配从目标字符串的当前位置开始，可以使用 y 标志</td>
+</tr>
+</tbody>
+</table>
+<p>包含一个标志的正则表达式，使用这个表达式：</p>
+<pre><code class="language-javascript">var re = /pattern/flags;
 </code></pre>
+<p>或者</p>
+<pre><code class="language-javascript">var re = new RegExp(&quot;pattern&quot;, &quot;flags&quot;);
+</code></pre>
+<p>函数 <code>findMatches</code> 实现了对请求数据的匹配，完整代码如下</p>
+<pre><code class="language-javascript">function findMatches(wordToMatch, cities) {
+   const regex = new RegExp(wordToMatch, 'gi');
+   return cities.filter(place =&gt; place.city.match(regex) || place.state.match(regex));
+}
+</code></pre>
+<p>在传入 <code>filter</code> 的箭头函数中，通过 <code>String​.prototype​.match()</code> 来匹配与输入相同的城市名或州名，并过滤掉不符合的数据。</p>
+<h3 id="数据展示">数据展示</h3>
+<p>通过对 <strong>input</strong> 标签的 <code>change</code> 和 <code>keyup</code> 事件的监听，实现了每输入一个字符都能在回调中获取到值。</p>
+<pre><code class="language-javascript">const searchInput = document.querySelector('.search');
+const suggestions = document.querySelector('.suggestions');
+
+searchInput.addEventListener('change', displayMatches);
+searchInput.addEventListener('keyup', displayMatches);
+</code></pre>
+<p>接下来，看看主要的方法 <code>displayMatches</code> 如下</p>
+<pre><code class="language-javascript">function displayMatches() {
+    const matches = findMatches(this.value, cities);
+    const html = matches.map(place =&gt; {
+        const regex = new RegExp(this.value, 'gi');
+        const cityName = place.city.replace(regex, `&lt;span class=&quot;hl&quot;&gt;${this.value}&lt;/span&gt;`)
+        const stateName = place.state.replace(regex, `&lt;span class=&quot;hl&quot;&gt;${this.value}&lt;/span&gt;`)
+        return `
+            &lt;li&gt;
+                &lt;span class=&quot;name&quot;&gt;${cityName}, ${stateName}&lt;/span&gt;
+                &lt;span class=&quot;population&quot;&gt;${numerWithCommas(place.population)}&lt;/span&gt;
+            &lt;/li&gt;
+        `
+    }).join('');
+    suggestions.innerHTML = html;
+}
+</code></pre>
+<p>通过 <code>String.prototype​.replace()</code> 方法，第一个参数可以是一个字符串也可以是一个 <strong>RegExp</strong> 对象，第二个参数为想要替换的字符串。</p>
+<p>之后通过 HTML DOM 的 <code>innerHTML</code> 属性，修改 HTML 内容。</p>
 
         </div>
 
@@ -138,10 +207,10 @@ console.log(months);
         <div class="flex justify-between py-8">
           
             <div class="prev-post">
-              <a href="https://shiwei93.github.io/post/javascript30-day-13">
+              <a href="https://shiwei93.github.io/post/javascript30-day-07">
                 <h3 class="post-title">
                   <i class="remixicon-arrow-left-line"></i>
-                  Javascript30 Day 13
+                  JavaScript30 Day 07
                 </h3>
               </a>
             </div>
@@ -149,9 +218,9 @@ console.log(months);
 
           
             <div class="next-post">
-              <a href="https://shiwei93.github.io/post/javascript30-day-11">
+              <a href="https://shiwei93.github.io/post/javascript30-day-05">
                 <h3 class="post-title">
-                  JavaScript30 Day 11
+                  JavaScript30 Day 05
                   <i class="remixicon-arrow-right-line"></i>
                 </h3>
               </a>

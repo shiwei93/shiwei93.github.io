@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shiwei93.github.io</id>
     <title>二十七</title>
-    <updated>2020-01-02T13:24:12.900Z</updated>
+    <updated>2020-01-02T13:47:33.222Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shiwei93.github.io"/>
     <link rel="self" href="https://shiwei93.github.io/atom.xml"/>
@@ -64,6 +64,174 @@ return result
 ]]></content>
     </entry>
     <entry>
+        <title type="html"><![CDATA[JavaScript30 Day 25]]></title>
+        <id>https://shiwei93.github.io/post/javascript30-day-25</id>
+        <link href="https://shiwei93.github.io/post/javascript30-day-25">
+        </link>
+        <updated>2019-05-08T05:47:44.000Z</updated>
+        <content type="html"><![CDATA[<p>今天的练习是关于 JavaScript 的事件流，下面做一些扩展与整理。</p>
+<h2 id="事件流">事件流</h2>
+<p><strong>事件流</strong>描述的是从页面中接收事件的顺序。IE 和 Netscape 团队提出了两种相反的事件流概念。IE 的事件流是事件冒泡流，而 Netscape 的事件流是事件捕获流。</p>
+<h2 id="事件冒泡">事件冒泡</h2>
+<p><strong>事件冒泡</strong>，即事件开始时由最具体的元素接收，然后逐层向上传播到较为不具体的节点。例如下面的代码</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div&gt;Click Me!&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>如果单击页面中的 <code>&lt;div&gt;</code> 元素，那么这个 click 事件会按照如下顺序传播：</p>
+<ol>
+<li><code>&lt;div&gt;</code></li>
+<li><code>&lt;body&gt;</code></li>
+<li><code>&lt;html&gt;</code></li>
+<li><code>document</code></li>
+</ol>
+<h2 id="事件捕获">事件捕获</h2>
+<p><strong>事件捕获</strong>的思想是不太具体的节点应该更早的接收到事件，而具体的节点应该最后接收到事件。使用上文提到的例子，点击 <code>&lt;div&gt;</code> 元素时，事件的传播顺序就会变成</p>
+<ol>
+<li><code>document</code></li>
+<li><code>&lt;html&gt;</code></li>
+<li><code>&lt;body&gt;</code></li>
+<li><code>&lt;div&gt;</code></li>
+</ol>
+<h2 id="dom-事件流">DOM 事件流</h2>
+<p>“DOM2 级事件” 规定了事件流包括三个阶段</p>
+<ol>
+<li>捕获阶段 <code>CAPTURING_PHASE</code></li>
+<li>目标阶段 <code>AT_TARGET</code></li>
+<li>冒泡阶段 <code>BUBBLING_PHASE</code></li>
+</ol>
+<p>我们可以通过事件对象的 <code>eventPhase</code> 属性，得知事件处于哪个阶段。</p>
+<p>DOM 事件在传播时，会从根节点开始往下传递到 <code>target</code>，若注册了事件监听，则监听器处于捕获阶段，为截获事件提供了机会。</p>
+<p><code>target</code> 就是触发事件的具体对象，这时注册在 <code>target</code> 上的事件监听器处于目标阶段。</p>
+<p>最后，事件再往上从 <code>target</code> 一路逆向传递到根节点，若注册了事件监听器，则监听器处于冒泡阶段，可以在这个阶段对事件作出响应。</p>
+<p>以前面的 HTML 实例代码为例，单击 <code>&lt;div&gt;</code> 元素完整的事件流如下如所示</p>
+<figure data-type="image" tabindex="1"><img src="https://res.cloudinary.com/dxe4zc5py/image/upload/v1557293001/Blog/281557292962_.pic.jpg" alt="图片来源于《JavaScript 高级程序设计》" loading="lazy"></figure>
+<p>在 DOM 事件流中，实际的目标 <code>&lt;div&gt;</code> 在捕获阶段不会接收到事件。这意味着在捕获阶段，事件从 document 到 <code>&lt;html&gt;</code> 再到 <code>&lt;body&gt;</code> 后就停止了。下一个阶段是<strong>处于目标</strong>阶段，于是事件在 <code>&lt;div&gt;</code> 上发生，并在事件处理中被看成冒泡阶段的一部分。然后冒泡阶段发生，事件又传回了 document。</p>
+<h2 id="事件处理">事件处理</h2>
+<p>在今天的练习中，通过 <code>Event​Target​.add​Event​Listener()</code> 来添加事件监听。</p>
+<h3 id="语法">语法</h3>
+<blockquote>
+<p><em>target.addEventListener(type, listener[, options]);</em></p>
+<p><em>target.addEventListener(type, listener[, useCapture]);</em></p>
+</blockquote>
+<p>方法接收三个参数</p>
+<blockquote>
+<p><strong>type</strong></p>
+<p>表示需要监听的<a href="https://developer.mozilla.org/zh-CN/docs/Web/Events">事件类型</a></p>
+<p><strong>listener</strong></p>
+<p>当所监听的事件类型触发时，接到一个事件通知对象。<code>listener</code> 必须是一个实现了 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/EventListener"><code>EventListener</code></a> 接口的对象，或者是一个函数。</p>
+<p><strong>options</strong> 可选</p>
+<ol>
+<li><code>capture</code> 默认为 false，即事件只会在冒泡阶段才会被执行。若为 true，即事件在捕获阶段就会被执行</li>
+<li><code>once</code> 表示事件监听被添加后之后执行一次，默认为 false。如果被设置为 true，listener 在被调用后就会被移除。</li>
+</ol>
+<p><strong>useCapture</strong> 可选</p>
+<p>默认为 false，表示注册事件是冒泡事件。若为 true，则表示注册事件为捕获事件。</p>
+</blockquote>
+<pre><code class="language-javascript">one.addEventListener('click', (e) =&gt; { 
+            console.log(&quot;one capture mode&quot;, e.eventPhase);
+}, true);
+one.addEventListener('click', (e) =&gt; { 
+   console.log(&quot;one bubble mode&quot;, e.eventPhase);
+}, false);
+two.addEventListener('click', (e) =&gt; {
+   console.log(&quot;two capture mode 2&quot;);
+}, true)
+two.addEventListener('click', (e) =&gt; { console.log(&quot;two bubble mode&quot;, e.eventPhase); }, false);
+three.addEventListener('click', (e) =&gt; { console.log(&quot;three capture mode&quot;, e.eventPhase); }, true);
+three.addEventListener('click', (e) =&gt; { console.log(&quot;three bubble mode&quot;, e.eventPhase); }, false);
+</code></pre>
+<p>打印结果为</p>
+<blockquote>
+<p>one capture mode 1</p>
+<p>two capture mode 1</p>
+<p>three capture mode 2</p>
+<p>three bubble mode 2</p>
+<p>tow bubble mode 3</p>
+<p>one bubble mode 3</p>
+</blockquote>
+<p>且打印顺序不和事件注册顺序有关。</p>
+<h3 id="阻止事件冒泡">阻止事件冒泡</h3>
+<pre><code class="language-javascript">two.addEventListener('click', (e) =&gt; { 
+   console.log(&quot;two capture mode&quot;, e.eventPhase);
+   e.stopPropagation();
+}, true);
+</code></pre>
+<p>通过 <code>stopPropagation()</code> 可以阻止事件的冒泡，也阻止了事件的继续捕获。但无法阻止同一个元素其他绑定事件的执行。</p>
+<p>使用 <code>stopImmediatePropagation()</code> 即阻止了事件的继续传递，也阻止了同一个元素的其他绑定事件的执行。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[JavaScript30 Day 19]]></title>
+        <id>https://shiwei93.github.io/post/javascript30-day-19</id>
+        <link href="https://shiwei93.github.io/post/javascript30-day-19">
+        </link>
+        <updated>2019-05-06T03:38:37.000Z</updated>
+        <content type="html"><![CDATA[<p>今天的练习是使用摄像头，实时记录，并通过 canvas 实时绘制到画布中。</p>
+<p>通过 <code>Media​Devices​.get​User​Media()</code> 方法，在通过授权之后，可以获取摄像头图像。具体代码如下</p>
+<pre><code class="language-javascript">navigator.mediaDevices.getUserMedia({ video: true, audio: false})
+    .then((videostream) =&gt; {
+        console.log(videostream);
+        video.srcObject = videostream;
+        video.onloadedmetadata = function() { 
+            video.play();
+        };
+    })
+    .catch((error) =&gt; {
+        console.error('OH, Don\'t have permission to use your local cam!', error);
+    });
+</code></pre>
+<!--- more --->
+<p>通过授权之后，返回一个 promise 对象，将返回值通过 <code>HTMLMedia​Element​.src​Object</code> 传入 video 中，可以在 video 标签中实时播放摄像头获取到的头像。<code>srcObject</code> 属性可以接收一个 <code>MediaStream</code>，一个 <code>MediaSource</code>，一个 <code>Blob</code> 或一个 <code>File</code> 对象。当资源文件的元数据加载完成时，就会调用 <code>Global​Event​Handlers​.onloadedmetadata</code> 参数，示例中传入了一个 function，用来开始播放视频。</p>
+<p>给 video 标签添加 <code>'canplay'</code> 事件监听，<code>video.addEventListener('canplay', printToCanvas);</code>，当视频可以播放时，调用 <code>printToCanvas</code> 方法，绘制到 canvas 画布中。来看一下 <code>printToCanvas</code> 方法的代码实现</p>
+<pre><code class="language-javascript">function printToCanvas() {
+    const { videoWidth: width, videoHeight: height} = video;
+    canvas.height = height;
+    canvas.width = width;
+    return setInterval(() =&gt; {
+        ctx.drawImage(video, 0, 0, width, height);
+
+        let imagedata = ctx.getImageData(0, 0, width, height);
+
+        // imagedata = redEffect(imagedata);
+        imagedata = rgbsplit(imagedata);
+        // ctx.globalAlpha = 0.2;
+
+        // imagedata = greenScreen(imagedata);
+
+        ctx.putImageData(imagedata, 0, 0);
+    }, 16);
+}
+</code></pre>
+<p>首先通过解构赋值获取视频组件的宽高，<strong>注意</strong>，一定要设置 canvas 画布的宽高。接下来在 <code>setIntervale()</code> 中甚至重复时间的间隔为 16ms 即屏幕每次刷新的时间间隔，达到绘制摄像头每一帧图像的目的。</p>
+<ol>
+<li><code>ctx.drawImage()</code> 将视频流绘制到 canvas 中</li>
+<li><code>ctx.getImageData()</code> 返回一个 <code>ImageData</code> 对象，用来描述 canvas 区域隐含的像素数据，这个区域通过矩形表示，起始点为 (sx, sy)、宽为 sw、高为 sh。<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/getImageData">文档</a></li>
+<li><code>ctx.putImageData()</code> 是 Canvas 2D API 将数据从已有的 <code>ImageData</code> 对象绘制到位图的方法。 如果提供了一个绘制过的矩形，则只绘制该矩形的像素。此方法不受画布转换矩阵的影响。<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/putImageData">文档</a></li>
+</ol>
+<h2 id="拍照实现">拍照实现</h2>
+<pre><code class="language-javascript">function takePhoto() {
+    snap.currentTime = 0;
+    snap.play();
+
+    let data = canvas.toDataURL('image/jpeg');
+    let link = document.createElement('a');
+    link.href = data;
+    link.setAttribute('download', 'handsome');
+    link.innerHTML = `&lt;img src=${data} alt=handsome&gt;`;
+    strip.insertBefore(link, strip.firstChild);
+}
+</code></pre>
+<p>通过将 <code>HTMLCanvas​Element​.toDataURL()</code> 方法，获取当前 canvas 画布中的图像数据地址，接着新建一个 <code>a</code> 标签，并将其 href 属性设置为获取到的 canvas 画布图像数据的 URL。</p>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[JavaScript30 Day 17]]></title>
         <id>https://shiwei93.github.io/post/javascript30-day-17</id>
         <link href="https://shiwei93.github.io/post/javascript30-day-17">
@@ -80,109 +248,42 @@ return result
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[JavaScript30 Day 14]]></title>
-        <id>https://shiwei93.github.io/post/javascript30-day-14</id>
-        <link href="https://shiwei93.github.io/post/javascript30-day-14">
+        <title type="html"><![CDATA[JavaScript30 Day 16]]></title>
+        <id>https://shiwei93.github.io/post/javascript30-day-16</id>
+        <link href="https://shiwei93.github.io/post/javascript30-day-16">
         </link>
-        <updated>2019-05-01T14:44:15.000Z</updated>
-        <content type="html"><![CDATA[<p>今天的练习是来了解一下 JavaScript 中关于引用与拷贝的问题。</p>
-<h2 id="值类型">值类型</h2>
-<p>在 JavaScript 中，<strong>string</strong>/<strong>number</strong>/<strong>boolean</strong>/<strong>null</strong>/<strong>undefined</strong> 等基本类型是值类型。例如下面的例子</p>
-<pre><code class="language-javascript">let age = 100;
-let age2 = age;
-console.log(age, age2);
-// 100 100
-age = 200;
-console.log(age, age2); 
-// 200 100
-</code></pre>
+        <updated>2019-05-03T05:07:33.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://github.com/shiwei93/JavaScript30/tree/master/16%20-%20CSS%20Text%20Shadow%20Mouse%20Move%20Effect">GitHub 地址</a></p>
+<p>今天的练习实现了一个鼠标移动修改文字阴影的效果。通过添加 <code>'mousemove'</code> 监听鼠标移动事件，计算鼠标移动的距离与阴影偏移的关系，修改文字阴影样式即可。</p>
 <!--- more --->
-<p>值类型的变量，将一个变量赋值给另一个变量时，拷贝了当前变量。因此对原值的拷贝不会影响被赋值的变量。</p>
-<h2 id="引用类型">引用类型</h2>
-<p>在 JavaScript 中，<strong>Object</strong>/<strong>Function</strong>/<strong>Array</strong>/<strong>Set</strong>/<strong>Map</strong> 等属于引用类型。同样在将一个变量赋值给另一个变量时，拷贝原始对象的地址。因此对原值的任何修改都会对被赋值的对象产生相同的改变。</p>
-<pre><code class="language-javascript">const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
-const team = players;
-console.log(players, team);
-players.push('Sze');
-console.log(players, team);
-</code></pre>
-<p>在 console 中看到的打印结果如下</p>
-<figure data-type="image" tabindex="1"><img src="https://res.cloudinary.com/dxe4zc5py/image/upload/v1556721420/Blog/references-array.png" alt="references" loading="lazy"></figure>
-<p>对与数组的拷贝可以通过如下方式实现</p>
-<pre><code class="language-javascript">// 数组的拷贝可以使用 slice() 方法
-const team2 = players.slice();
-// Or
-const team3 = [].concat(players);
-// Or
-const team4 = [...players];
-// Or
-const team5 = Array.from(players);
-</code></pre>
-<p>对于对象类型的拷贝可以通过 <code>Object.assign()</code> 方法实现，例如</p>
-<pre><code class="language-javascript">const person = {
-    name: 'sze wei',
-    age: 26,
-};
+<p>代码实现如下</p>
+<pre><code class="language-javascript">const hero = document.querySelector('.hero');
+const text = hero.querySelector('h1');
+const walk = 500; // 100px
 
-// Correct
-const cap2 = Object.assign({}, person, { numebr: 99, age: 12 });
-console.log(cap2);
-</code></pre>
-<p>这样看来好像确实拷贝了 <em>person</em> 对象，对如果改写一下 <em>person</em> 对象的结构</p>
-<pre><code class="language-javascript">const wes = {
-    name: 'wes',
-    age: 100,
-    social: {
-        twitter: '@wesbos',
-        facebook: 'wesbos.developer'
+function shadow(e) {
+    const { offsetWidth: width, offsetHeight: height } = hero;
+    let { offsetX: x, offsetY: y } = e;
+
+    if (this !== e.target) {
+        x += e.target.offsetLeft;
+        y += y + e.target.offsetTop;
     }
-};
-</code></pre>
-<p>此时再次使用 <code>const dev = Object.assign({}, wes);</code> 进行拷贝后，修改 <code>dev.social.twitter: '@cool'</code> 后，会发现原值 <code>wes.social.twitter</code> 的值也被修改了。因为 <code>Object.assign()</code> 只会拷贝最上层的属性。视频中提到了一个小技巧，可以拷贝所有对象。</p>
-<pre><code class="language-javascript">const dev2 = JSON.parse(JSON.stringify(wes));
-</code></pre>
-<p>代码其实很容易理解，首先将对象通过 <code>JSON.stringify()</code> 方法转为字符串，之后再使用 <code>JSON.parse()</code> 方法转成新的对象。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[JavaScript30 Day 12]]></title>
-        <id>https://shiwei93.github.io/post/javascript30-day-12</id>
-        <link href="https://shiwei93.github.io/post/javascript30-day-12">
-        </link>
-        <updated>2019-04-29T02:29:47.000Z</updated>
-        <content type="html"><![CDATA[<p>第十二天实现了一个键盘事件监听，当输入了特定字符串后，在页面上添加一些特殊效果。</p>
-<h2 id="key-point">Key Point</h2>
-<ul>
-<li>全局绑定 <code>'keyup'</code> 事件，通过 <code>e.key</code> 获取用户输入</li>
-<li>截取与 <code>secretCode</code> 相同长度的用户输入字符串，比较两者，相同出发添加效果</li>
-</ul>
-<!--- more --->
-<pre><code class="language-javascript">const pressed = [];
-const secretCode = 'jerry';
 
-window.addEventListener('keyup', (e) =&gt; {
-    console.log(e.key);
-    pressed.push(e.key);
-    pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
-    if (pressed.join('').includes(secretCode)) {
-        console.log('DING DING!');
-        cornify_add();
-    }
-    console.log(pressed);
-});
-</code></pre>
-<p>截取字符串操作，对用户输入的按键字符数组用到了 <code>Array.prototype.splice()</code> 方法，第一个参数传入了需要删除的起始位置下标，如果设置了负数就表示从后往前删除。第二个参数传入的是需要删除的长度。示例如下</p>
-<pre><code class="language-javascript">var months = ['Jan', 'March', 'April', 'June'];
-months.splice(1, 0, 'Feb', 'August');
-// inserts at 1st index position
-console.log(months);
-// expected output: Array ['Jan', 'Feb', 'August', 'March', 'April', 'June']
+    const xWalk = Math.round((x / width * walk) - (walk / 2));
+    const yWalk = Math.round((y / height * walk) - (walk / 2));
 
-months.splice(4, 1, 'May');
-// replaces 1 element at 4th index
-console.log(months);
-// expected output: Array ['Jan', 'Feb', 'March', 'April', 'May']
+    text.style.textShadow = `
+        ${xWalk}px ${yWalk}px 0 rgba(255, 0, 255, 0.7),
+        ${xWalk * -1}px ${yWalk}px 0 rgba(0, 255, 255, 0.7),
+        ${yWalk}px ${xWalk * -1}px 0 rgba(0, 255, 0, 0.7),
+        ${yWalk * -1}px ${xWalk}px 0 rgba(0, 0, 255, 0.7)
+    `;
+}
+
+hero.addEventListener('mousemove', shadow);
 </code></pre>
+<p>实现代码中 <code>const { offsetWidth: width, offsetHeight: height } = hero;</code> 这样的实现，被称之为解构赋值，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">参考文档</a>。</p>
 ]]></content>
     </entry>
 </feed>

@@ -1,0 +1,460 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>二十七</title>
+<meta name="description" content="浪花有意千重雪，桃李无言一队春" />
+<link rel="shortcut icon" href="https://shiwei93.github.io/favicon.ico?v=1577972693370">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://shiwei93.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="二十七 - Atom Feed" href="https://shiwei93.github.io/atom.xml">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://shiwei93.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://shiwei93.github.io/images/avatar.png?v=1577972693370" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">二十七</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C">准备工作</a></li>
+<li><a href="#%E5%93%88%E5%B8%8C%E8%A1%A8">哈希表</a>
+<ul>
+<li><a href="#%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0">哈希函数</a></li>
+<li><a href="#%E4%BF%9D%E8%AF%81%E6%95%B0%E7%BB%84%E7%A9%BA%E9%97%B4">保证数组空间</a></li>
+<li><a href="#%E9%81%BF%E5%85%8D%E7%A2%B0%E6%92%9E">避免碰撞</a></li>
+<li><a href="#%E6%9F%A5%E6%89%BE%E5%86%85%E5%AE%B9">查找内容</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">代码实现</a>
+<ul>
+<li><a href="#%E6%93%8D%E4%BD%9C%E7%B1%BB%E5%9E%8B">操作类型</a></li>
+<li><a href="#%E6%9F%A5%E6%89%BE%E5%85%83%E7%B4%A0">查找元素</a></li>
+<li><a href="#%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0">插入元素</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0">删除元素</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></div>
+    <a class="rss" href="https://shiwei93.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">【译】Swift 算法 - 哈希表</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2018-08-22 / 9 min read
+        </div>
+        
+        <div class="post-content yue">
+          <div class="gallery">
+![glasses](https://res.cloudinary.com/dxe4zc5py/image/upload/v1534928694/Blog/Photo_by_Jess_Watters_WeCoLo0Rxp4.jpg)
+</div>
+</br>
+<blockquote>
+<p><a href="https://www.raywenderlich.com/206-swift-algorithm-club-hash-tables">原文地址</a></p>
+</blockquote>
+<h2 id="准备工作">准备工作</h2>
+<p>作为 Swift 开发者，一定对 <code>Dictionary (字典)</code> 非常熟悉。如果你也是一个 Kotlin 开发者，那会对 <code>HashMap</code> 有所了解。这两种数据结构的本质都是 <strong>hash table (哈希表)</strong>。</p>
+<p>Swift 中的字典是一个<strong>键值对</strong>集合。想要在字典中存储一个值，需要通过 key 来传递：</p>
+<pre><code class="language-Swift">var dictionary: [String: String] = [:]
+
+// 添加 键值对
+dictionary[&quot;firstName&quot;] = &quot;Steve&quot;
+
+// 通过 key 获取值
+dictionary[&quot;firstName&quot;] // 输出 &quot;Steve&quot;
+</code></pre>
+<p>实际上，字典将键值对存入一个哈希表。本文中，你将了解到哈希表的一个基础实现以及它的性能。</p>
+<!-- more -->
+<h2 id="哈希表">哈希表</h2>
+<p>哈希表在本质上其实就是一个数组。初始化时，数组为空。当你通过某个键将一个值存放到哈希表的时候，哈希表会通过键计算出对应的数组下标。举个例子：</p>
+<figure data-type="image" tabindex="1"><img src="https://koenig-media.raywenderlich.com/uploads/2017/12/HashTables-graphic-1-1.png" alt="value" loading="lazy"></figure>
+<p>上述的例子中，键 <code>&quot;firstName&quot;</code> 印射到了数组下标 1。</p>
+<p>使用不同的键来添加一个值，会被放入另一个数组下标中：</p>
+<figure data-type="image" tabindex="2"><img src="https://koenig-media.raywenderlich.com/uploads/2017/12/HashTables-graphic-2-2.png" alt="new value" loading="lazy"></figure>
+<p>关键在于哈希表是如何计算出这些数组下标的。这就是哈希算法的由来了。有如下声明代码，</p>
+<pre><code class="language-Swift">hashTable[&quot;firstName&quot;] = &quot;Steve&quot;
+</code></pre>
+<p>哈希表得到键 &quot;firstName&quot; 并且调用它的 <code>hashValue</code> 属性。因此，键必须遵循 <code>Hashable</code> 协议。</p>
+<h3 id="哈希函数">哈希函数</h3>
+<p>当你调用 <code>&quot;firstName&quot;.hashValue</code>，会得到一个整数：<code>-8378883973431208045</code>。同样地，<code>&quot;hobbies&quot;.hashValue</code> 的哈希值为：<code>477845223140190530</code>。</p>
+<p>哈希值是 <strong>hash function (哈希函数)</strong> 的计算结果，哈希函数接收一个输入参数并且返回一个整数：</p>
+<figure data-type="image" tabindex="3"><img src="https://koenig-media.raywenderlich.com/uploads/2017/12/HashTables-graphic-3-1.png" alt="hash function" loading="lazy"></figure>
+<p>为了更好的理解哈希函数是如何工作的，你将实现两个简单的哈希函数。打开一个 playground 新增如下代码：</p>
+<pre><code class="language-Swift">func naiveHash(_ string: String) -&gt; Int {
+    let unicodeScalars = string.unicodeScalars.map { Int($0.value) }
+    return unicodeScalars.reduce(0, +)
+}
+</code></pre>
+<p>上述哈希函数中，将字符串中的每个字符的 Unicode scalar 值累加。接下来在 playground 中添加如下代码。</p>
+<pre><code class="language-Swift">naiveHash(&quot;abc&quot;) // 输出 294
+</code></pre>
+<p>哈希函数通过 map 一个字符串来获得一个整数值，并不是一个好的方式。为什么呢？</p>
+<pre><code class="language-Swift">naiveHash(&quot;bca&quot;) // 输出 294
+</code></pre>
+<p>由于 <code>naiveHash</code> 只是简单的把每个字符的 Unicode scalar 值累加，任何特定字符串的不同排列都会得到相同的结果。</p>
+<p>多把钥匙可以打开同一把锁！这并不好。一点点努力就可以让哈希函数有一个本质的提升。在 playground 中添加如下代码：</p>
+<pre><code class="language-Swift">// 来源: https://gist.github.com/kharrison/2355182ac03b481921073c5cf6d77a73#file-country-swift-L31
+func djb2Hash(_ string: String) -&gt; Int {
+    let unicodeScalars = string.unicodeScalars.map { Int($0.value) }
+    return unicodeScalars.reduce(5381, {
+        ($0 &lt;&lt; 5) &amp;+ $0 &amp;+ Int($1)
+    })
+}
+
+djb2Hash(&quot;abc&quot;) // 输出 193485963
+djb2Hash(&quot;bca&quot;) // 输出 193487083
+</code></pre>
+<p>这一次，两个排列得到了两个不同的哈希值。Swift 标准库中，<code>String</code> 的哈希函数要复杂的多，并且使用了 <code>SipHash</code> 算法。这超出了本文讨论的范畴了。</p>
+<blockquote>
+<p>######备注:</p>
+<ul>
+<li>如果你想了解字符串是如何转换成哈希值的，可以在<a href="https://github.com/apple/swift/blob/111499d2bfc58dc12fcb9cd1ce1dda7978c995b7/stdlib/public/core/StringHashable.swift">这里</a>查看源码。</li>
+<li>Swift 使用 <strong>SipHash</strong> 哈希函数来处理大多数的哈希值计算。这个实现的 API 是私有的，但有个公开的实现可以在<a href="https://github.com/attaswift/SipHash/blob/master/SipHash/SipHasher.swift">这里</a>查看。</li>
+</ul>
+</blockquote>
+<h3 id="保证数组空间">保证数组空间</h3>
+<p><code>&quot;firstName&quot;</code> 的哈希值为 <code>-8378883973431208045</code>。这个值不仅很庞大，同时它还是一个负值。那么如何处理这个哈希值呢？一个普遍的做法是取它的绝对值，之后以数组长度做模运算。</p>
+<p>在之前的例子中，数组的长度为 3。键 <code>&quot;firstName&quot;</code> 的数组下标变成了 <code>abs(-8378883973431208045) % 3 = 1</code>。同理可以得出 <code>&quot;hobbies&quot;</code> 的数组下标为 2。</p>
+<p>使用哈希的方式使得字典变得更为效率。在哈希表中查找一个值，你必须取键的哈希值来获取数组的下标，接下来就是查找对应下标的数组元素了。所有的这些操作所消耗的时间都是固定的，因此，新增，查询和删除的时间复杂度都是 <code>O(1)</code>。</p>
+<blockquote>
+<p>**备注：**由于无法预估数组的最终长度。因此，字典无法保证哈希表中元素的有序性。</p>
+</blockquote>
+<h3 id="避免碰撞">避免碰撞</h3>
+<p>对哈希值做模运算也会获得相同的值，这里有个例子：</p>
+<pre><code class="language-Swift">djb2Hash(&quot;firstName&quot;) % 2 // outputs 1
+djb2Hash(&quot;lastName&quot;) % 2 // outputs 1
+</code></pre>
+<p>这个例子有点不自然，例子的目的在于支出哈希映射有可能指向相同的数组下标，这被称之为<strong>哈希碰撞</strong>。一个常用的解决碰撞的方法是使用链表。数组形式如下：</p>
+<figure data-type="image" tabindex="4"><img src="https://koenig-media.raywenderlich.com/uploads/2017/12/HashTables-graphic-4-1.png" alt="chaining" loading="lazy"></figure>
+<p>利用链表，键值对并不直接存储在数组中。取而代之的是数组中的每个元素都是一个键值对的链表。这样的数组元素称之为 <em>buckets (桶)</em>。</p>
+<h3 id="查找内容">查找内容</h3>
+<p>从哈希表中获取一个值的例子如下：</p>
+<pre><code class="language-Swift">let x = hashTable[&quot;lastName&quot;]
+</code></pre>
+<p>哈希表首先计算了 <code>&quot;lastName&quot;</code> 的哈希值，并映射为数组下标为 2。由于数组下标为 2 的桶包含一个链表，就下来的步骤就是在链表中查找键值为 <code>&quot;lastName&quot;</code> 的值。链表应当限制长度，否则将会降低哈希表中的查找速度。理想情况下，并不需要链表，但实际上完全避免碰撞是不可能的。可以通过在哈希表设置足量的桶以及使用高质量的哈希函数来降低碰撞概率。</p>
+<blockquote>
+<p>**备注：**一个可以替换链表的方法 &quot;open addressing&quot; (开放地址)。关键思想在于：如果数组中的某个下标已经被占用了，就将元素放到下一个未被使用的桶中。这个方法有它特有的优势和劣势。</p>
+</blockquote>
+<h2 id="代码实现">代码实现</h2>
+<p>在 <strong>Source</strong> 目录下，创建 <strong>Swift</strong> 文件命名为 <code>HashTable.swift</code>。写入如下代码：</p>
+<pre><code class="language-Swift">public struct HashTable&lt;Key: Hashable, Value&gt; {
+    private typealias Element = (key: Key, value: Value)
+    private typealias Bucket = [Element]
+    private var buckets: [Bucket]
+    
+    private(set) public var count = 0
+    public var isEmpty: Bool {
+        return count == 0
+    }
+    
+    public init(capacity: Int) {
+        assert(capacity &gt; 0)
+        buckets = Array&lt;Bucket&gt;(repeating: [], count: capacity)
+    }
+}
+</code></pre>
+<p>由于将 <code>Key</code> 约束为 <code>Hashable</code>，所以字典中的所有键都有哈希值，所以你的字典无需担心计算哈希值。哈希表中的，主要的数组命名为 <code>buckets</code>，并通过 <code>init(capacity)</code> 方法提供了固定的长度。另外可以通过 <code>count</code> 属性来获取存入哈希表中的元素个数。</p>
+<h3 id="操作类型">操作类型</h3>
+<p>现在，哈希表的基础已经完成了，接下来定义一些可变方法来操作这个数据结构。一般有如下四种操作：</p>
+<ul>
+<li>插入新的元素</li>
+<li>查找某个元素</li>
+<li>更新已经存在的元素</li>
+<li>删除一个元素</li>
+</ul>
+<p>语气的语法应该是：</p>
+<pre><code class="language-Swift">hashTable[&quot;firstName&quot;] = &quot;Steve&quot; // insert
+let x = hashTable[&quot;firstName&quot;] // lookup
+hashTable[&quot;firstName&quot;] = &quot;Tim&quot; // update
+hashTable[&quot;firstName&quot;] = nil // delete
+</code></pre>
+<p>首先，定义如下方法：</p>
+<pre><code class="language-Swift">private func index(for key: Key) -&gt; Int {
+    return abs(key.hashValue) % buckets.count
+}
+</code></pre>
+<p>这个方法为了确保键值映射到存储数组中的下标没有越界。接下来，在 <code>index(for:)</code> 下面添加如下方法</p>
+<h3 id="查找元素">查找元素</h3>
+<pre><code class="language-Swift">// 1
+public subscript(key: Key) -&gt; Value? {
+    get {
+        return value(for: key)
+    }
+}
+    
+// 2
+public func value(for key: Key) -&gt; Value? {
+    let index = self.index(for: key)
+    return buckets[index].first { $0.key == key }?.value
+}
+</code></pre>
+<ol>
+<li><code>subscript</code> 方法接受一个键并返回对应的值。</li>
+<li><code>value(for:)</code> 首先调用了 <code>index(for:)</code> 将键转换为数组下标。当出现哈希碰撞时，这个桶可能对应了多个键，因此需要比较每个元素的键和需要查找的键。</li>
+</ol>
+<h3 id="插入元素">插入元素</h3>
+<p><code>subscript</code> 也应当提供一个 setter 方法。在 <code>subscript</code> 中添加如下代码：</p>
+<pre><code class="language-Swift">set {
+    if let value = newValue {
+        update(value: value, for: key)
+    }
+}
+</code></pre>
+<p>接下来添加这里的 <code>update(value:for:)</code> 方法：</p>
+<pre><code class="language-Swift">@discardableResult
+public mutating func update(value: Value, for key: Key) -&gt; Value? {
+    let index = self.index(for: key)
+  
+    // 1
+    if let (i, element) = buckets[index].enumerated().first(where: { $0.1.key == key }) {
+        let oldValue = element.value
+        buckets[index][i].value = value
+        return oldValue
+    }
+
+    // 2
+    buckets[index].append((key: key, value: value))
+    count += 1
+    return nil
+}
+</code></pre>
+<ol>
+<li>首先检测值是否已经存在，如果存在只需要更新对应的数组下标 <code>i</code>。</li>
+<li>如果没有检测到，则新建一个键值对，并存入桶数组的最后。</li>
+</ol>
+<h3 id="删除元素">删除元素</h3>
+<p>最后一个操作是实现删除某个键的元素操作。更新 <code>subscript</code> 方法：</p>
+<pre><code class="language-Swift">// 1
+public subscript(key: Key) -&gt; Value? {
+    get {
+        return value(for: key)
+    }
+    set {
+        if let value = newValue {
+            update(value: value, for: key)
+        } else {
+            removeValue(for: key)
+        }
+    }
+}
+</code></pre>
+<p>接下来添加 <code>remove(value: for:)</code> 方法：</p>
+<pre><code class="language-Swift">@discardableResult
+public mutating func removeValue(for key: Key) -&gt; Value? {
+  let index = self.index(for: key)
+  
+  // 1
+  if let (i, element) = buckets[index].enumerated().first(where: { $0.1.key == key }) {
+    buckets[index].remove(at: i)
+    count -= 1
+    return element.value
+  }
+
+  // 2
+  return nil
+}
+</code></pre>
+<p>实现方法和 <code>update</code> 方法类似。第一步检测值是否在桶数组中。如果存在则移除键，<code>count</code> 做减 1 操作。如果值不存在，则返回 <code>nil</code>。</p>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tag/hrFl_xbAha">
+            <span class="flex-auto">Swift</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+            <div class="prev-post">
+              <a href="https://shiwei93.github.io/post/debugging-swift-code-with-lldb">
+                <h3 class="post-title">
+                  <i class="remixicon-arrow-left-line"></i>
+                  【译】使用 LLDB 调试 Swift 代码
+                </h3>
+              </a>
+            </div>
+          
+
+          
+            <div class="next-post">
+              <a href="https://shiwei93.github.io/post/swift-extension">
+                <h3 class="post-title">
+                  Swift Extension
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+
+    <script src="https://shiwei93.github.io/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>

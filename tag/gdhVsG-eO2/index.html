@@ -1,207 +1,354 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-        <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,minimal-ui" />
-    <title>二十七</title>
-<link rel='stylesheet' id='puma-css'  href='https://shiwei93.github.io/styles/main.css' type='text/css' media='screen' />
-<link rel='stylesheet' id='puma-css'  href='https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css' media='screen' />
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-<script type='text/javascript' src='https://shiwei93.github.io/media/scripts/jquery.js'></script>
-<script type='text/javascript' src='https://shiwei93.github.io/media/scripts/jquery-migrate.min.js'></script>
-        <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
-         <script >hljs.initHighlightingOnLoad();</script>
-         
-</head>
-<body class="home blog">
-	<!--加入跟随滑动的顶部-->
-	<header id="masthead" class="site-header" role="banner">
-		<div class="site-branding">
-			<h1 class="site-title">
-				<a href="https://shiwei93.github.io" title="二十七">二十七</a>
-			</h1>
-		</div>
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>二十七</title>
+<meta name="description" content="浪花有意千重雪，桃李无言一队春" />
+<link rel="shortcut icon" href="https://shiwei93.github.io/favicon.ico?v=1577972693370">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 
-		<a class="primary-nav-trigger" href="javascript:void(0)">
-			<span class="menu-icon"></span>
-		</a>
-		
-	</header>
-    	<div class="site-navigation-wrapper">
-		<nav id="site-navigation" class="main-navigation" role="navigation">
-			<ul class="primary-nav">
-                    
-				<li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a title="首页" href="/">首页</a></li>
-                
-				<li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a title="归档" href="/archives">归档</a></li>
-                
-				<li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a title="标签" href="/tags">标签</a></li>
-                
-				<li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a title="关于" href="/post/about">关于</a></li>
-                
-	
-			</ul>
-		</nav>			
-	</div>
-	<!--跟随滑动的顶部结束-->
-	<!--大屏banner开始-->
-	
-	<div class="site-banner u-textAlignCenter hasImage" style="background-image:url( https://images.unsplash.com/photo-1577813827670-6f8b2bd9d764?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1950&amp;q=80 )">
-		<div class="fade-cover"></div>
-		<div class="banner-txt">
-			<h2>二十七</h2>
-		</div>
-		<div class="banner-txt">
-			<p>浪花有意千重雪，桃李无言一队春</p>
-		</div>	
-	</div>
-	<!--大屏banner结束-->
-	<div class="site-main">
-	<div class="surface-content">    <main class="main-content">
-        <section class="blockGroup">
-                
-            <article class="block block--inset block--list">
-    <h2 class="block-title post-featured" itemprop="headline">
-        <a href="https://shiwei93.github.io/post/javascript30-day-17">JavaScript30 Day 17</a>
-    </h2>
-    <div class="block-postMetaWrap u-textAlignCenter">
-        <time>2019-05-04</time>
-    </div>
-    <div class="block-snippet block-snippet--subtitle grap" itemprop="about">
+<link rel="stylesheet" href="https://shiwei93.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="二十七 - Atom Feed" href="https://shiwei93.github.io/atom.xml">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://shiwei93.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://shiwei93.github.io/images/avatar.png?v=1577972693370" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">二十七</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            浪花有意千重雪，桃李无言一队春
+          </p>
+          <div class="animated fadeInLeft social-container hidden lg:block" style="animation-delay: 0.6s">
             
-                    
-                <p class="u-textAlignCenter"><a class="more-link" href="https://shiwei93.github.io/post/javascript30-day-17" title="JavaScript30 Day 17">READ MORE</a></p>
-    </div>
-    <div class="block-footer">
-        In  <a href="https://shiwei93.github.io/tag/gdhVsG-eO2" rel="category tag">FrontEnd</a>.  
-        <div class="block-footer-inner">
-                1 min read .
-        </div>
-    </div>
-</article>
-
-            <article class="block block--inset block--list">
-    <h2 class="block-title post-featured" itemprop="headline">
-        <a href="https://shiwei93.github.io/post/javascript30-day-14">JavaScript30 Day 14</a>
-    </h2>
-    <div class="block-postMetaWrap u-textAlignCenter">
-        <time>2019-05-01</time>
-    </div>
-    <div class="block-snippet block-snippet--subtitle grap" itemprop="about">
+              
+                <a href="https://github.com/shiwei93" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
+                  <i class="remixicon-github-line"></i>
+                </a>
+              
             
-                    
-                <p class="u-textAlignCenter"><a class="more-link" href="https://shiwei93.github.io/post/javascript30-day-14" title="JavaScript30 Day 14">READ MORE</a></p>
-    </div>
-    <div class="block-footer">
-        In  <a href="https://shiwei93.github.io/tag/gdhVsG-eO2" rel="category tag">FrontEnd</a>.  
-        <div class="block-footer-inner">
-                2 min read .
-        </div>
-    </div>
-</article>
-
-            <article class="block block--inset block--list">
-    <h2 class="block-title post-featured" itemprop="headline">
-        <a href="https://shiwei93.github.io/post/javascript30-day-12">JavaScript30 Day 12</a>
-    </h2>
-    <div class="block-postMetaWrap u-textAlignCenter">
-        <time>2019-04-29</time>
-    </div>
-    <div class="block-snippet block-snippet--subtitle grap" itemprop="about">
+              
+                <a href="https://twitter.com/swmagicswift" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
+                  <i class="remixicon-twitter-line"></i>
+                </a>
+              
             
-                    
-                <p class="u-textAlignCenter"><a class="more-link" href="https://shiwei93.github.io/post/javascript30-day-12" title="JavaScript30 Day 12">READ MORE</a></p>
-    </div>
-    <div class="block-footer">
-        In  <a href="https://shiwei93.github.io/tag/gdhVsG-eO2" rel="category tag">FrontEnd</a>.  
-        <div class="block-footer-inner">
-                2 min read .
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+          </div>
         </div>
+      
     </div>
-</article>
+  </div>
+</div>
 
-</section>
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></div>
+    <a class="rss" href="https://shiwei93.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
+        <h2 class="text-lg text-gray-700 mb-8">
+          <i class="remixicon-bookmark-line"></i> FrontEnd
+        </h2>
+        
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${0 * 0.2}s` }">
+    
+    <div class="content">
+      <a href="https://shiwei93.github.io/post/javascript30-day-25">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 25</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-05-08 / 5 min read</div>
+    </div>
+  </section>
 
-    </main>
-</div></div>
-<script type="text/javascript">
-//点击加载更多
-jQuery(document).ready(function($) {
-    //点击下一页的链接(即那个a标签)
-    $(' .button').click(function() {
-        $this = $(this);
-        $this.addClass('loading').text('正在努力加载'); //给a标签加载一个loading的class属性，用来添加加载效果
-        var href = $this.attr('href'); //获取下一页的链接地址
-        if (href != undefined) { //如果地址存在
-            $.ajax({ //发起ajax请求
-                url: href,
-                //请求的地址就是下一页的链接
-                type: 'get',
-                //请求类型是get
-                error: function(request) {
-                    //如果发生错误怎么处理
-                },
-                success: function(data) { //请求成功
-                    $this.removeClass('loading').text('点击查看更多'); //移除loading属性
-                    var $res = $(data).find('.block--list '); //从数据中挑出文章数据，请根据实际情况更改
-                    $('.blockGroup').append($res.fadeIn(500)); //将数据加载加进posts-loop的标签中。
-                    var newhref = $(data).find(' .button').attr('href'); //找出新的下一页链接
-                    if (newhref != undefined) {
-                        $('.button').attr('href', newhref);
-                    } else {
-                        $('.button').remove(); //如果没有下一页了，隐藏
-                    }
-                }
-            });
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${1 * 0.2}s` }">
+    
+    <div class="content">
+      <a href="https://shiwei93.github.io/post/javascript30-day-19">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 19</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-05-06 / 3 min read</div>
+    </div>
+  </section>
+
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${2 * 0.2}s` }">
+    
+    <div class="content">
+      <a href="https://shiwei93.github.io/post/javascript30-day-17">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 17</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-05-04 / 1 min read</div>
+    </div>
+  </section>
+
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${3 * 0.2}s` }">
+    
+    <div class="content">
+      <a href="https://shiwei93.github.io/post/javascript30-day-16">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 16</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-05-03 / 2 min read</div>
+    </div>
+  </section>
+
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${4 * 0.2}s` }">
+    
+    <div class="content">
+      <a href="https://shiwei93.github.io/post/javascript30-day-15">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 15</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-05-02 / 1 min read</div>
+    </div>
+  </section>
+
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${5 * 0.2}s` }">
+    
+    <div class="content">
+      <a href="https://shiwei93.github.io/post/javascript30-day-14">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 14</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-05-01 / 2 min read</div>
+    </div>
+  </section>
+
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${6 * 0.2}s` }">
+    
+    <div class="content">
+      <a href="https://shiwei93.github.io/post/javascript30-day-13">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">Javascript30 Day 13</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-04-30 / 2 min read</div>
+    </div>
+  </section>
+
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${7 * 0.2}s` }">
+    
+    <div class="content">
+      <a href="https://shiwei93.github.io/post/javascript30-day-12">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 12</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-04-29 / 2 min read</div>
+    </div>
+  </section>
+
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${8 * 0.2}s` }">
+    
+    <div class="content">
+      <a href="https://shiwei93.github.io/post/javascript30-day-11">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 11</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-04-28 / 3 min read</div>
+    </div>
+  </section>
+
+  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${9 * 0.2}s` }">
+    
+    <div class="content">
+      <a href="https://shiwei93.github.io/post/javascript30-day-10">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 10</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        
+      </div>
+      <div class="text-gray-400 text-sm font-light">2019-04-26 / 3 min read</div>
+    </div>
+  </section>
+
+        <div class="pagination-container animated fadeIn">
+  
+  
+    <a href="https://shiwei93.github.io/tag/gdhVsG-eO2/page/2" class="page-btn">下一页 <i class="remixicon-arrow-right-line"></i></a>
+  
+</div>
+
+      </div>
+    </div>
+
+    <script src="https://shiwei93.github.io/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
         }
-        return false;
-    });
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
 });
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
 </script>
-	<footer class="site-footer u-textAlignCenter">
-    	<div class="footer-branding">
-            <a href="https://shiwei93.github.io" title="二十七">二十七</a>
-									
-			         </div>
-		 <hr />
-		 <div class="social-links">
-		                       
-                            
-                           
-                            	
-			<span class="social-link"><a href="https://twitter.com/swmagicswift" target="_blank"><i class="iconfont icon-twitter"></i></a></span>	
-			                         
-                           
-                            	
-			<span class="social-link"><a href="https://github.com/shiwei93" target="_blank"><i class="iconfont icon-github"></i></a></span>	
-			                         
-                           
-                            
-                           
-                            
-                           
-                            
-                           
-                            
-                           
-                            
-                           
-                            
-                           
-                            
-                           
-                            
-                           
-                            
-                           
-				</div>
-        <div class="footer-copy">
-                Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-        </div>
-
-    </footer>
-	<div class="back-to-top u-hide" onclick="backToTop();"><i class="iconfont icon-xiangshang"></i></div>
-
-<script type='text/javascript' src='https://shiwei93.github.io/media/scripts/main.js'></script>
-</body>
+  
+  </body>
 </html>

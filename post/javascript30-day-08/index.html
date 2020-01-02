@@ -34,14 +34,7 @@
             文章目录
           </p>
           <div class="toc-container hidden lg:block">
-            <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#key-point">Key Point</a></li>
-</ul>
-</li>
-</ul>
-
+            
           </div>
         </div>
       
@@ -86,45 +79,79 @@
 <div class="mask" onclick="closeMenu()">
 </div>
       <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
-        <h1 class="text-3xl font-bold lg:mt-16">JavaScript30 Day 12</h1>
+        <h1 class="text-3xl font-bold lg:mt-16">Javascript30 Day 08</h1>
         <div class="text-sm text-gray-700 lg:my-8">
-          2019-04-29 / 2 min read
+          2019-04-24 / 4 min read
         </div>
         
         <div class="post-content yue">
-          <p>第十二天实现了一个键盘事件监听，当输入了特定字符串后，在页面上添加一些特殊效果。</p>
-<h2 id="key-point">Key Point</h2>
+          <p><a href="https://github.com/shiwei93/JavaScript30/tree/master/08%20-%20Fun%20with%20HTML5%20Canvas">GitHub 地址</a></p>
+<p>第 8 天的练习是使用 HTML5 新增的 <strong>Canvas</strong>，创建一个简单的画板。画笔的颜色呈彩虹色渐变，画笔的粗细也会渐变循环。</p>
+<blockquote>
+<p><strong>Canvas</strong> 和 iOS 开发中常用的 <strong>Core Graphics</strong> 有许多相似的地方。</p>
+</blockquote>
+<p>在页面中使用 <strong>Canvas</strong>，只需要添加 <code>&lt;canvas&gt;</code> 标签即可。本例中，添加了如下标签</p>
+<pre><code class="language-HTML">&lt;canvas id=&quot;draw&quot;&gt;&lt;/canvas&gt;
+</code></pre>
+<p>JavaScript 中，通过 <code>querySelector('#draw')</code> 获取到 canvas 页面元素。接下来通过 <code>HTMLCanvasElement.getContext()</code> 方法获取上下文，这一点与 iOS 中的 <code>UIGraphicsGetCurrentContext()</code> 一样。不同的是 <code>HTMLCanvasElement.getContext()</code> 有两个可选参数，<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/getContext">具体解释</a>。下面简单列举一下 <code>contextType</code> 的属性</p>
+<!-- more -->
+<p><strong>上下文类型 contextType</strong></p>
 <ul>
-<li>全局绑定 <code>'keyup'</code> 事件，通过 <code>e.key</code> 获取用户输入</li>
-<li>截取与 <code>secretCode</code> 相同长度的用户输入字符串，比较两者，相同出发添加效果</li>
+<li>&quot;2d&quot;，创建一个 <code>CanvasRenderingContext2D</code> 对象，用于渲染二维图形的上下文</li>
+<li>&quot;webgl&quot;，创建一个 <code>WebGLRenderingContext</code> 对象，用于渲染三维图形的上下文，只能用于浏览器实现 <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API">WebGl</a> 版本1</li>
+<li>&quot;webgl2&quot;，创建一个 <code>WebGL2RenderingContext</code> 对象，用于渲染三维图形的上下文，只能用于浏览器实现 <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API">WebGl</a> 版本2</li>
+<li>&quot;bitmaprenderer&quot;，创建一个 <code>ImageBitmapRenderingContext</code> 只提供功能去替换指定 <code>canvas</code> 的 <code>ImageBitmap</code> 内容</li>
 </ul>
-<!--- more --->
-<pre><code class="language-javascript">const pressed = [];
-const secretCode = 'jerry';
+<pre><code class="language-javascript">canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+ctx.strokeStyle = '#bada55';
+ctx.lineCap = 'round';
+ctx.lineJoin = 'round';
+</code></pre>
+<p>通过 <code>window.innerWidth</code> 和 <code>window.innerHeight</code> 获取浏览器窗口的实际大小，重新定义 canvas 画布的大小。通过 <code>strokeStyle</code>、<code>lineCap</code>、<code>lineJoin</code> 分别设置线条的填充色、线条结尾的类型、线条相交拐点的类型。是不是很熟悉？<code>Core Graphics</code> 里都有相同的概念。</p>
+<p>希望能够在鼠标按下之后开始绘制，并且在鼠标松开或离开窗口时停止绘制。所以定义了一个控制变量 <code>let isDrawing = false</code>。接下来定义事件的监听，在监听到 <code>&quot;mousedown&quot;</code> 时，将 <strong>isDrawing</strong> 置为 <code>true</code>。监听到 <code>&quot;mouseup&quot;</code> 和 <code>&quot;mouseout&quot;</code> 时，将 <strong>isDrawing</strong> 置为 <code>false</code>。</p>
+<pre><code class="language-javascript">// 监听到鼠标按下事件时，isDrawing 置为 true
+canvas.addEventListener('mousedown', (event) =&gt; [isDrawing, lastX, lastY] = [true, event.offsetX, event.offsetY]);
+// 监听到鼠标松开事件时，isDrawing 置为 false
+canvas.addEventListener('mouseup', () =&gt; isDrawing = false);
+// 监听到鼠标离开屏幕事件时，isDrawing 置为 false
+canvas.addEventListener('mouseout', () =&gt; isDrawing = false);
+</code></pre>
+<blockquote>
+<p>在 <code>&quot;mousedown&quot;</code> 事件中，记录了鼠标按下时的坐标，并以这个点作为图形绘制的起点</p>
+</blockquote>
+<p>通过对 <code>&quot;mousemove&quot;</code> 事件的监听，来实时绘制鼠标轨迹图形。</p>
+<pre><code class="language-javascript">canvas.addEventListener('mousemove', draw);
+</code></pre>
+<p>接下来看一下 <code>draw</code> 方法。</p>
+<pre><code class="language-javascript">function draw(e) {
+    if (!isDrawing) return;
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+    ctx.beginPath(); // 开始绘图
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+    // lastX = e.offsetX;
+    // lastY = e.offsetY;
 
-window.addEventListener('keyup', (e) =&gt; {
-    console.log(e.key);
-    pressed.push(e.key);
-    pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
-    if (pressed.join('').includes(secretCode)) {
-        console.log('DING DING!');
-        cornify_add();
+    hue++;
+    if (hue &gt;= 360) {
+        hue = 0;
     }
-    console.log(pressed);
-});
+    
+    if (ctx.lineWidth &gt;= 50 || ctx.lineWidth &lt;= 1) {
+        direction = !direction;
+    }
+    if (direction) {
+        ctx.lineWidth++;
+    } else {
+        ctx.lineWidth--;
+    }
+}
 </code></pre>
-<p>截取字符串操作，对用户输入的按键字符数组用到了 <code>Array.prototype.splice()</code> 方法，第一个参数传入了需要删除的起始位置下标，如果设置了负数就表示从后往前删除。第二个参数传入的是需要删除的长度。示例如下</p>
-<pre><code class="language-javascript">var months = ['Jan', 'March', 'April', 'June'];
-months.splice(1, 0, 'Feb', 'August');
-// inserts at 1st index position
-console.log(months);
-// expected output: Array ['Jan', 'Feb', 'August', 'March', 'April', 'June']
-
-months.splice(4, 1, 'May');
-// replaces 1 element at 4th index
-console.log(months);
-// expected output: Array ['Jan', 'Feb', 'March', 'April', 'May']
-</code></pre>
+<p>这里的颜色使用 <a href="https://www.w3schools.com/colors/colors_hsl.asp">Colors HSL</a> 和 HSB 的概念一样，只是 HSL 中最后的亮度用了 <em>lightness</em> 而 HSB 中最后的亮度用了 <em>brightness</em>。</p>
+<p><code>beginPath()</code> 清空字路径列表开始一个新的路径。当创建一个新路径之前，调用此方法。<code>moveTo(x, y)</code> 将新路径的起点移动到 (x, y) 坐标。<code>lineTo(x, y)</code> 使用直线连接子路径最后的坐标到 (x, y)。<code>stroke()</code> 对线条进行颜色填充。</p>
 
         </div>
 
@@ -138,10 +165,10 @@ console.log(months);
         <div class="flex justify-between py-8">
           
             <div class="prev-post">
-              <a href="https://shiwei93.github.io/post/javascript30-day-13">
+              <a href="https://shiwei93.github.io/post/javascript30-day-09">
                 <h3 class="post-title">
                   <i class="remixicon-arrow-left-line"></i>
-                  Javascript30 Day 13
+                  Javascript30 Day 09
                 </h3>
               </a>
             </div>
@@ -149,9 +176,9 @@ console.log(months);
 
           
             <div class="next-post">
-              <a href="https://shiwei93.github.io/post/javascript30-day-11">
+              <a href="https://shiwei93.github.io/post/javascript30-day-07">
                 <h3 class="post-title">
-                  JavaScript30 Day 11
+                  JavaScript30 Day 07
                   <i class="remixicon-arrow-right-line"></i>
                 </h3>
               </a>

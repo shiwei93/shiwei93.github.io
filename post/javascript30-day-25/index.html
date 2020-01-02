@@ -37,7 +37,16 @@
             <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#key-point">Key Point</a></li>
+<li><a href="#%E4%BA%8B%E4%BB%B6%E6%B5%81">事件流</a></li>
+<li><a href="#%E4%BA%8B%E4%BB%B6%E5%86%92%E6%B3%A1">事件冒泡</a></li>
+<li><a href="#%E4%BA%8B%E4%BB%B6%E6%8D%95%E8%8E%B7">事件捕获</a></li>
+<li><a href="#dom-%E4%BA%8B%E4%BB%B6%E6%B5%81">DOM 事件流</a></li>
+<li><a href="#%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86">事件处理</a>
+<ul>
+<li><a href="#%E8%AF%AD%E6%B3%95">语法</a></li>
+<li><a href="#%E9%98%BB%E6%AD%A2%E4%BA%8B%E4%BB%B6%E5%86%92%E6%B3%A1">阻止事件冒泡</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -86,45 +95,108 @@
 <div class="mask" onclick="closeMenu()">
 </div>
       <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
-        <h1 class="text-3xl font-bold lg:mt-16">JavaScript30 Day 12</h1>
+        <h1 class="text-3xl font-bold lg:mt-16">JavaScript30 Day 25</h1>
         <div class="text-sm text-gray-700 lg:my-8">
-          2019-04-29 / 2 min read
+          2019-05-08 / 5 min read
         </div>
         
         <div class="post-content yue">
-          <p>第十二天实现了一个键盘事件监听，当输入了特定字符串后，在页面上添加一些特殊效果。</p>
-<h2 id="key-point">Key Point</h2>
-<ul>
-<li>全局绑定 <code>'keyup'</code> 事件，通过 <code>e.key</code> 获取用户输入</li>
-<li>截取与 <code>secretCode</code> 相同长度的用户输入字符串，比较两者，相同出发添加效果</li>
-</ul>
-<!--- more --->
-<pre><code class="language-javascript">const pressed = [];
-const secretCode = 'jerry';
-
-window.addEventListener('keyup', (e) =&gt; {
-    console.log(e.key);
-    pressed.push(e.key);
-    pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
-    if (pressed.join('').includes(secretCode)) {
-        console.log('DING DING!');
-        cornify_add();
-    }
-    console.log(pressed);
-});
+          <p>今天的练习是关于 JavaScript 的事件流，下面做一些扩展与整理。</p>
+<h2 id="事件流">事件流</h2>
+<p><strong>事件流</strong>描述的是从页面中接收事件的顺序。IE 和 Netscape 团队提出了两种相反的事件流概念。IE 的事件流是事件冒泡流，而 Netscape 的事件流是事件捕获流。</p>
+<h2 id="事件冒泡">事件冒泡</h2>
+<p><strong>事件冒泡</strong>，即事件开始时由最具体的元素接收，然后逐层向上传播到较为不具体的节点。例如下面的代码</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div&gt;Click Me!&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
 </code></pre>
-<p>截取字符串操作，对用户输入的按键字符数组用到了 <code>Array.prototype.splice()</code> 方法，第一个参数传入了需要删除的起始位置下标，如果设置了负数就表示从后往前删除。第二个参数传入的是需要删除的长度。示例如下</p>
-<pre><code class="language-javascript">var months = ['Jan', 'March', 'April', 'June'];
-months.splice(1, 0, 'Feb', 'August');
-// inserts at 1st index position
-console.log(months);
-// expected output: Array ['Jan', 'Feb', 'August', 'March', 'April', 'June']
-
-months.splice(4, 1, 'May');
-// replaces 1 element at 4th index
-console.log(months);
-// expected output: Array ['Jan', 'Feb', 'March', 'April', 'May']
+<p>如果单击页面中的 <code>&lt;div&gt;</code> 元素，那么这个 click 事件会按照如下顺序传播：</p>
+<ol>
+<li><code>&lt;div&gt;</code></li>
+<li><code>&lt;body&gt;</code></li>
+<li><code>&lt;html&gt;</code></li>
+<li><code>document</code></li>
+</ol>
+<h2 id="事件捕获">事件捕获</h2>
+<p><strong>事件捕获</strong>的思想是不太具体的节点应该更早的接收到事件，而具体的节点应该最后接收到事件。使用上文提到的例子，点击 <code>&lt;div&gt;</code> 元素时，事件的传播顺序就会变成</p>
+<ol>
+<li><code>document</code></li>
+<li><code>&lt;html&gt;</code></li>
+<li><code>&lt;body&gt;</code></li>
+<li><code>&lt;div&gt;</code></li>
+</ol>
+<h2 id="dom-事件流">DOM 事件流</h2>
+<p>“DOM2 级事件” 规定了事件流包括三个阶段</p>
+<ol>
+<li>捕获阶段 <code>CAPTURING_PHASE</code></li>
+<li>目标阶段 <code>AT_TARGET</code></li>
+<li>冒泡阶段 <code>BUBBLING_PHASE</code></li>
+</ol>
+<p>我们可以通过事件对象的 <code>eventPhase</code> 属性，得知事件处于哪个阶段。</p>
+<p>DOM 事件在传播时，会从根节点开始往下传递到 <code>target</code>，若注册了事件监听，则监听器处于捕获阶段，为截获事件提供了机会。</p>
+<p><code>target</code> 就是触发事件的具体对象，这时注册在 <code>target</code> 上的事件监听器处于目标阶段。</p>
+<p>最后，事件再往上从 <code>target</code> 一路逆向传递到根节点，若注册了事件监听器，则监听器处于冒泡阶段，可以在这个阶段对事件作出响应。</p>
+<p>以前面的 HTML 实例代码为例，单击 <code>&lt;div&gt;</code> 元素完整的事件流如下如所示</p>
+<figure data-type="image" tabindex="1"><img src="https://res.cloudinary.com/dxe4zc5py/image/upload/v1557293001/Blog/281557292962_.pic.jpg" alt="图片来源于《JavaScript 高级程序设计》" loading="lazy"></figure>
+<p>在 DOM 事件流中，实际的目标 <code>&lt;div&gt;</code> 在捕获阶段不会接收到事件。这意味着在捕获阶段，事件从 document 到 <code>&lt;html&gt;</code> 再到 <code>&lt;body&gt;</code> 后就停止了。下一个阶段是<strong>处于目标</strong>阶段，于是事件在 <code>&lt;div&gt;</code> 上发生，并在事件处理中被看成冒泡阶段的一部分。然后冒泡阶段发生，事件又传回了 document。</p>
+<h2 id="事件处理">事件处理</h2>
+<p>在今天的练习中，通过 <code>Event​Target​.add​Event​Listener()</code> 来添加事件监听。</p>
+<h3 id="语法">语法</h3>
+<blockquote>
+<p><em>target.addEventListener(type, listener[, options]);</em></p>
+<p><em>target.addEventListener(type, listener[, useCapture]);</em></p>
+</blockquote>
+<p>方法接收三个参数</p>
+<blockquote>
+<p><strong>type</strong></p>
+<p>表示需要监听的<a href="https://developer.mozilla.org/zh-CN/docs/Web/Events">事件类型</a></p>
+<p><strong>listener</strong></p>
+<p>当所监听的事件类型触发时，接到一个事件通知对象。<code>listener</code> 必须是一个实现了 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/EventListener"><code>EventListener</code></a> 接口的对象，或者是一个函数。</p>
+<p><strong>options</strong> 可选</p>
+<ol>
+<li><code>capture</code> 默认为 false，即事件只会在冒泡阶段才会被执行。若为 true，即事件在捕获阶段就会被执行</li>
+<li><code>once</code> 表示事件监听被添加后之后执行一次，默认为 false。如果被设置为 true，listener 在被调用后就会被移除。</li>
+</ol>
+<p><strong>useCapture</strong> 可选</p>
+<p>默认为 false，表示注册事件是冒泡事件。若为 true，则表示注册事件为捕获事件。</p>
+</blockquote>
+<pre><code class="language-javascript">one.addEventListener('click', (e) =&gt; { 
+            console.log(&quot;one capture mode&quot;, e.eventPhase);
+}, true);
+one.addEventListener('click', (e) =&gt; { 
+   console.log(&quot;one bubble mode&quot;, e.eventPhase);
+}, false);
+two.addEventListener('click', (e) =&gt; {
+   console.log(&quot;two capture mode 2&quot;);
+}, true)
+two.addEventListener('click', (e) =&gt; { console.log(&quot;two bubble mode&quot;, e.eventPhase); }, false);
+three.addEventListener('click', (e) =&gt; { console.log(&quot;three capture mode&quot;, e.eventPhase); }, true);
+three.addEventListener('click', (e) =&gt; { console.log(&quot;three bubble mode&quot;, e.eventPhase); }, false);
 </code></pre>
+<p>打印结果为</p>
+<blockquote>
+<p>one capture mode 1</p>
+<p>two capture mode 1</p>
+<p>three capture mode 2</p>
+<p>three bubble mode 2</p>
+<p>tow bubble mode 3</p>
+<p>one bubble mode 3</p>
+</blockquote>
+<p>且打印顺序不和事件注册顺序有关。</p>
+<h3 id="阻止事件冒泡">阻止事件冒泡</h3>
+<pre><code class="language-javascript">two.addEventListener('click', (e) =&gt; { 
+   console.log(&quot;two capture mode&quot;, e.eventPhase);
+   e.stopPropagation();
+}, true);
+</code></pre>
+<p>通过 <code>stopPropagation()</code> 可以阻止事件的冒泡，也阻止了事件的继续捕获。但无法阻止同一个元素其他绑定事件的执行。</p>
+<p>使用 <code>stopImmediatePropagation()</code> 即阻止了事件的继续传递，也阻止了同一个元素的其他绑定事件的执行。</p>
 
         </div>
 
@@ -138,10 +210,10 @@ console.log(months);
         <div class="flex justify-between py-8">
           
             <div class="prev-post">
-              <a href="https://shiwei93.github.io/post/javascript30-day-13">
+              <a href="https://shiwei93.github.io/post/thin-space">
                 <h3 class="post-title">
                   <i class="remixicon-arrow-left-line"></i>
-                  Javascript30 Day 13
+                  中西文中间添加 Thin space U+2009
                 </h3>
               </a>
             </div>
@@ -149,9 +221,9 @@ console.log(months);
 
           
             <div class="next-post">
-              <a href="https://shiwei93.github.io/post/javascript30-day-11">
+              <a href="https://shiwei93.github.io/post/javascript30-day-19">
                 <h3 class="post-title">
-                  JavaScript30 Day 11
+                  JavaScript30 Day 19
                   <i class="remixicon-arrow-right-line"></i>
                 </h3>
               </a>
