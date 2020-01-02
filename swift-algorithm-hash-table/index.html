@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>二十七</title>
 <meta name="description" content="浪花有意千重雪，桃李无言一队春" />
-<link rel="shortcut icon" href="https://shiwei93.github.io/favicon.ico?v=1577975002481">
+<link rel="shortcut icon" href="https://shiwei93.github.io/favicon.ico?v=1577975061612">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
@@ -24,7 +24,7 @@
       <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
         <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
         <a href="https://shiwei93.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://shiwei93.github.io/images/avatar.png?v=1577975002481" alt="">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://shiwei93.github.io/images/avatar.png?v=1577975061612" alt="">
         </a>
         <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">二十七</h1>
       </div>
@@ -113,6 +113,7 @@
           <p><a href="https://www.raywenderlich.com/206-swift-algorithm-club-hash-tables">原文地址</a></p>
 <h2 id="准备工作">准备工作</h2>
 <p>作为 Swift 开发者，一定对 <code>Dictionary (字典)</code> 非常熟悉。如果你也是一个 Kotlin 开发者，那会对 <code>HashMap</code> 有所了解。这两种数据结构的本质都是 <strong>hash table (哈希表)</strong>。</p>
+<!-- more -->
 <p>Swift 中的字典是一个<strong>键值对</strong>集合。想要在字典中存储一个值，需要通过 key 来传递：</p>
 <pre><code class="language-swift">var dictionary: [String: String] = [:]
 
@@ -123,7 +124,6 @@ dictionary[&quot;firstName&quot;] = &quot;Steve&quot;
 dictionary[&quot;firstName&quot;] // 输出 &quot;Steve&quot;
 </code></pre>
 <p>实际上，字典将键值对存入一个哈希表。本文中，你将了解到哈希表的一个基础实现以及它的性能。</p>
-<!-- more -->
 <h2 id="哈希表">哈希表</h2>
 <p>哈希表在本质上其实就是一个数组。初始化时，数组为空。当你通过某个键将一个值存放到哈希表的时候，哈希表会通过键计算出对应的数组下标。举个例子：</p>
 <figure data-type="image" tabindex="1"><img src="https://koenig-media.raywenderlich.com/uploads/2017/12/HashTables-graphic-1-1.png" alt="value" loading="lazy"></figure>
