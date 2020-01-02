@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>二十七</title>
 <meta name="description" content="浪花有意千重雪，桃李无言一队春" />
-<link rel="shortcut icon" href="https://shiwei93.github.io/favicon.ico?v=1577975061612">
+<link rel="shortcut icon" href="https://shiwei93.github.io/favicon.ico?v=1577975172245">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
@@ -24,7 +24,7 @@
       <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
         <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
         <a href="https://shiwei93.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://shiwei93.github.io/images/avatar.png?v=1577975061612" alt="">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://shiwei93.github.io/images/avatar.png?v=1577975172245" alt="">
         </a>
         <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">二十七</h1>
       </div>
@@ -126,12 +126,7 @@
       <div class="post-abstract text-gray-700 font-light my-4">
         <p><a href="https://www.hackingwithswift.com/articles/126/whats-new-in-swift-5-0">原文地址</a></p>
 <h2 id="raw-string-原始字符串">Raw String (原始字符串)</h2>
-<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0200-raw-string-escaping.md">SE-0200</a><br>
-原始字符串中特定的字符不会被转义，例如 <code>\</code> <code>&quot;</code> 等。使用原始字符串时，只需要在字符串的开头和结尾添加 <code>#</code> 就可以了，例如 <code>let rawString = #&quot;This is a &quot;raw&quot; &quot;String&quot;&quot;#</code>。由于开头和结尾的 <code>#</code> 是新的界定符号，所以 Swift 会把单独的 <code>&quot;</code> 理解成普通的字符，而不是字符串的开始或结尾符号。<br>
-同样， 原始字符串中也可以使用 <code>\</code> ，例如 <code>let rawString = #&quot;This is a &quot;raw&quot; &quot;String&quot; with keyPath \Person.name&quot;#</code> 。不过需要注意的是，由于 <code>\</code> 的特殊性，在原始字符串中添加变量时，需要改为 <code>\#(value)</code> 。</p>
-<pre><code class="language-swift">let value = 42
-let rawString = #&quot;This is a raw string with \#(value)&quot;#
-</code></pre>
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0200-raw-string-escaping.md">SE-0200</a></p>
 
       </div>
       <div class="text-gray-400 text-sm font-light">2019-01-29 / 9 min read</div>
