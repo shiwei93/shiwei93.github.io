@@ -1,0 +1,294 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>二十七</title>
+<meta name="description" content="浪花有意千重雪，桃李无言一队春" />
+<link rel="shortcut icon" href="https://shiwei93.github.io/favicon.ico?v=1577975002481">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://shiwei93.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="二十七 - Atom Feed" href="https://shiwei93.github.io/atom.xml">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://shiwei93.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://shiwei93.github.io/images/avatar.png?v=1577975002481" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">二十七</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></div>
+    <a class="rss" href="https://shiwei93.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">Javascript30 Day 08</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2019-04-24 / 4 min read
+        </div>
+        
+        <div class="post-content yue">
+          <p><a href="https://github.com/shiwei93/JavaScript30/tree/master/08%20-%20Fun%20with%20HTML5%20Canvas">GitHub 地址</a></p>
+<p>第 8 天的练习是使用 HTML5 新增的 <strong>Canvas</strong>，创建一个简单的画板。画笔的颜色呈彩虹色渐变，画笔的粗细也会渐变循环。</p>
+<blockquote>
+<p><strong>Canvas</strong> 和 iOS 开发中常用的 <strong>Core Graphics</strong> 有许多相似的地方。</p>
+</blockquote>
+<!-- more -->
+<p>在页面中使用 <strong>Canvas</strong>，只需要添加 <code>&lt;canvas&gt;</code> 标签即可。本例中，添加了如下标签</p>
+<pre><code class="language-HTML">&lt;canvas id=&quot;draw&quot;&gt;&lt;/canvas&gt;
+</code></pre>
+<p>JavaScript 中，通过 <code>querySelector('#draw')</code> 获取到 canvas 页面元素。接下来通过 <code>HTMLCanvasElement.getContext()</code> 方法获取上下文，这一点与 iOS 中的 <code>UIGraphicsGetCurrentContext()</code> 一样。不同的是 <code>HTMLCanvasElement.getContext()</code> 有两个可选参数，<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/getContext">具体解释</a>。下面简单列举一下 <code>contextType</code> 的属性</p>
+<p><strong>上下文类型 contextType</strong></p>
+<ul>
+<li>&quot;2d&quot;，创建一个 <code>CanvasRenderingContext2D</code> 对象，用于渲染二维图形的上下文</li>
+<li>&quot;webgl&quot;，创建一个 <code>WebGLRenderingContext</code> 对象，用于渲染三维图形的上下文，只能用于浏览器实现 <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API">WebGl</a> 版本1</li>
+<li>&quot;webgl2&quot;，创建一个 <code>WebGL2RenderingContext</code> 对象，用于渲染三维图形的上下文，只能用于浏览器实现 <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API">WebGl</a> 版本2</li>
+<li>&quot;bitmaprenderer&quot;，创建一个 <code>ImageBitmapRenderingContext</code> 只提供功能去替换指定 <code>canvas</code> 的 <code>ImageBitmap</code> 内容</li>
+</ul>
+<pre><code class="language-javascript">canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+ctx.strokeStyle = '#bada55';
+ctx.lineCap = 'round';
+ctx.lineJoin = 'round';
+</code></pre>
+<p>通过 <code>window.innerWidth</code> 和 <code>window.innerHeight</code> 获取浏览器窗口的实际大小，重新定义 canvas 画布的大小。通过 <code>strokeStyle</code>、<code>lineCap</code>、<code>lineJoin</code> 分别设置线条的填充色、线条结尾的类型、线条相交拐点的类型。是不是很熟悉？<code>Core Graphics</code> 里都有相同的概念。</p>
+<p>希望能够在鼠标按下之后开始绘制，并且在鼠标松开或离开窗口时停止绘制。所以定义了一个控制变量 <code>let isDrawing = false</code>。接下来定义事件的监听，在监听到 <code>&quot;mousedown&quot;</code> 时，将 <strong>isDrawing</strong> 置为 <code>true</code>。监听到 <code>&quot;mouseup&quot;</code> 和 <code>&quot;mouseout&quot;</code> 时，将 <strong>isDrawing</strong> 置为 <code>false</code>。</p>
+<pre><code class="language-javascript">// 监听到鼠标按下事件时，isDrawing 置为 true
+canvas.addEventListener('mousedown', (event) =&gt; [isDrawing, lastX, lastY] = [true, event.offsetX, event.offsetY]);
+// 监听到鼠标松开事件时，isDrawing 置为 false
+canvas.addEventListener('mouseup', () =&gt; isDrawing = false);
+// 监听到鼠标离开屏幕事件时，isDrawing 置为 false
+canvas.addEventListener('mouseout', () =&gt; isDrawing = false);
+</code></pre>
+<blockquote>
+<p>在 <code>&quot;mousedown&quot;</code> 事件中，记录了鼠标按下时的坐标，并以这个点作为图形绘制的起点</p>
+</blockquote>
+<p>通过对 <code>&quot;mousemove&quot;</code> 事件的监听，来实时绘制鼠标轨迹图形。</p>
+<pre><code class="language-javascript">canvas.addEventListener('mousemove', draw);
+</code></pre>
+<p>接下来看一下 <code>draw</code> 方法。</p>
+<pre><code class="language-javascript">function draw(e) {
+    if (!isDrawing) return;
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+    ctx.beginPath(); // 开始绘图
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+    // lastX = e.offsetX;
+    // lastY = e.offsetY;
+
+    hue++;
+    if (hue &gt;= 360) {
+        hue = 0;
+    }
+    
+    if (ctx.lineWidth &gt;= 50 || ctx.lineWidth &lt;= 1) {
+        direction = !direction;
+    }
+    if (direction) {
+        ctx.lineWidth++;
+    } else {
+        ctx.lineWidth--;
+    }
+}
+</code></pre>
+<p>这里的颜色使用 <a href="https://www.w3schools.com/colors/colors_hsl.asp">Colors HSL</a> 和 HSB 的概念一样，只是 HSL 中最后的亮度用了 <em>lightness</em> 而 HSB 中最后的亮度用了 <em>brightness</em>。</p>
+<p><code>beginPath()</code> 清空字路径列表开始一个新的路径。当创建一个新路径之前，调用此方法。<code>moveTo(x, y)</code> 将新路径的起点移动到 (x, y) 坐标。<code>lineTo(x, y)</code> 使用直线连接子路径最后的坐标到 (x, y)。<code>stroke()</code> 对线条进行颜色填充。</p>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/gdhVsG-eO2">
+            <span class="flex-auto">FrontEnd</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+            <div class="prev-post">
+              <a href="https://shiwei93.github.io/javascript30-day-09">
+                <h3 class="post-title">
+                  <i class="remixicon-arrow-left-line"></i>
+                  Javascript30 Day 09
+                </h3>
+              </a>
+            </div>
+          
+
+          
+            <div class="next-post">
+              <a href="https://shiwei93.github.io/javascript30-day-07">
+                <h3 class="post-title">
+                  JavaScript30 Day 07
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+
+    <script src="https://shiwei93.github.io/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>

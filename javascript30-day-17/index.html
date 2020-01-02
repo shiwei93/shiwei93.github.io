@@ -31,37 +31,9 @@
       
         <div class="animated fadeInLeft" style="animation-delay: 0.4s">
           <p class="my-4 text-gray-600 font-light hidden lg:block">
-            浪花有意千重雪，桃李无言一队春
+            文章目录
           </p>
-          <div class="animated fadeInLeft social-container hidden lg:block" style="animation-delay: 0.6s">
-            
-              
-                <a href="https://github.com/shiwei93" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-github-line"></i>
-                </a>
-              
-            
-              
-                <a href="https://twitter.com/swmagicswift" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-twitter-line"></i>
-                </a>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
+          <div class="toc-container hidden lg:block">
             
           </div>
         </div>
@@ -106,33 +78,57 @@
 </div>
 <div class="mask" onclick="closeMenu()">
 </div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
-        <h2 class="text-lg text-gray-700 mb-8">
-          <i class="remixicon-bookmark-2-line"></i> 标签云
-        </h2>
-        <div class="tags-container">
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">JavaScript30 Day 17</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2019-05-04 / 1 min read
+        </div>
+        
+        <div class="post-content yue">
+          <p>今天的练习是对数组的排序练习，特别的是需要去除字符串开头的 <strong>a an the</strong> 之后进行排序。</p>
+<p>去除 <strong>a an the</strong> 的操作放到了一个 function 里，代码如下</p>
+<pre><code class="language-javascript">function strip(str) {
+    return str.replace(/^(a |an |the )/i, '').trim();
+}
+</code></pre>
+<p><code>String.prototype.replace()</code> 接收两个参数，第一个参数可以是一个 <em>正则表达式</em> 或者 <em>待替换的子字符串</em>，第二个参数为 <em>新字符串</em> 或者 <em>函数</em>，返回替换后的新的字符串。</p>
+<p>通过 <code>Array.prototype.sort()</code> 排序后，通过 map 方法，转换为 HTML 代码字符串，插入 HTML 代码中。</p>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/gdhVsG-eO2">
+            <span class="flex-auto">FrontEnd</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tcA3M53tk" :style="{ 'animation-delay': `${0 * 0.2}s` }">
-              <span class="flex-auto">iOS</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">4</span>
-            </a>
+            <div class="prev-post">
+              <a href="https://shiwei93.github.io/javascript30-day-19">
+                <h3 class="post-title">
+                  <i class="remixicon-arrow-left-line"></i>
+                  JavaScript30 Day 19
+                </h3>
+              </a>
+            </div>
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/gdhVsG-eO2" :style="{ 'animation-delay': `${1 * 0.2}s` }">
-              <span class="flex-auto">FrontEnd</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">19</span>
-            </a>
+
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/hrFl_xbAha" :style="{ 'animation-delay': `${2 * 0.2}s` }">
-              <span class="flex-auto">Swift</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">2</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tks8BwXu01" :style="{ 'animation-delay': `${3 * 0.2}s` }">
-              <span class="flex-auto">Git</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">1</span>
-            </a>
+            <div class="next-post">
+              <a href="https://shiwei93.github.io/javascript30-day-16">
+                <h3 class="post-title">
+                  JavaScript30 Day 16
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
           
         </div>
+
+        
+
       </div>
     </div>
 

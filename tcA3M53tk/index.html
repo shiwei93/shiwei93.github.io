@@ -17,7 +17,7 @@
 
   </head>
   <body>
-    <div class="main px-4 flex flex-col lg:flex-row">
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
       <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
   <div class="lg:sticky top-0">
     <div class="sidebar-content">
@@ -107,9 +107,8 @@
 <div class="mask" onclick="closeMenu()">
 </div>
       <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
-        <h2 class="latest-article text-lg text-gray-700 mb-8">
-          <i class="remixicon-article-line"></i>
-          最新文章
+        <h2 class="text-lg text-gray-700 mb-8">
+          <i class="remixicon-bookmark-line"></i> iOS
         </h2>
         
   <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${0 * 0.2}s` }">
@@ -127,138 +126,76 @@
 
   <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${1 * 0.2}s` }">
     
+      <a href="https://shiwei93.github.io/debugging-swift-code-with-lldb" class="feature-image-wrapper bg-gray-100 rounded-lg flex-shrink-0 mr-8 w-full h-56 h-32 md:w-56 md:h-40">
+        <div class="post-feature-image lazy w-full h-56 h-32 md:w-56 md:h-40" data-bg="'https://shiwei93.github.io/post-images/debugging-swift-code-with-lldb.jpg'">
+        </div>
+      </a>
+    
     <div class="content">
-      <a href="https://shiwei93.github.io/javascript30-day-25">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 25</h2>
+      <a href="https://shiwei93.github.io/debugging-swift-code-with-lldb">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">【译】使用 LLDB 调试 Swift 代码</h2>
       </a>
       <div class="post-abstract text-gray-700 font-light my-4">
-        
+        <p><a href="https://medium.com/flawless-app-stories/debugging-swift-code-with-lldb-b30c5cf2fd49">原文地址</a></p>
+<p>作为工程师，我们会花费 70% 的时间来调试。剩下的 20% 用于思考架构和与同事交流，最后的 10% 才是真正用于编码的时间。</p>
+<blockquote>
+<p>调试就像是在犯罪电影中同时扮演侦探和嫌疑人。</p>
+<p>-- <a href="https://twitter.com/fortes"><u><em>Filipe Fortes</em></u></a> <em>via Twitter</em></p>
+</blockquote>
+<p>因此，如何让 70% 的调试时间尽可能的愉快，就显得及其重要。LLDB 因此应运而生。Xcode 的 UI 调试工具展示了所有有用的调试信息，而不用敲任何 LLDB 指令。然而，控制台在我们日常工作中仍然扮演了重要的角色，下面介绍一些笔者在日常调试工作中经常使用的 LLDB 小技巧。</p>
+
       </div>
-      <div class="text-gray-400 text-sm font-light">2019-05-08 / 5 min read</div>
+      <div class="text-gray-400 text-sm font-light">2018-09-30 / 15 min read</div>
     </div>
   </section>
 
   <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${2 * 0.2}s` }">
     
+      <a href="https://shiwei93.github.io/swift-extension" class="feature-image-wrapper bg-gray-100 rounded-lg flex-shrink-0 mr-8 w-full h-56 h-32 md:w-56 md:h-40">
+        <div class="post-feature-image lazy w-full h-56 h-32 md:w-56 md:h-40" data-bg="'https://shiwei93.github.io/post-images/swift-extension.jpg'">
+        </div>
+      </a>
+    
     <div class="content">
-      <a href="https://shiwei93.github.io/javascript30-day-19">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 19</h2>
+      <a href="https://shiwei93.github.io/swift-extension">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">Swift Extension</h2>
       </a>
       <div class="post-abstract text-gray-700 font-light my-4">
-        
+        <p>前些日子准备周会关于 <strong>Swift Extension</strong> 的分享时，翻看自己之前写过的 Extension 时。发现有些在可扩展性，以及易用性上并不尽如人意，这也让我在周会讨论中加入了如下议题。</p>
+<ul>
+<li>如何评判一个 Extension 是必要的，且有价值的</li>
+<li>编写 Extension 需要遵循哪些原则</li>
+</ul>
+
       </div>
-      <div class="text-gray-400 text-sm font-light">2019-05-06 / 3 min read</div>
+      <div class="text-gray-400 text-sm font-light">2018-08-16 / 9 min read</div>
     </div>
   </section>
 
   <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${3 * 0.2}s` }">
     
-    <div class="content">
-      <a href="https://shiwei93.github.io/javascript30-day-17">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 17</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-05-04 / 1 min read</div>
-    </div>
-  </section>
-
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${4 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://shiwei93.github.io/javascript30-day-16">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 16</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-05-03 / 2 min read</div>
-    </div>
-  </section>
-
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${5 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://shiwei93.github.io/javascript30-day-15">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 15</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-05-02 / 1 min read</div>
-    </div>
-  </section>
-
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${6 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://shiwei93.github.io/javascript30-day-14">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 14</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-05-01 / 2 min read</div>
-    </div>
-  </section>
-
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${7 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://shiwei93.github.io/javascript30-day-13">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">Javascript30 Day 13</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-04-30 / 2 min read</div>
-    </div>
-  </section>
-
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${8 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://shiwei93.github.io/javascript30-day-12">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 12</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-04-29 / 2 min read</div>
-    </div>
-  </section>
-
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${9 * 0.2}s` }">
-    
-    <div class="content">
-      <a href="https://shiwei93.github.io/javascript30-day-11">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">JavaScript30 Day 11</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-04-28 / 3 min read</div>
-    </div>
-  </section>
-
-        <div class="read-more">
-          
-            <a href="https://shiwei93.github.io/page/2" class="animated fadeIn font-extrabold text-gray-700 hover:text-gray-900 more-btn">
-              阅读更多
-              <i class="remixicon-arrow-right-line"></i>
-            </a>
-          
+      <a href="https://shiwei93.github.io/linkblock-iOS" class="feature-image-wrapper bg-gray-100 rounded-lg flex-shrink-0 mr-8 w-full h-56 h-32 md:w-56 md:h-40">
+        <div class="post-feature-image lazy w-full h-56 h-32 md:w-56 md:h-40" data-bg="'https://shiwei93.github.io/post-images/linkblock-iOS.jpg'">
         </div>
-        <div class="index-page">
-          <div class="pagination-container animated fadeIn">
+      </a>
+    
+    <div class="content">
+      <a href="https://shiwei93.github.io/linkblock-iOS">
+        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">Swift &amp; Objective-C 中的链式调用</h2>
+      </a>
+      <div class="post-abstract text-gray-700 font-light my-4">
+        <p>在 <a href="https://github.com/shiwei93/Goku">Goku</a> 的实现中，尝试了使用类似于 <strong>SnapKit</strong> 中，链式调用的方式，来构建 <em>AlertView</em> 的样式。具体使用如下</p>
+
+      </div>
+      <div class="text-gray-400 text-sm font-light">2018-08-06 / 3 min read</div>
+    </div>
+  </section>
+
+        <div class="pagination-container animated fadeIn">
   
-  
-    <a href="https://shiwei93.github.io/page/2" class="page-btn">下一页 <i class="remixicon-arrow-right-line"></i></a>
   
 </div>
 
-        </div>
       </div>
     </div>
 

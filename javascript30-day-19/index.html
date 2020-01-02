@@ -31,38 +31,17 @@
       
         <div class="animated fadeInLeft" style="animation-delay: 0.4s">
           <p class="my-4 text-gray-600 font-light hidden lg:block">
-            浪花有意千重雪，桃李无言一队春
+            文章目录
           </p>
-          <div class="animated fadeInLeft social-container hidden lg:block" style="animation-delay: 0.6s">
-            
-              
-                <a href="https://github.com/shiwei93" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-github-line"></i>
-                </a>
-              
-            
-              
-                <a href="https://twitter.com/swmagicswift" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-twitter-line"></i>
-                </a>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%8B%8D%E7%85%A7%E5%AE%9E%E7%8E%B0">拍照实现</a></li>
+</ul>
+</li>
+</ul>
+
           </div>
         </div>
       
@@ -106,33 +85,105 @@
 </div>
 <div class="mask" onclick="closeMenu()">
 </div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
-        <h2 class="text-lg text-gray-700 mb-8">
-          <i class="remixicon-bookmark-2-line"></i> 标签云
-        </h2>
-        <div class="tags-container">
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">JavaScript30 Day 19</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2019-05-06 / 3 min read
+        </div>
+        
+        <div class="post-content yue">
+          <p>今天的练习是使用摄像头，实时记录，并通过 canvas 实时绘制到画布中。</p>
+<p>通过 <code>Media​Devices​.get​User​Media()</code> 方法，在通过授权之后，可以获取摄像头图像。具体代码如下</p>
+<pre><code class="language-javascript">navigator.mediaDevices.getUserMedia({ video: true, audio: false})
+    .then((videostream) =&gt; {
+        console.log(videostream);
+        video.srcObject = videostream;
+        video.onloadedmetadata = function() { 
+            video.play();
+        };
+    })
+    .catch((error) =&gt; {
+        console.error('OH, Don\'t have permission to use your local cam!', error);
+    });
+</code></pre>
+<!--- more --->
+<p>通过授权之后，返回一个 promise 对象，将返回值通过 <code>HTMLMedia​Element​.src​Object</code> 传入 video 中，可以在 video 标签中实时播放摄像头获取到的头像。<code>srcObject</code> 属性可以接收一个 <code>MediaStream</code>，一个 <code>MediaSource</code>，一个 <code>Blob</code> 或一个 <code>File</code> 对象。当资源文件的元数据加载完成时，就会调用 <code>Global​Event​Handlers​.onloadedmetadata</code> 参数，示例中传入了一个 function，用来开始播放视频。</p>
+<p>给 video 标签添加 <code>'canplay'</code> 事件监听，<code>video.addEventListener('canplay', printToCanvas);</code>，当视频可以播放时，调用 <code>printToCanvas</code> 方法，绘制到 canvas 画布中。来看一下 <code>printToCanvas</code> 方法的代码实现</p>
+<pre><code class="language-javascript">function printToCanvas() {
+    const { videoWidth: width, videoHeight: height} = video;
+    canvas.height = height;
+    canvas.width = width;
+    return setInterval(() =&gt; {
+        ctx.drawImage(video, 0, 0, width, height);
+
+        let imagedata = ctx.getImageData(0, 0, width, height);
+
+        // imagedata = redEffect(imagedata);
+        imagedata = rgbsplit(imagedata);
+        // ctx.globalAlpha = 0.2;
+
+        // imagedata = greenScreen(imagedata);
+
+        ctx.putImageData(imagedata, 0, 0);
+    }, 16);
+}
+</code></pre>
+<p>首先通过解构赋值获取视频组件的宽高，<strong>注意</strong>，一定要设置 canvas 画布的宽高。接下来在 <code>setIntervale()</code> 中甚至重复时间的间隔为 16ms 即屏幕每次刷新的时间间隔，达到绘制摄像头每一帧图像的目的。</p>
+<ol>
+<li><code>ctx.drawImage()</code> 将视频流绘制到 canvas 中</li>
+<li><code>ctx.getImageData()</code> 返回一个 <code>ImageData</code> 对象，用来描述 canvas 区域隐含的像素数据，这个区域通过矩形表示，起始点为 (sx, sy)、宽为 sw、高为 sh。<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/getImageData">文档</a></li>
+<li><code>ctx.putImageData()</code> 是 Canvas 2D API 将数据从已有的 <code>ImageData</code> 对象绘制到位图的方法。 如果提供了一个绘制过的矩形，则只绘制该矩形的像素。此方法不受画布转换矩阵的影响。<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/putImageData">文档</a></li>
+</ol>
+<h2 id="拍照实现">拍照实现</h2>
+<pre><code class="language-javascript">function takePhoto() {
+    snap.currentTime = 0;
+    snap.play();
+
+    let data = canvas.toDataURL('image/jpeg');
+    let link = document.createElement('a');
+    link.href = data;
+    link.setAttribute('download', 'handsome');
+    link.innerHTML = `&lt;img src=${data} alt=handsome&gt;`;
+    strip.insertBefore(link, strip.firstChild);
+}
+</code></pre>
+<p>通过将 <code>HTMLCanvas​Element​.toDataURL()</code> 方法，获取当前 canvas 画布中的图像数据地址，接着新建一个 <code>a</code> 标签，并将其 href 属性设置为获取到的 canvas 画布图像数据的 URL。</p>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/gdhVsG-eO2">
+            <span class="flex-auto">FrontEnd</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tcA3M53tk" :style="{ 'animation-delay': `${0 * 0.2}s` }">
-              <span class="flex-auto">iOS</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">4</span>
-            </a>
+            <div class="prev-post">
+              <a href="https://shiwei93.github.io/javascript30-day-25">
+                <h3 class="post-title">
+                  <i class="remixicon-arrow-left-line"></i>
+                  JavaScript30 Day 25
+                </h3>
+              </a>
+            </div>
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/gdhVsG-eO2" :style="{ 'animation-delay': `${1 * 0.2}s` }">
-              <span class="flex-auto">FrontEnd</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">19</span>
-            </a>
+
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/hrFl_xbAha" :style="{ 'animation-delay': `${2 * 0.2}s` }">
-              <span class="flex-auto">Swift</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">2</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tks8BwXu01" :style="{ 'animation-delay': `${3 * 0.2}s` }">
-              <span class="flex-auto">Git</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">1</span>
-            </a>
+            <div class="next-post">
+              <a href="https://shiwei93.github.io/javascript30-day-17">
+                <h3 class="post-title">
+                  JavaScript30 Day 17
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
           
         </div>
+
+        
+
       </div>
     </div>
 

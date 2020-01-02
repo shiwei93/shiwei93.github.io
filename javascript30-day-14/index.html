@@ -31,38 +31,18 @@
       
         <div class="animated fadeInLeft" style="animation-delay: 0.4s">
           <p class="my-4 text-gray-600 font-light hidden lg:block">
-            浪花有意千重雪，桃李无言一队春
+            文章目录
           </p>
-          <div class="animated fadeInLeft social-container hidden lg:block" style="animation-delay: 0.6s">
-            
-              
-                <a href="https://github.com/shiwei93" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-github-line"></i>
-                </a>
-              
-            
-              
-                <a href="https://twitter.com/swmagicswift" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-twitter-line"></i>
-                </a>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%80%BC%E7%B1%BB%E5%9E%8B">值类型</a></li>
+<li><a href="#%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B">引用类型</a></li>
+</ul>
+</li>
+</ul>
+
           </div>
         </div>
       
@@ -106,33 +86,106 @@
 </div>
 <div class="mask" onclick="closeMenu()">
 </div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
-        <h2 class="text-lg text-gray-700 mb-8">
-          <i class="remixicon-bookmark-2-line"></i> 标签云
-        </h2>
-        <div class="tags-container">
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">JavaScript30 Day 14</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2019-05-01 / 2 min read
+        </div>
+        
+        <div class="post-content yue">
+          <p>今天的练习是来了解一下 JavaScript 中关于引用与拷贝的问题。</p>
+<h2 id="值类型">值类型</h2>
+<p>在 JavaScript 中，<strong>string</strong>/<strong>number</strong>/<strong>boolean</strong>/<strong>null</strong>/<strong>undefined</strong> 等基本类型是值类型。例如下面的例子</p>
+<pre><code class="language-javascript">let age = 100;
+let age2 = age;
+console.log(age, age2);
+// 100 100
+age = 200;
+console.log(age, age2); 
+// 200 100
+</code></pre>
+<!--- more --->
+<p>值类型的变量，将一个变量赋值给另一个变量时，拷贝了当前变量。因此对原值的拷贝不会影响被赋值的变量。</p>
+<h2 id="引用类型">引用类型</h2>
+<p>在 JavaScript 中，<strong>Object</strong>/<strong>Function</strong>/<strong>Array</strong>/<strong>Set</strong>/<strong>Map</strong> 等属于引用类型。同样在将一个变量赋值给另一个变量时，拷贝原始对象的地址。因此对原值的任何修改都会对被赋值的对象产生相同的改变。</p>
+<pre><code class="language-javascript">const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+const team = players;
+console.log(players, team);
+players.push('Sze');
+console.log(players, team);
+</code></pre>
+<p>在 console 中看到的打印结果如下</p>
+<figure data-type="image" tabindex="1"><img src="https://res.cloudinary.com/dxe4zc5py/image/upload/v1556721420/Blog/references-array.png" alt="references" loading="lazy"></figure>
+<p>对与数组的拷贝可以通过如下方式实现</p>
+<pre><code class="language-javascript">// 数组的拷贝可以使用 slice() 方法
+const team2 = players.slice();
+// Or
+const team3 = [].concat(players);
+// Or
+const team4 = [...players];
+// Or
+const team5 = Array.from(players);
+</code></pre>
+<p>对于对象类型的拷贝可以通过 <code>Object.assign()</code> 方法实现，例如</p>
+<pre><code class="language-javascript">const person = {
+    name: 'sze wei',
+    age: 26,
+};
+
+// Correct
+const cap2 = Object.assign({}, person, { numebr: 99, age: 12 });
+console.log(cap2);
+</code></pre>
+<p>这样看来好像确实拷贝了 <em>person</em> 对象，对如果改写一下 <em>person</em> 对象的结构</p>
+<pre><code class="language-javascript">const wes = {
+    name: 'wes',
+    age: 100,
+    social: {
+        twitter: '@wesbos',
+        facebook: 'wesbos.developer'
+    }
+};
+</code></pre>
+<p>此时再次使用 <code>const dev = Object.assign({}, wes);</code> 进行拷贝后，修改 <code>dev.social.twitter: '@cool'</code> 后，会发现原值 <code>wes.social.twitter</code> 的值也被修改了。因为 <code>Object.assign()</code> 只会拷贝最上层的属性。视频中提到了一个小技巧，可以拷贝所有对象。</p>
+<pre><code class="language-javascript">const dev2 = JSON.parse(JSON.stringify(wes));
+</code></pre>
+<p>代码其实很容易理解，首先将对象通过 <code>JSON.stringify()</code> 方法转为字符串，之后再使用 <code>JSON.parse()</code> 方法转成新的对象。</p>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/gdhVsG-eO2">
+            <span class="flex-auto">FrontEnd</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tcA3M53tk" :style="{ 'animation-delay': `${0 * 0.2}s` }">
-              <span class="flex-auto">iOS</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">4</span>
-            </a>
+            <div class="prev-post">
+              <a href="https://shiwei93.github.io/javascript30-day-15">
+                <h3 class="post-title">
+                  <i class="remixicon-arrow-left-line"></i>
+                  JavaScript30 Day 15
+                </h3>
+              </a>
+            </div>
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/gdhVsG-eO2" :style="{ 'animation-delay': `${1 * 0.2}s` }">
-              <span class="flex-auto">FrontEnd</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">19</span>
-            </a>
+
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/hrFl_xbAha" :style="{ 'animation-delay': `${2 * 0.2}s` }">
-              <span class="flex-auto">Swift</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">2</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tks8BwXu01" :style="{ 'animation-delay': `${3 * 0.2}s` }">
-              <span class="flex-auto">Git</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">1</span>
-            </a>
+            <div class="next-post">
+              <a href="https://shiwei93.github.io/javascript30-day-13">
+                <h3 class="post-title">
+                  Javascript30 Day 13
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
           
         </div>
+
+        
+
       </div>
     </div>
 

@@ -31,38 +31,17 @@
       
         <div class="animated fadeInLeft" style="animation-delay: 0.4s">
           <p class="my-4 text-gray-600 font-light hidden lg:block">
-            浪花有意千重雪，桃李无言一队春
+            文章目录
           </p>
-          <div class="animated fadeInLeft social-container hidden lg:block" style="animation-delay: 0.6s">
-            
-              
-                <a href="https://github.com/shiwei93" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-github-line"></i>
-                </a>
-              
-            
-              
-                <a href="https://twitter.com/swmagicswift" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-twitter-line"></i>
-                </a>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#key-point">Key Point</a></li>
+</ul>
+</li>
+</ul>
+
           </div>
         </div>
       
@@ -106,33 +85,98 @@
 </div>
 <div class="mask" onclick="closeMenu()">
 </div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
-        <h2 class="text-lg text-gray-700 mb-8">
-          <i class="remixicon-bookmark-2-line"></i> 标签云
-        </h2>
-        <div class="tags-container">
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">Javascript30 Day 13</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2019-04-30 / 2 min read
+        </div>
+        
+        <div class="post-content yue">
+          <div class="day-10">
+![day-13](https://res.cloudinary.com/dxe4zc5py/image/upload/v1556516410/Blog/day-13.png)
+</div>
+</br>
+<p>第十三天的练习是实现页面滚动过程中，滑动到图片位置时，图片从左右伴随动画进入。</p>
+<p><a href="http://htmlpreview.github.io/?https://github.com/shiwei93/JavaScript30/blob/master/13%20-%20Slide%20in%20on%20Scroll/index.html">Preview</a></p>
+<h2 id="key-point">Key Point</h2>
+<ul>
+<li>监听滚动事件</li>
+<li>计算图片出现的位置，添加动画</li>
+</ul>
+<!--- more --->
+<p>详细代码如下</p>
+<pre><code class="language-javascript">const sliderImages = document.querySelectorAll('.slide-in');
+
+function checkSlide(e) {
+    sliderImages.forEach((sliderImage) =&gt; {
+        // half way through the image
+        const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2;
+        // bottom of the image
+        const imageBottom = sliderImage.offsetTop + sliderImage.height;
+        const isHalfShown = slideInAt &gt; sliderImage.offsetTop;
+        const isNotScrolledPast = window.scrollY &lt; imageBottom;
+        if (isHalfShown &amp;&amp; isNotScrolledPast) {
+            sliderImage.classList.add('active');
+        } else {
+            sliderImage.classList.remove('active');
+        }
+    });
+}
+
+window.addEventListener('scroll', debounce(checkSlide));
+</code></pre>
+<p>本次练习的难点在于图片滑动出现的计算。</p>
+<p>首先在滚动到图片一半的位置时，出发显示动画，<code>const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2;</code></p>
+<ul>
+<li><code>window.innerHeight</code> 表示浏览器内部视图窗口的高度</li>
+<li><code>window.scrollY</code> 表示当前页面在 Y 轴的滚动距离。</li>
+</ul>
+<p>接下来获取图片底部到页面文本顶端的距离 <code>const imageBottom = sliderImage.offsetTop + sliderImage.height;</code>。<code>sliderImage.offsetTop</code> 表示图片最顶端的值，加上图片高度，就是图片底部到页面文档顶端的距离了</p>
+<pre><code class="language-javascript">const isHalfShown = slideInAt &gt; sliderImage.offsetTop;
+const isNotScrolledPast = window.scrollY &lt; imageBottom;
+if (isHalfShown &amp;&amp; isNotScrolledPast) {
+    sliderImage.classList.add('active');
+} else {
+    sliderImage.classList.remove('active');
+}
+</code></pre>
+<p>设置两个变量，分别表示图片是否显示一半和图片是否已经全部滚动出去，当两个条件都满足时，添加图片出现动画，否则从 img 元素的 <code>classList</code> 中移除动画。</p>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/gdhVsG-eO2">
+            <span class="flex-auto">FrontEnd</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tcA3M53tk" :style="{ 'animation-delay': `${0 * 0.2}s` }">
-              <span class="flex-auto">iOS</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">4</span>
-            </a>
+            <div class="prev-post">
+              <a href="https://shiwei93.github.io/javascript30-day-14">
+                <h3 class="post-title">
+                  <i class="remixicon-arrow-left-line"></i>
+                  JavaScript30 Day 14
+                </h3>
+              </a>
+            </div>
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/gdhVsG-eO2" :style="{ 'animation-delay': `${1 * 0.2}s` }">
-              <span class="flex-auto">FrontEnd</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">19</span>
-            </a>
+
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/hrFl_xbAha" :style="{ 'animation-delay': `${2 * 0.2}s` }">
-              <span class="flex-auto">Swift</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">2</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tks8BwXu01" :style="{ 'animation-delay': `${3 * 0.2}s` }">
-              <span class="flex-auto">Git</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">1</span>
-            </a>
+            <div class="next-post">
+              <a href="https://shiwei93.github.io/javascript30-day-12">
+                <h3 class="post-title">
+                  JavaScript30 Day 12
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
           
         </div>
+
+        
+
       </div>
     </div>
 

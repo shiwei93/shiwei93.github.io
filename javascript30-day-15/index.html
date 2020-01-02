@@ -31,37 +31,9 @@
       
         <div class="animated fadeInLeft" style="animation-delay: 0.4s">
           <p class="my-4 text-gray-600 font-light hidden lg:block">
-            浪花有意千重雪，桃李无言一队春
+            文章目录
           </p>
-          <div class="animated fadeInLeft social-container hidden lg:block" style="animation-delay: 0.6s">
-            
-              
-                <a href="https://github.com/shiwei93" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-github-line"></i>
-                </a>
-              
-            
-              
-                <a href="https://twitter.com/swmagicswift" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-twitter-line"></i>
-                </a>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
+          <div class="toc-container hidden lg:block">
             
           </div>
         </div>
@@ -106,33 +78,77 @@
 </div>
 <div class="mask" onclick="closeMenu()">
 </div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
-        <h2 class="text-lg text-gray-700 mb-8">
-          <i class="remixicon-bookmark-2-line"></i> 标签云
-        </h2>
-        <div class="tags-container">
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">JavaScript30 Day 15</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2019-05-02 / 1 min read
+        </div>
+        
+        <div class="post-content yue">
+          <div class="day-15">
+![day-15](https://res.cloudinary.com/dxe4zc5py/image/upload/v1556856112/Blog/day-15.png)
+</div>
+</br>
+<p>第 15 天的练习是使用 LocalStorage 实现的类似 Todo List 的 web 页面。效果如下，<a href="http://htmlpreview.github.io/?https://github.com/shiwei93/JavaScript30/blob/master/15%20-%20LocalStorage%20and%20Event%20Delegation/index.html">Preview</a></p>
+<!--- more --->
+<p>JavaScript 中的 LocalStorage 类似于 iOS 开发中使用的 UserDefaults，用于存储本地数据。提供了如下 API。</p>
+<ul>
+<li><code>localStorage.setItem('key', value)</code></li>
+<li><code>localStorage.getItem('key')</code></li>
+<li><code>localStorage.clear()</code></li>
+<li><code>localStorage.removeItem('key')</code></li>
+</ul>
+<blockquote>
+<p>与 UserDefaults 不同的是 localStorage 中只能存储字符串，因此这里使用了 <code>JSON.stringify()</code> 方法将 Object 转换成字符串，再使用 <code>JSON.parse()</code> 将字符串转成 Object。</p>
+</blockquote>
+<p>声明 JavaScript 的 Object 时，ES6 提供了一个简写形式，</p>
+<pre><code class="language-javascript">const item = {
+    text,
+    done: false
+};
+</code></pre>
+<p>上面的代码与下面的代码一样</p>
+<pre><code class="language-javascript">const item = {
+    test: text,
+    done: false
+};
+</code></pre>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/gdhVsG-eO2">
+            <span class="flex-auto">FrontEnd</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tcA3M53tk" :style="{ 'animation-delay': `${0 * 0.2}s` }">
-              <span class="flex-auto">iOS</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">4</span>
-            </a>
+            <div class="prev-post">
+              <a href="https://shiwei93.github.io/javascript30-day-16">
+                <h3 class="post-title">
+                  <i class="remixicon-arrow-left-line"></i>
+                  JavaScript30 Day 16
+                </h3>
+              </a>
+            </div>
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/gdhVsG-eO2" :style="{ 'animation-delay': `${1 * 0.2}s` }">
-              <span class="flex-auto">FrontEnd</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">19</span>
-            </a>
+
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/hrFl_xbAha" :style="{ 'animation-delay': `${2 * 0.2}s` }">
-              <span class="flex-auto">Swift</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">2</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tks8BwXu01" :style="{ 'animation-delay': `${3 * 0.2}s` }">
-              <span class="flex-auto">Git</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">1</span>
-            </a>
+            <div class="next-post">
+              <a href="https://shiwei93.github.io/javascript30-day-14">
+                <h3 class="post-title">
+                  JavaScript30 Day 14
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
           
         </div>
+
+        
+
       </div>
     </div>
 

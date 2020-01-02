@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shiwei93.github.io</id>
     <title>二十七</title>
-    <updated>2020-01-02T14:22:31.324Z</updated>
+    <updated>2020-01-02T14:23:25.636Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shiwei93.github.io"/>
     <link rel="self" href="https://shiwei93.github.io/atom.xml"/>
@@ -12,8 +12,8 @@
     <rights>All rights reserved 2020, 二十七</rights>
     <entry>
         <title type="html"><![CDATA[中西文中间添加 Thin space U+2009]]></title>
-        <id>https://shiwei93.github.io/post/thin-space</id>
-        <link href="https://shiwei93.github.io/post/thin-space">
+        <id>https://shiwei93.github.io/thin-space</id>
+        <link href="https://shiwei93.github.io/thin-space">
         </link>
         <updated>2019-06-20T02:30:29.000Z</updated>
         <content type="html"><![CDATA[<h2 id="前言">前言</h2>
@@ -65,8 +65,8 @@ return result
     </entry>
     <entry>
         <title type="html"><![CDATA[JavaScript30 Day 25]]></title>
-        <id>https://shiwei93.github.io/post/javascript30-day-25</id>
-        <link href="https://shiwei93.github.io/post/javascript30-day-25">
+        <id>https://shiwei93.github.io/javascript30-day-25</id>
+        <link href="https://shiwei93.github.io/javascript30-day-25">
         </link>
         <updated>2019-05-08T05:47:44.000Z</updated>
         <content type="html"><![CDATA[<p>今天的练习是关于 JavaScript 的事件流，下面做一些扩展与整理。</p>
@@ -169,8 +169,8 @@ three.addEventListener('click', (e) =&gt; { console.log(&quot;three bubble mode&
     </entry>
     <entry>
         <title type="html"><![CDATA[JavaScript30 Day 19]]></title>
-        <id>https://shiwei93.github.io/post/javascript30-day-19</id>
-        <link href="https://shiwei93.github.io/post/javascript30-day-19">
+        <id>https://shiwei93.github.io/javascript30-day-19</id>
+        <link href="https://shiwei93.github.io/javascript30-day-19">
         </link>
         <updated>2019-05-06T03:38:37.000Z</updated>
         <content type="html"><![CDATA[<p>今天的练习是使用摄像头，实时记录，并通过 canvas 实时绘制到画布中。</p>
@@ -233,8 +233,8 @@ three.addEventListener('click', (e) =&gt; { console.log(&quot;three bubble mode&
     </entry>
     <entry>
         <title type="html"><![CDATA[JavaScript30 Day 17]]></title>
-        <id>https://shiwei93.github.io/post/javascript30-day-17</id>
-        <link href="https://shiwei93.github.io/post/javascript30-day-17">
+        <id>https://shiwei93.github.io/javascript30-day-17</id>
+        <link href="https://shiwei93.github.io/javascript30-day-17">
         </link>
         <updated>2019-05-04T01:05:19.000Z</updated>
         <content type="html"><![CDATA[<p>今天的练习是对数组的排序练习，特别的是需要去除字符串开头的 <strong>a an the</strong> 之后进行排序。</p>
@@ -249,8 +249,8 @@ three.addEventListener('click', (e) =&gt; { console.log(&quot;three bubble mode&
     </entry>
     <entry>
         <title type="html"><![CDATA[JavaScript30 Day 16]]></title>
-        <id>https://shiwei93.github.io/post/javascript30-day-16</id>
-        <link href="https://shiwei93.github.io/post/javascript30-day-16">
+        <id>https://shiwei93.github.io/javascript30-day-16</id>
+        <link href="https://shiwei93.github.io/javascript30-day-16">
         </link>
         <updated>2019-05-03T05:07:33.000Z</updated>
         <content type="html"><![CDATA[<p><a href="https://github.com/shiwei93/JavaScript30/tree/master/16%20-%20CSS%20Text%20Shadow%20Mouse%20Move%20Effect">GitHub 地址</a></p>

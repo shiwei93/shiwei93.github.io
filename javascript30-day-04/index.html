@@ -31,37 +31,9 @@
       
         <div class="animated fadeInLeft" style="animation-delay: 0.4s">
           <p class="my-4 text-gray-600 font-light hidden lg:block">
-            浪花有意千重雪，桃李无言一队春
+            文章目录
           </p>
-          <div class="animated fadeInLeft social-container hidden lg:block" style="animation-delay: 0.6s">
-            
-              
-                <a href="https://github.com/shiwei93" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-github-line"></i>
-                </a>
-              
-            
-              
-                <a href="https://twitter.com/swmagicswift" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-twitter-line"></i>
-                </a>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
+          <div class="toc-container hidden lg:block">
             
           </div>
         </div>
@@ -106,33 +78,106 @@
 </div>
 <div class="mask" onclick="closeMenu()">
 </div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
-        <h2 class="text-lg text-gray-700 mb-8">
-          <i class="remixicon-bookmark-2-line"></i> 标签云
-        </h2>
-        <div class="tags-container">
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">JavaScript30 Day 04</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2019-04-20 / 3 min read
+        </div>
+        
+        <div class="post-content yue">
+          <p><a href="https://github.com/shiwei93/JavaScript30/tree/master/04%20-%20Array%20Cardio%20Day%201">GitHub 地址</a></p>
+<p>这次的练习是 JavaScript 的数组练习。</p>
+<p><strong>Q1 过滤出出生于 16 世纪的发明家</strong></p>
+<p><strong>Answer</strong></p>
+<pre><code class="language-javascript">const fifteen = inventors.filter(inventor =&gt; inventor.year &gt;= 1500 &amp;&amp; inventor.year &lt; 1600);
+</code></pre>
+<p>JavaScript 的 <code>filter</code> 用法与 Swift 中集合类型的 <code>filter</code> 使用方法一样，需要保留的数据返回 <code>true</code> 既可。</p>
+<blockquote>
+<p>JavaScript 中提供了 <code>console.table</code> 方法，通过表格的样式打印出表格化的数据</p>
+</blockquote>
+<!--- more --->
+<p><strong>Q2 获取所有发明家的姓和名</strong></p>
+<p><strong>Answer</strong></p>
+<pre><code class="language-JavaScript">const fullNames = inventors.map(inventor =&gt; `${inventor.first} ${inventor.last}`);
+</code></pre>
+<p>JavaScript 的 <code>map</code> 用法与 Swfit 中的 <code>map</code> 使用方法也是一致的。通过参数中的 <em>callback</em> 方法，将原数组中的数据通过传入的方法做处理之后返回。</p>
+<p><strong>Q3 根据出生年月进行排序。年长到年轻</strong></p>
+<p><strong>Answer</strong></p>
+<pre><code class="language-javascript">const ordered = inventors.sort((left, right) =&gt; left.year &gt; right.year ? 1 : -1);
+</code></pre>
+<p><code>sort</code> 方法与 Swift 中的同名方法，在返回值上略有区别。Swift 中返回值类型为 <code>Bool</code> 类型，在 JS 中，<strong>如果期望排序后第一个参数出现在第二个参数前，则返回负数</strong>。</p>
+<p><strong>Q4 算出所有发明家年龄之和</strong></p>
+<p><strong>Answer</strong></p>
+<pre><code class="language-javascript">const totalYears = inventors.reduce((total, current) =&gt; total + current.passed - current.year, 0);
+</code></pre>
+<p><code>reduce</code> 方法与 Swift 中的 <code>recude</code> 一致，只是在函数参数顺序有点变化。传入的函数中，第一个参数为累计值，第二个参数是当前的值。</p>
+<p><strong>Q5 对发明家的在世年数做排序</strong></p>
+<p><strong>Answer</strong></p>
+<pre><code class="language-JavaScript">const oldest = inventors.sort((a, b) =&gt; (a.passed - a.year) &lt; (b.passed - b.year) ? 1 : -1);
+</code></pre>
+<p><strong>Q6 创建一个数组，包含了所有巴黎街道名称中包含 <code>de</code> 的街道名</strong></p>
+<p><a href="https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris">数据链接</a></p>
+<p><strong>Answer</strong></p>
+<pre><code class="language-javascript">const category = document.querySelector('.mw-category');
+const links = Array.from(document.querySelectorAll('a'));
+const des = links.map(link =&gt; link.textContent).filter(content =&gt; content.includes('de'));
+</code></pre>
+<p>之前提到过 <code>querySelectorAll</code> 返回的值不是 <em>Array</em> 类型 而是 <em>NodeList</em> 类型。在 NodeList 的 <code>__proto__</code> 并不存在 <code>map</code> <code>reduce</code> 等数组操作方法。所以需要将结果转换为 <em>Array</em> 类型。之后就可以通过 <code>map</code> <code>reduce</code> 等方法进行一系列操作了。</p>
+<p><strong>Q7 对 people 数组中的人名的 last name 进行排序</strong></p>
+<p><strong>Answer</strong></p>
+<pre><code class="language-javascript">const alpha = people.sort(function (a, b) { 
+    const [aFirst, aLast] = a.split(', ');
+    const [bFirst, bLast] = b.split(', ');
+    return aLast &gt; bLast ? 1 : -1;
+});
+</code></pre>
+<p>通过 <code>String.prototype.split()</code> 方法，分割字符串。 <code>const [aFirst, aLast] = a.split(', ');</code> 这样的操作确实有意思。</p>
+<p><strong>Q8 计算数组中每个值出现的次数</strong></p>
+<p><strong>Answer</strong></p>
+<pre><code class="language-javascript">const sum = data.reduce((result, current) =&gt; {
+    if (!result[current]) {
+        result[current] = 0;
+    }
+    result[current]++;
+    return result;
+}, {});
+</code></pre>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/gdhVsG-eO2">
+            <span class="flex-auto">FrontEnd</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tcA3M53tk" :style="{ 'animation-delay': `${0 * 0.2}s` }">
-              <span class="flex-auto">iOS</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">4</span>
-            </a>
+            <div class="prev-post">
+              <a href="https://shiwei93.github.io/javascript30-day-05">
+                <h3 class="post-title">
+                  <i class="remixicon-arrow-left-line"></i>
+                  JavaScript30 Day 05
+                </h3>
+              </a>
+            </div>
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/gdhVsG-eO2" :style="{ 'animation-delay': `${1 * 0.2}s` }">
-              <span class="flex-auto">FrontEnd</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">19</span>
-            </a>
+
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/hrFl_xbAha" :style="{ 'animation-delay': `${2 * 0.2}s` }">
-              <span class="flex-auto">Swift</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">2</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tks8BwXu01" :style="{ 'animation-delay': `${3 * 0.2}s` }">
-              <span class="flex-auto">Git</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">1</span>
-            </a>
+            <div class="next-post">
+              <a href="https://shiwei93.github.io/javascript30-day-03">
+                <h3 class="post-title">
+                  JavaScript30 Day 03
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
           
         </div>
+
+        
+
       </div>
     </div>
 

@@ -31,38 +31,20 @@
       
         <div class="animated fadeInLeft" style="animation-delay: 0.4s">
           <p class="my-4 text-gray-600 font-light hidden lg:block">
-            浪花有意千重雪，桃李无言一队春
+            文章目录
           </p>
-          <div class="animated fadeInLeft social-container hidden lg:block" style="animation-delay: 0.6s">
-            
-              
-                <a href="https://github.com/shiwei93" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-github-line"></i>
-                </a>
-              
-            
-              
-                <a href="https://twitter.com/swmagicswift" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-twitter-line"></i>
-                </a>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#key-point">Key Point</a></li>
+<li><a href="#%E9%A1%B5%E9%9D%A2%E5%85%83%E7%B4%A0%E7%BB%91%E5%AE%9A">页面元素绑定</a></li>
+<li><a href="#%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC">事件监听</a></li>
+<li><a href="#%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0">功能实现</a></li>
+</ul>
+</li>
+</ul>
+
           </div>
         </div>
       
@@ -106,33 +88,128 @@
 </div>
 <div class="mask" onclick="closeMenu()">
 </div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
-        <h2 class="text-lg text-gray-700 mb-8">
-          <i class="remixicon-bookmark-2-line"></i> 标签云
-        </h2>
-        <div class="tags-container">
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">JavaScript30 Day 11</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2019-04-28 / 3 min read
+        </div>
+        
+        <div class="post-content yue">
+          <div class="day-11">
+![day-10](https://res.cloudinary.com/dxe4zc5py/image/upload/v1556428769/Blog/day-11.png)
+</div>
+</br>
+<p><a href="https://github.com/shiwei93/JavaScript30/tree/master/11%20-%20Custom%20Video%20Player">GitHub 地址</a></p>
+<p>断了一天，甚是罪恶😆。今天是实现一个自定义的视频播放器。实现视频的播放、暂停、进度条托拽更新、音量加减、倍速播放、快进快退等功能。</p>
+<p><a href="http://htmlpreview.github.io/?https://github.com/shiwei93/JavaScript30/blob/master/11%20-%20Custom%20Video%20Player/index.html">Preview</a></p>
+<h2 id="key-point">Key Point</h2>
+<p>功能实现大概分成了三个部分</p>
+<ul>
+<li>页面元素绑定</li>
+<li>事件监听</li>
+<li>功能实现</li>
+</ul>
+<!--- more --->
+<h2 id="页面元素绑定">页面元素绑定</h2>
+<p>使用前面提到过的 <code>querySelector()</code> 和 <code>querySelectorAll()</code> 方法，将变量和页面元素进行绑定。代码如下</p>
+<pre><code class="language-javascript">const player = document.querySelector('.player');
+const video = player.querySelector('.viewer');
+const progress = player.querySelector('.progress');
+const progressBar = player.querySelector('.progress__filled');
+const toggle = player.querySelector('.toggle');
+const skipButtons = player.querySelectorAll('[data-skip]');
+const ranges = player.querySelectorAll('.player__slider');
+</code></pre>
+<h2 id="事件监听">事件监听</h2>
+<p><code>video</code> 元素需要监听 <code>click</code>、<code>play</code>、<code>pause</code> 以及 <code>timeupdate</code> 事件，用来监听播放器页面的点击事件实现暂停/播放的快速切换，<code>play</code> 与 <code>pause</code> 事件来修改播放按钮，<code>timeupdate</code> 来修改视频的播放进度条。</p>
+<pre><code class="language-javascript">video.addEventListener('click', togglePlay);
+video.addEventListener('play', updateButton);
+video.addEventListener('pause', updateButton);
+video.addEventListener('timeupdate', handleProgress);
+</code></pre>
+<p>播放暂停按钮监听了 <code>'click'</code> 事件，快进快退按钮也同样监听 <code>'click'</code> 事件，音量调节和倍速播放组件，需要监听 <code>'mousemove'</code> 和 <code>'change'</code>。</p>
+<pre><code class="language-javascript">toggle.addEventListener('click', togglePlay);
+skipButtons.forEach(button =&gt; button.addEventListener('click', skip));
+ranges.forEach(range =&gt; range.addEventListener('change', handleRangeUpdate));
+ranges.forEach(range =&gt; range.addEventListener('mousemove', handleRangeUpdate));
+</code></pre>
+<p>视频进度条组件监听了 <code>'click'</code>、<code>'mousemove'</code>、<code>'mousedown'</code> 和 <code>'mouseup'</code> 事件。这里为了事件只在鼠标按下时才会修改播放进度，添加了一个变量 <code>mousedown</code>，在 <code>'mousemove'</code> 的事件监听回调中，传如的箭头函数中用到了 <code>flag &amp;&amp; func()</code> 的使用方式，在 flag 变量为 true 时，执行 func 方法。当 flag 为 false 时，直接返回。</p>
+<pre><code class="language-javascript">let mousedown = false;
+progress.addEventListener('click', scrub);
+progress.addEventListener('mousemove', (e) =&gt; mousedown &amp;&amp; scrub(e));
+progress.addEventListener('mousedown', () =&gt; mousedown = true);
+progress.addEventListener('mouseup', () =&gt; mousedown = false);
+</code></pre>
+<h2 id="功能实现">功能实现</h2>
+<pre><code class="language-javascript">// 视频播放/暂停
+function togglePlay() {
+    const method = video.paused ? 'play' : 'pause';
+    video[method]();
+}
+
+// 更新播放按钮
+function updateButton() {
+    toggle.textContent = this.paused ? '►' : '❚ ❚';
+}
+
+// 快进与快退
+function skip() {
+    video.currentTime += parseFloat(this.dataset.skip);
+}
+
+// 音量调节与倍速播放
+function handleRangeUpdate() {
+    video[this.name] = this.value;
+}
+
+// 播放进度调整
+function handleProgress() {
+    const percent = (video.currentTime / video.duration) * 100;
+    progressBar.style.flexBasis = `${percent}%`;
+}
+
+// 进度条托拽
+function scrub(e) {
+    const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
+    video.currentTime = scrubTime;
+}
+</code></pre>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/gdhVsG-eO2">
+            <span class="flex-auto">FrontEnd</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tcA3M53tk" :style="{ 'animation-delay': `${0 * 0.2}s` }">
-              <span class="flex-auto">iOS</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">4</span>
-            </a>
+            <div class="prev-post">
+              <a href="https://shiwei93.github.io/javascript30-day-12">
+                <h3 class="post-title">
+                  <i class="remixicon-arrow-left-line"></i>
+                  JavaScript30 Day 12
+                </h3>
+              </a>
+            </div>
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/gdhVsG-eO2" :style="{ 'animation-delay': `${1 * 0.2}s` }">
-              <span class="flex-auto">FrontEnd</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">19</span>
-            </a>
+
           
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/hrFl_xbAha" :style="{ 'animation-delay': `${2 * 0.2}s` }">
-              <span class="flex-auto">Swift</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">2</span>
-            </a>
-          
-            <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tks8BwXu01" :style="{ 'animation-delay': `${3 * 0.2}s` }">
-              <span class="flex-auto">Git</span>
-              <span class="flex rounded-full bg-gray-200 px-2 py-1 text-xs ml-1">1</span>
-            </a>
+            <div class="next-post">
+              <a href="https://shiwei93.github.io/javascript30-day-10">
+                <h3 class="post-title">
+                  JavaScript30 Day 10
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
           
         </div>
+
+        
+
       </div>
     </div>
 
