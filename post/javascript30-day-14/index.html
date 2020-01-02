@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,minimal-ui" />
+    <title>JavaScript30 Day 14 | 二十七</title>
+<link rel='stylesheet' id='puma-css'  href='https://shiwei93.github.io/styles/main.css' type='text/css' media='screen' />
+<link rel='stylesheet' id='puma-css'  href='https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css' media='screen' />
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://shiwei93.github.io/media/scripts/jquery.js'></script>
+<script type='text/javascript' src='https://shiwei93.github.io/media/scripts/jquery-migrate.min.js'></script>
+        <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+         <script >hljs.initHighlightingOnLoad();</script>
+         
+</head>
+<body class="single single-post postid-3788 single-format-standard">
+	<!--加入跟随滑动的顶部-->
+	<header id="masthead" class="site-header" role="banner">
+		<div class="site-branding">
+			<h1 class="site-title">
+				<a href="https://shiwei93.github.io" title="二十七">二十七</a>
+			</h1>
+		</div>
+
+		<a class="primary-nav-trigger" href="javascript:void(0)">
+			<span class="menu-icon"></span>
+		</a>
+		
+	</header>
+		<div class="site-navigation-wrapper">
+		<nav id="site-navigation" class="main-navigation" role="navigation">
+			<ul class="primary-nav">
+                    
+				<li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a title="首页" href="/">首页</a></li>
+                
+				<li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a title="归档" href="/archives">归档</a></li>
+                
+				<li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a title="标签" href="/tags">标签</a></li>
+                
+				<li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a title="关于" href="/post/about">关于</a></li>
+                
+	
+			</ul>
+		</nav>			
+	</div>
+	<!--跟随滑动的顶部结束-->
+	<div class="surface-content">    <main class="main-content">
+        <section class="section-body">
+                            <header class="section-header u-textAlignCenter">
+                    <h2 class="grap--h2">JavaScript30 Day 14</h2>
+                    <div class="block-postMetaWrap">
+                        <time>2019-05-01</time>
+                    </div>
+                </header>
+                <div class="grap">
+					
+					<p>今天的练习是来了解一下 JavaScript 中关于引用与拷贝的问题。</p>
+<h2 id="值类型">值类型</h2>
+<p>在 JavaScript 中，<strong>string</strong>/<strong>number</strong>/<strong>boolean</strong>/<strong>null</strong>/<strong>undefined</strong> 等基本类型是值类型。例如下面的例子</p>
+<pre><code class="language-javascript">let age = 100;
+let age2 = age;
+console.log(age, age2);
+// 100 100
+age = 200;
+console.log(age, age2); 
+// 200 100
+</code></pre>
+<!--- more --->
+<p>值类型的变量，将一个变量赋值给另一个变量时，拷贝了当前变量。因此对原值的拷贝不会影响被赋值的变量。</p>
+<h2 id="引用类型">引用类型</h2>
+<p>在 JavaScript 中，<strong>Object</strong>/<strong>Function</strong>/<strong>Array</strong>/<strong>Set</strong>/<strong>Map</strong> 等属于引用类型。同样在将一个变量赋值给另一个变量时，拷贝原始对象的地址。因此对原值的任何修改都会对被赋值的对象产生相同的改变。</p>
+<pre><code class="language-javascript">const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+const team = players;
+console.log(players, team);
+players.push('Sze');
+console.log(players, team);
+</code></pre>
+<p>在 console 中看到的打印结果如下</p>
+<figure data-type="image" tabindex="1"><img src="https://res.cloudinary.com/dxe4zc5py/image/upload/v1556721420/Blog/references-array.png" alt="references" loading="lazy"></figure>
+<p>对与数组的拷贝可以通过如下方式实现</p>
+<pre><code class="language-javascript">// 数组的拷贝可以使用 slice() 方法
+const team2 = players.slice();
+// Or
+const team3 = [].concat(players);
+// Or
+const team4 = [...players];
+// Or
+const team5 = Array.from(players);
+</code></pre>
+<p>对于对象类型的拷贝可以通过 <code>Object.assign()</code> 方法实现，例如</p>
+<pre><code class="language-javascript">const person = {
+    name: 'sze wei',
+    age: 26,
+};
+
+// Correct
+const cap2 = Object.assign({}, person, { numebr: 99, age: 12 });
+console.log(cap2);
+</code></pre>
+<p>这样看来好像确实拷贝了 <em>person</em> 对象，对如果改写一下 <em>person</em> 对象的结构</p>
+<pre><code class="language-javascript">const wes = {
+    name: 'wes',
+    age: 100,
+    social: {
+        twitter: '@wesbos',
+        facebook: 'wesbos.developer'
+    }
+};
+</code></pre>
+<p>此时再次使用 <code>const dev = Object.assign({}, wes);</code> 进行拷贝后，修改 <code>dev.social.twitter: '@cool'</code> 后，会发现原值 <code>wes.social.twitter</code> 的值也被修改了。因为 <code>Object.assign()</code> 只会拷贝最上层的属性。视频中提到了一个小技巧，可以拷贝所有对象。</p>
+<pre><code class="language-javascript">const dev2 = JSON.parse(JSON.stringify(wes));
+</code></pre>
+<p>代码其实很容易理解，首先将对象通过 <code>JSON.stringify()</code> 方法转为字符串，之后再使用 <code>JSON.parse()</code> 方法转成新的对象。</p>
+
+                </div>
+
+                <div class="post--keywords" itemprop="keywords">
+					 <a href="https://shiwei93.github.io/tag/gdhVsG-eO2" class="post--keyword" data-title="FrontEnd" data-type="post_tag" data-term-id="39">FrontEnd</a>           </div>
+
+
+
+                      </section>
+    </main>
+</div>
+	<footer class="site-footer u-textAlignCenter">
+    	<div class="footer-branding">
+            <a href="https://shiwei93.github.io" title="二十七">二十七</a>
+									
+			         </div>
+		 <hr />
+		 <div class="social-links">
+		                       
+                            
+                           
+                            	
+			<span class="social-link"><a href="https://twitter.com/swmagicswift" target="_blank"><i class="iconfont icon-twitter"></i></a></span>	
+			                         
+                           
+                            	
+			<span class="social-link"><a href="https://github.com/shiwei93" target="_blank"><i class="iconfont icon-github"></i></a></span>	
+			                         
+                           
+                            
+                           
+                            
+                           
+                            
+                           
+                            
+                           
+                            
+                           
+                            
+                           
+                            
+                           
+                            
+                           
+                            
+                           
+				</div>
+        <div class="footer-copy">
+                Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+        </div>
+
+    </footer>
+	<div class="back-to-top u-hide" onclick="backToTop();"><i class="iconfont icon-xiangshang"></i></div>
+
+<script type='text/javascript' src='https://shiwei93.github.io/media/scripts/main.js'></script>
+</body>
+</html>

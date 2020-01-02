@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,minimal-ui" />
+    <title>中西文中间添加 Thin space U+2009 | 二十七</title>
+<link rel='stylesheet' id='puma-css'  href='https://shiwei93.github.io/styles/main.css' type='text/css' media='screen' />
+<link rel='stylesheet' id='puma-css'  href='https://at.alicdn.com/t/font_1306644_jwtuc2zzbrd.css' media='screen' />
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<script type='text/javascript' src='https://shiwei93.github.io/media/scripts/jquery.js'></script>
+<script type='text/javascript' src='https://shiwei93.github.io/media/scripts/jquery-migrate.min.js'></script>
+        <script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+         <script >hljs.initHighlightingOnLoad();</script>
+         
+</head>
+<body class="single single-post postid-3788 single-format-standard">
+	<!--加入跟随滑动的顶部-->
+	<header id="masthead" class="site-header" role="banner">
+		<div class="site-branding">
+			<h1 class="site-title">
+				<a href="https://shiwei93.github.io" title="二十七">二十七</a>
+			</h1>
+		</div>
+
+		<a class="primary-nav-trigger" href="javascript:void(0)">
+			<span class="menu-icon"></span>
+		</a>
+		
+	</header>
+		<div class="site-navigation-wrapper">
+		<nav id="site-navigation" class="main-navigation" role="navigation">
+			<ul class="primary-nav">
+                    
+				<li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a title="首页" href="/">首页</a></li>
+                
+				<li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a title="归档" href="/archives">归档</a></li>
+                
+				<li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a title="标签" href="/tags">标签</a></li>
+                
+				<li id="menu-item-30" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-30"><a title="关于" href="/post/about">关于</a></li>
+                
+	
+			</ul>
+		</nav>			
+	</div>
+	<!--跟随滑动的顶部结束-->
+	<div class="surface-content">    <main class="main-content">
+        <section class="section-body">
+                            <header class="section-header u-textAlignCenter">
+                    <h2 class="grap--h2">中西文中间添加 Thin space U+2009</h2>
+                    <div class="block-postMetaWrap">
+                        <time>2019-06-20</time>
+                    </div>
+                </header>
+                <div class="grap">
+					
+					<h2 id="前言">前言</h2>
+<p>在平时的文字输入时，我总会在中文和英文，中文和数字中间添加一个普通空格 (U+0020)。在文本布局时不会显得那么拥挤，也一定程度上提升了阅读体验。前一段时间即刻 App 添加了一个中西文之前默认添加一个特殊空格的特性，体验之后发现，这样的宽度短于普通空格的<strong>特殊</strong>空格，即不会出现没有空格时过于拥挤的布局，也不会出现普通空格间距过大的问题。查阅了一些资料后，找到一篇关于 <a href="http://jkorpela.fi/chars/spaces.html">Sapce 的 Unicode 表</a>，想不到空格还有这么多的种类。</p>
+<p>之前的开发工作中，出现过一些，长文本在 iOS 设备中不换行的 Bug，这个问题曾经困扰了我许久，后来无意中发现了一个叫 <em>NO-BREAK SPACE</em> 的空格，其 Unicode 为 <code>U+00A0</code>。在 App 中的表现就是，设置了 UILabel 的 numberOfLines 属性为 0 同时 breakMode 设置为 byWords，含有该空格的文本也不会换行，即使限制了 UILabel 的宽度，换行时仍然会拆开单词换行。</p>
+<p>鉴于即刻 App 这个新需求带来的完美效果，着手简单实现一下。不过不知道即刻选用的空格种类，这里经过多次比较之后，我使用了 <code>U+2009</code>，被称为 <em>THIN SPACE</em> 的空格。</p>
+<h2 id="实现">实现</h2>
+<p>这个需求，我的第一反应就是使用正则来匹配给定字符串的如下情况</p>
+<ul>
+<li>中文+英文</li>
+<li>英文+中文</li>
+<li>中文+数字</li>
+<li>数字+中文</li>
+<li>中文+符号</li>
+<li>符号+中文</li>
+<li>忽略英文和数字的组合，即计量单位，如 10TB</li>
+</ul>
+<p>想到用 Swift 来实现正则表达式，就会有点头皮发麻。先不说 NSRegularExpression 的部分 API 中还带有 NSRange。就是正则表达式里面，还需要添加 / 转义符，就是一个噩梦，可读性大大降低。不过，好在 Swift 5 新增的 Raw String 可以完美解决这个问题。用到的所有正则表达式如下</p>
+<pre><code class="language-swift">let chinese = #&quot;[\u2E80-\u2FFF\u31C0-\u31EF\u3300-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\uFE30-\uFE4F]&quot;# // 匹配中文
+
+// 使用 tuple
+// base 基础符号。单一符号，不成对
+// open 与 close 成对出现的符号
+let punc = (
+    base: #&quot;[@&amp;=_\,\.\?\!\$\%\^\*\-\+\/]&quot;#,
+    open: #&quot;[\(\[\{\'&quot;&lt;‘“]&quot;#,
+    close: #&quot;[\)\]\}\'&quot;&gt;’”]&quot;#
+)
+
+// 拉丁字符。数字、字母等
+let latin = #&quot;[A-Za-z0-9\u00C0-\u00FF\u0100-\u017F\u0180-\u024F\u1E00-\u1EFF]|\#(punc.base)&quot;#
+</code></pre>
+<p>由于需要匹配的情况有前后之分，下面用一个数组，将上述的正则表达式组合成两个完整的正则表达式。通过 compactMap 获取到最后的 NSRegularExpression 实例数组。</p>
+<pre><code class="language-swift">let patterns = [
+    #&quot;(\#(chinese))(\#(latin)|\#(punc.open))&quot;#,
+    #&quot;(\#(latin)|\#(punc.close))(\#(chinese))&quot;#
+].compactMap { try? NSRegularExpression(pattern: $0) }
+</code></pre>
+<p>最后，就可以通过 <code>stringByReplacingMatches(in:options:range:withTemplate:)</code> 方法，通过 template 替换原有的字符串了。</p>
+<pre><code class="language-swift">let unicode = &quot;\u{2009}&quot;
+patterns.forEach { (regex) in
+    result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: &quot;$1\(unicode)$2&quot;)
+}
+return result
+</code></pre>
+<p>下面的 Gif 比较了不添加空格、添加普通空格和 <code>U+2009</code> 空格的区别。</p>
+<figure data-type="image" tabindex="1"><img src="https://res.cloudinary.com/dxe4zc5py/image/upload/v1561000680/Blog/2019-06-20_11.16.23.gif" alt="Gif" loading="lazy"></figure>
+
+                </div>
+
+                <div class="post--keywords" itemprop="keywords">
+					 <a href="https://shiwei93.github.io/tag/tcA3M53tk" class="post--keyword" data-title="iOS" data-type="post_tag" data-term-id="39">iOS</a>           </div>
+
+
+
+                      </section>
+    </main>
+</div>
+	<footer class="site-footer u-textAlignCenter">
+    	<div class="footer-branding">
+            <a href="https://shiwei93.github.io" title="二十七">二十七</a>
+									
+			         </div>
+		 <hr />
+		 <div class="social-links">
+		                       
+                            
+                           
+                            	
+			<span class="social-link"><a href="https://twitter.com/swmagicswift" target="_blank"><i class="iconfont icon-twitter"></i></a></span>	
+			                         
+                           
+                            	
+			<span class="social-link"><a href="https://github.com/shiwei93" target="_blank"><i class="iconfont icon-github"></i></a></span>	
+			                         
+                           
+                            
+                           
+                            
+                           
+                            
+                           
+                            
+                           
+                            
+                           
+                            
+                           
+                            
+                           
+                            
+                           
+                            
+                           
+				</div>
+        <div class="footer-copy">
+                Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+        </div>
+
+    </footer>
+	<div class="back-to-top u-hide" onclick="backToTop();"><i class="iconfont icon-xiangshang"></i></div>
+
+<script type='text/javascript' src='https://shiwei93.github.io/media/scripts/main.js'></script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://shiwei93.github.io</id>
+    <title>二十七</title>
+    <updated>2020-01-02T13:24:12.900Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://shiwei93.github.io"/>
+    <link rel="self" href="https://shiwei93.github.io/atom.xml"/>
+    <subtitle>浪花有意千重雪，桃李无言一队春</subtitle>
+    <logo>https://shiwei93.github.io/images/avatar.png</logo>
+    <icon>https://shiwei93.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2020, 二十七</rights>
+    <entry>
+        <title type="html"><![CDATA[中西文中间添加 Thin space U+2009]]></title>
+        <id>https://shiwei93.github.io/post/thin-space</id>
+        <link href="https://shiwei93.github.io/post/thin-space">
+        </link>
+        <updated>2019-06-20T02:30:29.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="前言">前言</h2>
+<p>在平时的文字输入时，我总会在中文和英文，中文和数字中间添加一个普通空格 (U+0020)。在文本布局时不会显得那么拥挤，也一定程度上提升了阅读体验。前一段时间即刻 App 添加了一个中西文之前默认添加一个特殊空格的特性，体验之后发现，这样的宽度短于普通空格的<strong>特殊</strong>空格，即不会出现没有空格时过于拥挤的布局，也不会出现普通空格间距过大的问题。查阅了一些资料后，找到一篇关于 <a href="http://jkorpela.fi/chars/spaces.html">Sapce 的 Unicode 表</a>，想不到空格还有这么多的种类。</p>
+<p>之前的开发工作中，出现过一些，长文本在 iOS 设备中不换行的 Bug，这个问题曾经困扰了我许久，后来无意中发现了一个叫 <em>NO-BREAK SPACE</em> 的空格，其 Unicode 为 <code>U+00A0</code>。在 App 中的表现就是，设置了 UILabel 的 numberOfLines 属性为 0 同时 breakMode 设置为 byWords，含有该空格的文本也不会换行，即使限制了 UILabel 的宽度，换行时仍然会拆开单词换行。</p>
+<p>鉴于即刻 App 这个新需求带来的完美效果，着手简单实现一下。不过不知道即刻选用的空格种类，这里经过多次比较之后，我使用了 <code>U+2009</code>，被称为 <em>THIN SPACE</em> 的空格。</p>
+<h2 id="实现">实现</h2>
+<p>这个需求，我的第一反应就是使用正则来匹配给定字符串的如下情况</p>
+<ul>
+<li>中文+英文</li>
+<li>英文+中文</li>
+<li>中文+数字</li>
+<li>数字+中文</li>
+<li>中文+符号</li>
+<li>符号+中文</li>
+<li>忽略英文和数字的组合，即计量单位，如 10TB</li>
+</ul>
+<p>想到用 Swift 来实现正则表达式，就会有点头皮发麻。先不说 NSRegularExpression 的部分 API 中还带有 NSRange。就是正则表达式里面，还需要添加 / 转义符，就是一个噩梦，可读性大大降低。不过，好在 Swift 5 新增的 Raw String 可以完美解决这个问题。用到的所有正则表达式如下</p>
+<pre><code class="language-swift">let chinese = #&quot;[\u2E80-\u2FFF\u31C0-\u31EF\u3300-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\uFE30-\uFE4F]&quot;# // 匹配中文
+
+// 使用 tuple
+// base 基础符号。单一符号，不成对
+// open 与 close 成对出现的符号
+let punc = (
+    base: #&quot;[@&amp;=_\,\.\?\!\$\%\^\*\-\+\/]&quot;#,
+    open: #&quot;[\(\[\{\'&quot;&lt;‘“]&quot;#,
+    close: #&quot;[\)\]\}\'&quot;&gt;’”]&quot;#
+)
+
+// 拉丁字符。数字、字母等
+let latin = #&quot;[A-Za-z0-9\u00C0-\u00FF\u0100-\u017F\u0180-\u024F\u1E00-\u1EFF]|\#(punc.base)&quot;#
+</code></pre>
+<p>由于需要匹配的情况有前后之分，下面用一个数组，将上述的正则表达式组合成两个完整的正则表达式。通过 compactMap 获取到最后的 NSRegularExpression 实例数组。</p>
+<pre><code class="language-swift">let patterns = [
+    #&quot;(\#(chinese))(\#(latin)|\#(punc.open))&quot;#,
+    #&quot;(\#(latin)|\#(punc.close))(\#(chinese))&quot;#
+].compactMap { try? NSRegularExpression(pattern: $0) }
+</code></pre>
+<p>最后，就可以通过 <code>stringByReplacingMatches(in:options:range:withTemplate:)</code> 方法，通过 template 替换原有的字符串了。</p>
+<pre><code class="language-swift">let unicode = &quot;\u{2009}&quot;
+patterns.forEach { (regex) in
+    result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: &quot;$1\(unicode)$2&quot;)
+}
+return result
+</code></pre>
+<p>下面的 Gif 比较了不添加空格、添加普通空格和 <code>U+2009</code> 空格的区别。</p>
+<figure data-type="image" tabindex="1"><img src="https://res.cloudinary.com/dxe4zc5py/image/upload/v1561000680/Blog/2019-06-20_11.16.23.gif" alt="Gif" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[JavaScript30 Day 17]]></title>
+        <id>https://shiwei93.github.io/post/javascript30-day-17</id>
+        <link href="https://shiwei93.github.io/post/javascript30-day-17">
+        </link>
+        <updated>2019-05-04T01:05:19.000Z</updated>
+        <content type="html"><![CDATA[<p>今天的练习是对数组的排序练习，特别的是需要去除字符串开头的 <strong>a an the</strong> 之后进行排序。</p>
+<p>去除 <strong>a an the</strong> 的操作放到了一个 function 里，代码如下</p>
+<pre><code class="language-javascript">function strip(str) {
+    return str.replace(/^(a |an |the )/i, '').trim();
+}
+</code></pre>
+<p><code>String.prototype.replace()</code> 接收两个参数，第一个参数可以是一个 <em>正则表达式</em> 或者 <em>待替换的子字符串</em>，第二个参数为 <em>新字符串</em> 或者 <em>函数</em>，返回替换后的新的字符串。</p>
+<p>通过 <code>Array.prototype.sort()</code> 排序后，通过 map 方法，转换为 HTML 代码字符串，插入 HTML 代码中。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[JavaScript30 Day 14]]></title>
+        <id>https://shiwei93.github.io/post/javascript30-day-14</id>
+        <link href="https://shiwei93.github.io/post/javascript30-day-14">
+        </link>
+        <updated>2019-05-01T14:44:15.000Z</updated>
+        <content type="html"><![CDATA[<p>今天的练习是来了解一下 JavaScript 中关于引用与拷贝的问题。</p>
+<h2 id="值类型">值类型</h2>
+<p>在 JavaScript 中，<strong>string</strong>/<strong>number</strong>/<strong>boolean</strong>/<strong>null</strong>/<strong>undefined</strong> 等基本类型是值类型。例如下面的例子</p>
+<pre><code class="language-javascript">let age = 100;
+let age2 = age;
+console.log(age, age2);
+// 100 100
+age = 200;
+console.log(age, age2); 
+// 200 100
+</code></pre>
+<!--- more --->
+<p>值类型的变量，将一个变量赋值给另一个变量时，拷贝了当前变量。因此对原值的拷贝不会影响被赋值的变量。</p>
+<h2 id="引用类型">引用类型</h2>
+<p>在 JavaScript 中，<strong>Object</strong>/<strong>Function</strong>/<strong>Array</strong>/<strong>Set</strong>/<strong>Map</strong> 等属于引用类型。同样在将一个变量赋值给另一个变量时，拷贝原始对象的地址。因此对原值的任何修改都会对被赋值的对象产生相同的改变。</p>
+<pre><code class="language-javascript">const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+const team = players;
+console.log(players, team);
+players.push('Sze');
+console.log(players, team);
+</code></pre>
+<p>在 console 中看到的打印结果如下</p>
+<figure data-type="image" tabindex="1"><img src="https://res.cloudinary.com/dxe4zc5py/image/upload/v1556721420/Blog/references-array.png" alt="references" loading="lazy"></figure>
+<p>对与数组的拷贝可以通过如下方式实现</p>
+<pre><code class="language-javascript">// 数组的拷贝可以使用 slice() 方法
+const team2 = players.slice();
+// Or
+const team3 = [].concat(players);
+// Or
+const team4 = [...players];
+// Or
+const team5 = Array.from(players);
+</code></pre>
+<p>对于对象类型的拷贝可以通过 <code>Object.assign()</code> 方法实现，例如</p>
+<pre><code class="language-javascript">const person = {
+    name: 'sze wei',
+    age: 26,
+};
+
+// Correct
+const cap2 = Object.assign({}, person, { numebr: 99, age: 12 });
+console.log(cap2);
+</code></pre>
+<p>这样看来好像确实拷贝了 <em>person</em> 对象，对如果改写一下 <em>person</em> 对象的结构</p>
+<pre><code class="language-javascript">const wes = {
+    name: 'wes',
+    age: 100,
+    social: {
+        twitter: '@wesbos',
+        facebook: 'wesbos.developer'
+    }
+};
+</code></pre>
+<p>此时再次使用 <code>const dev = Object.assign({}, wes);</code> 进行拷贝后，修改 <code>dev.social.twitter: '@cool'</code> 后，会发现原值 <code>wes.social.twitter</code> 的值也被修改了。因为 <code>Object.assign()</code> 只会拷贝最上层的属性。视频中提到了一个小技巧，可以拷贝所有对象。</p>
+<pre><code class="language-javascript">const dev2 = JSON.parse(JSON.stringify(wes));
+</code></pre>
+<p>代码其实很容易理解，首先将对象通过 <code>JSON.stringify()</code> 方法转为字符串，之后再使用 <code>JSON.parse()</code> 方法转成新的对象。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[JavaScript30 Day 12]]></title>
+        <id>https://shiwei93.github.io/post/javascript30-day-12</id>
+        <link href="https://shiwei93.github.io/post/javascript30-day-12">
+        </link>
+        <updated>2019-04-29T02:29:47.000Z</updated>
+        <content type="html"><![CDATA[<p>第十二天实现了一个键盘事件监听，当输入了特定字符串后，在页面上添加一些特殊效果。</p>
+<h2 id="key-point">Key Point</h2>
+<ul>
+<li>全局绑定 <code>'keyup'</code> 事件，通过 <code>e.key</code> 获取用户输入</li>
+<li>截取与 <code>secretCode</code> 相同长度的用户输入字符串，比较两者，相同出发添加效果</li>
+</ul>
+<!--- more --->
+<pre><code class="language-javascript">const pressed = [];
+const secretCode = 'jerry';
+
+window.addEventListener('keyup', (e) =&gt; {
+    console.log(e.key);
+    pressed.push(e.key);
+    pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
+    if (pressed.join('').includes(secretCode)) {
+        console.log('DING DING!');
+        cornify_add();
+    }
+    console.log(pressed);
+});
+</code></pre>
+<p>截取字符串操作，对用户输入的按键字符数组用到了 <code>Array.prototype.splice()</code> 方法，第一个参数传入了需要删除的起始位置下标，如果设置了负数就表示从后往前删除。第二个参数传入的是需要删除的长度。示例如下</p>
+<pre><code class="language-javascript">var months = ['Jan', 'March', 'April', 'June'];
+months.splice(1, 0, 'Feb', 'August');
+// inserts at 1st index position
+console.log(months);
+// expected output: Array ['Jan', 'Feb', 'August', 'March', 'April', 'June']
+
+months.splice(4, 1, 'May');
+// replaces 1 element at 4th index
+console.log(months);
+// expected output: Array ['Jan', 'Feb', 'March', 'April', 'May']
+</code></pre>
+]]></content>
+    </entry>
+</feed>
