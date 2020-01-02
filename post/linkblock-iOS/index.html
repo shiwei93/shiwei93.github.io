@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>二十七</title>
 <meta name="description" content="浪花有意千重雪，桃李无言一队春" />
-<link rel="shortcut icon" href="https://shiwei93.github.io/favicon.ico?v=1577973174447">
+<link rel="shortcut icon" href="https://shiwei93.github.io/favicon.ico?v=1577974221579">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
@@ -24,7 +24,7 @@
       <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
         <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
         <a href="https://shiwei93.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://shiwei93.github.io/images/avatar.png?v=1577973174447" alt="">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://shiwei93.github.io/images/avatar.png?v=1577974221579" alt="">
         </a>
         <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">二十七</h1>
       </div>
@@ -96,12 +96,10 @@
           2018-08-06 / 3 min read
         </div>
         
+          <img class="post-feature-image rounded-lg mx-auto my-4" src="https://shiwei93.github.io/post-images/linkblock-iOS.jpg" alt="">
+        
         <div class="post-content yue">
-          <div class="gallery">
-![sky](https://res.cloudinary.com/dxe4zc5py/image/upload/v1533545660/Blog/sky_blog.jpg)
-</div>
-</br>
-<p>在 <a href="https://github.com/shiwei93/Goku">Goku</a> 的实现中，尝试了使用类似于 <strong>SnapKit</strong> 中，链式调用的方式，来构建 <em>AlertView</em> 的样式。具体使用如下</p>
+          <p>在 <a href="https://github.com/shiwei93/Goku">Goku</a> 的实现中，尝试了使用类似于 <strong>SnapKit</strong> 中，链式调用的方式，来构建 <em>AlertView</em> 的样式。具体使用如下</p>
 <pre><code class="language-swift">self.goku.presentAlert(animated: true, closure: { (make) in
 	make.theme
 	   .actionSheet
@@ -125,7 +123,7 @@
 <li>top 是定义在 <code>ConstraintMaker</code> 中的一个 <code>ConstraintMakerExtendable</code> 类型的 <code>public</code> 变量，变量的调用，返回了该类的一个实例</li>
 <li><code>equalTo</code> 定义在 <code>ConstraintMakerRelatable</code> 类中，同时 <code>ConstraintMakerExtendable</code> 继承自该类，<code>equalTo</code> 定义如下，方法返回值是 <code>ConstraintMakerEditable</code> 的一个实例</li>
 </ul>
-<pre><code>public func equalTo(_ other: ConstraintRelatableTarget, _ file: String = #file, _ line: UInt = #line) -&gt; ConstraintMakerEditable
+<pre><code class="language-swift">public func equalTo(_ other: ConstraintRelatableTarget, _ file: String = #file, _ line: UInt = #line) -&gt; ConstraintMakerEditable
 </code></pre>
 <figure data-type="image" tabindex="1"><img src="https://res.cloudinary.com/dxe4zc5py/image/upload/v1533545660/Blog/snapkit.png" alt="SnapKit" loading="lazy"></figure>
 <p>Swift 中的链式很容易理解，总结下来其实是</p>
@@ -139,7 +137,7 @@
 <li>可以作为类的属性被 . 出来</li>
 <li>可以当作函数直接使用</li>
 </ol>
-<pre><code class="language-objc">LinkBlock.h
+<pre><code class="language-c">LinkBlock.h
 
 - (LineBlock *(^)(NSString *))say;
 
@@ -153,12 +151,12 @@ LinkBlock.m
 }
 </code></pre>
 <p>调用方式只需要使用 LinkBlock 的实例，通过 <code>.say(@&quot;Hello&quot;)</code> 就行。代码如下</p>
-<pre><code class="language-objc">LinkBlock *link = [[LinkBlock alloc] init];
+<pre><code class="language-c">LinkBlock *link = [[LinkBlock alloc] init];
 
 link.say(@&quot;Hello&quot;);
 </code></pre>
 <p>简单扩展一下</p>
-<pre><code class="language-objc">.h
+<pre><code class="language-c">.h
 
 @property(nonatomic, strong) NSMutableString *saySomething;
 - (LinkBlock *)greet;
@@ -194,7 +192,7 @@ link.say(@&quot;Hello&quot;);
 }
 </code></pre>
 <p>使用</p>
-<pre><code class="language-objc">meet.say(@&quot;Nice to meet you&quot;).to(@&quot;Jerry&quot;).greet;
+<pre><code class="language-c">meet.say(@&quot;Nice to meet you&quot;).to(@&quot;Jerry&quot;).greet;
 </code></pre>
 
         </div>

@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>二十七</title>
 <meta name="description" content="浪花有意千重雪，桃李无言一队春" />
-<link rel="shortcut icon" href="https://shiwei93.github.io/favicon.ico?v=1577973174447">
+<link rel="shortcut icon" href="https://shiwei93.github.io/favicon.ico?v=1577974221579">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
@@ -24,7 +24,7 @@
       <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
         <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
         <a href="https://shiwei93.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://shiwei93.github.io/images/avatar.png?v=1577973174447" alt="">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://shiwei93.github.io/images/avatar.png?v=1577974221579" alt="">
         </a>
         <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">二十七</h1>
       </div>
@@ -103,13 +103,12 @@
           2019-04-18 / 5 min read
         </div>
         
+          <img class="post-feature-image rounded-lg mx-auto my-4" src="https://shiwei93.github.io/post-images/javascript30-day-02.png" alt="">
+        
         <div class="post-content yue">
-          <div class="gallery">
-![day-02](https://res.cloudinary.com/dxe4zc5py/image/upload/v1555667395/Blog/day-02.png)
-</div>
-</br>
-<p><a href="https://github.com/shiwei93/JavaScript30/tree/master/02%20-%20CSS%20%2B%20JS%20Clock">GitHub 地址</a></p>
+          <p><a href="https://github.com/shiwei93/JavaScript30/tree/master/02%20-%20CSS%20%2B%20JS%20Clock">GitHub 地址</a></p>
 <p>使用 CSS + JS 实现的时钟，实时显示当前的时间。这里没有仿照 JavaScript 30 的样式制作，而是选择了 <a href="https://cssanimation.rocks/clocks/">这篇</a> 进行了一些简化和修改。</p>
+<!-- more -->
 <h2 id="技术要点">技术要点</h2>
 <p>时钟的项目，技术难点不在 JavaScript 中，实际 JavaScript 涉及的内容并不多。主要的代码和 <a href="https://github.com/shiwei93/JavaScript30/tree/master/01%20-%20Drum%20Kit">Day 01 Drum Kit</a> 类似，需要注意的是秒针在 59s 到 0s 时切换。由于为了实现更自然的秒针移动效果，动画使用了贝塞尔曲线，并设置了动画时间 <code>transition: all .2s cubic-bezier(0.4, 2.08, 0.55, .44)</code> 会导致秒钟角度从 354° 切换到 0° 时由于动画时长的 0.2s 会有在 0.2s 内指针旋转一周的问题。解决方式如下</p>
 <pre><code class="language-javascript">const container = document.querySelector(`.${hand.hand}-keyframes`);
@@ -117,7 +116,6 @@ if (hand.hand === 'seconds') {
     container.style.transition = 'all ' + (hand.angle === 0 ? 0 : 0.2) + 's cubic-bezier(0.4, 2.08, 0.55, .44)';
 }
 </code></pre>
-<!-- more -->
 <p>当判断到秒钟指针时，如果角度为 0° 时，修改动画时长为 0s，否则修改动画时长为 0.2s。</p>
 <p>第二点就是新接触到的 CSS 的伪元素。为了区分伪类和伪元素，CSS 3 中伪元素使用双冒号写法。</p>
 <blockquote>

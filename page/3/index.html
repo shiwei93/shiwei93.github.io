@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>二十七</title>
 <meta name="description" content="浪花有意千重雪，桃李无言一队春" />
-<link rel="shortcut icon" href="https://shiwei93.github.io/favicon.ico?v=1577973174447">
+<link rel="shortcut icon" href="https://shiwei93.github.io/favicon.ico?v=1577974221579">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
@@ -24,7 +24,7 @@
       <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
         <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
         <a href="https://shiwei93.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://shiwei93.github.io/images/avatar.png?v=1577973174447" alt="">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://shiwei93.github.io/images/avatar.png?v=1577974221579" alt="">
         </a>
         <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">二十七</h1>
       </div>
@@ -114,16 +114,17 @@
         
   <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${0 * 0.2}s` }">
     
+      <a href="https://shiwei93.github.io/post/whats-new-in-swift-5-0" class="feature-image-wrapper bg-gray-100 rounded-lg flex-shrink-0 mr-8 w-full h-56 h-32 md:w-56 md:h-40">
+        <div class="post-feature-image lazy w-full h-56 h-32 md:w-56 md:h-40" data-bg="'https://shiwei93.github.io/post-images/whats-new-in-swift-5-0.jpg'">
+        </div>
+      </a>
+    
     <div class="content">
       <a href="https://shiwei93.github.io/post/whats-new-in-swift-5-0">
         <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">Swift 5.0 语言新特性</h2>
       </a>
       <div class="post-abstract text-gray-700 font-light my-4">
-        <div class="gallery">
-![bridge](https://res.cloudinary.com/dxe4zc5py/image/upload/v1548743384/Blog/bridge.jpg)
-</div>
-</br>
-<p><a href="https://www.hackingwithswift.com/articles/126/whats-new-in-swift-5-0">原文地址</a></p>
+        <p><a href="https://www.hackingwithswift.com/articles/126/whats-new-in-swift-5-0">原文地址</a></p>
 <h2 id="raw-string-原始字符串">Raw String (原始字符串)</h2>
 <p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0200-raw-string-escaping.md">SE-0200</a><br>
 原始字符串中特定的字符不会被转义，例如 <code>\</code> <code>&quot;</code> 等。使用原始字符串时，只需要在字符串的开头和结尾添加 <code>#</code> 就可以了，例如 <code>let rawString = #&quot;This is a &quot;raw&quot; &quot;String&quot;&quot;#</code>。由于开头和结尾的 <code>#</code> 是新的界定符号，所以 Swift 会把单独的 <code>&quot;</code> 理解成普通的字符，而不是字符串的开始或结尾符号。<br>
@@ -139,18 +140,17 @@ let rawString = #&quot;This is a raw string with \#(value)&quot;#
 
   <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${1 * 0.2}s` }">
     
+      <a href="https://shiwei93.github.io/post/debugging-swift-code-with-lldb" class="feature-image-wrapper bg-gray-100 rounded-lg flex-shrink-0 mr-8 w-full h-56 h-32 md:w-56 md:h-40">
+        <div class="post-feature-image lazy w-full h-56 h-32 md:w-56 md:h-40" data-bg="'https://shiwei93.github.io/post-images/debugging-swift-code-with-lldb.jpg'">
+        </div>
+      </a>
+    
     <div class="content">
       <a href="https://shiwei93.github.io/post/debugging-swift-code-with-lldb">
         <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">【译】使用 LLDB 调试 Swift 代码</h2>
       </a>
       <div class="post-abstract text-gray-700 font-light my-4">
-        <div class="gallery">
-![glasses](https://res.cloudinary.com/dxe4zc5py/image/upload/v1541745037/Blog/mike-marquez-601957-unsplash.jpg)
-</div>
-</br>
-<blockquote>
-<p><a href="https://medium.com/flawless-app-stories/debugging-swift-code-with-lldb-b30c5cf2fd49">原文地址</a></p>
-</blockquote>
+        <p><a href="https://medium.com/flawless-app-stories/debugging-swift-code-with-lldb-b30c5cf2fd49">原文地址</a></p>
 <p>作为工程师，我们会花费 70% 的时间来调试。剩下的 20% 用于思考架构和与同事交流，最后的 10% 才是真正用于编码的时间。</p>
 <blockquote>
 <p>调试就像是在犯罪电影中同时扮演侦探和嫌疑人。</p>
@@ -165,22 +165,21 @@ let rawString = #&quot;This is a raw string with \#(value)&quot;#
 
   <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${2 * 0.2}s` }">
     
+      <a href="https://shiwei93.github.io/post/swift-algorithm-hash-table" class="feature-image-wrapper bg-gray-100 rounded-lg flex-shrink-0 mr-8 w-full h-56 h-32 md:w-56 md:h-40">
+        <div class="post-feature-image lazy w-full h-56 h-32 md:w-56 md:h-40" data-bg="'https://shiwei93.github.io/post-images/swift-algorithm-hash-table.jpg'">
+        </div>
+      </a>
+    
     <div class="content">
       <a href="https://shiwei93.github.io/post/swift-algorithm-hash-table">
         <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">【译】Swift 算法 - 哈希表</h2>
       </a>
       <div class="post-abstract text-gray-700 font-light my-4">
-        <div class="gallery">
-![glasses](https://res.cloudinary.com/dxe4zc5py/image/upload/v1534928694/Blog/Photo_by_Jess_Watters_WeCoLo0Rxp4.jpg)
-</div>
-</br>
-<blockquote>
-<p><a href="https://www.raywenderlich.com/206-swift-algorithm-club-hash-tables">原文地址</a></p>
-</blockquote>
+        <p><a href="https://www.raywenderlich.com/206-swift-algorithm-club-hash-tables">原文地址</a></p>
 <h2 id="准备工作">准备工作</h2>
 <p>作为 Swift 开发者，一定对 <code>Dictionary (字典)</code> 非常熟悉。如果你也是一个 Kotlin 开发者，那会对 <code>HashMap</code> 有所了解。这两种数据结构的本质都是 <strong>hash table (哈希表)</strong>。</p>
 <p>Swift 中的字典是一个<strong>键值对</strong>集合。想要在字典中存储一个值，需要通过 key 来传递：</p>
-<pre><code class="language-Swift">var dictionary: [String: String] = [:]
+<pre><code class="language-swift">var dictionary: [String: String] = [:]
 
 // 添加 键值对
 dictionary[&quot;firstName&quot;] = &quot;Steve&quot;
@@ -197,16 +196,17 @@ dictionary[&quot;firstName&quot;] // 输出 &quot;Steve&quot;
 
   <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${3 * 0.2}s` }">
     
+      <a href="https://shiwei93.github.io/post/swift-extension" class="feature-image-wrapper bg-gray-100 rounded-lg flex-shrink-0 mr-8 w-full h-56 h-32 md:w-56 md:h-40">
+        <div class="post-feature-image lazy w-full h-56 h-32 md:w-56 md:h-40" data-bg="'https://shiwei93.github.io/post-images/swift-extension.jpg'">
+        </div>
+      </a>
+    
     <div class="content">
       <a href="https://shiwei93.github.io/post/swift-extension">
         <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">Swift Extension</h2>
       </a>
       <div class="post-abstract text-gray-700 font-light my-4">
-        <div class="gallery">
-![foster](https://res.cloudinary.com/dxe4zc5py/image/upload/v1534413125/foster.jpg)
-</div>
-</br>
-<p>前些日子准备周会关于 <strong>Swift Extension</strong> 的分享时，翻看自己之前写过的 Extension 时。发现有些在可扩展性，以及易用性上并不尽如人意，这也让我在周会讨论中加入了如下议题。</p>
+        <p>前些日子准备周会关于 <strong>Swift Extension</strong> 的分享时，翻看自己之前写过的 Extension 时。发现有些在可扩展性，以及易用性上并不尽如人意，这也让我在周会讨论中加入了如下议题。</p>
 <ul>
 <li>如何评判一个 Extension 是必要的，且有价值的</li>
 <li>编写 Extension 需要遵循哪些原则</li>
@@ -219,16 +219,17 @@ dictionary[&quot;firstName&quot;] // 输出 &quot;Steve&quot;
 
   <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${4 * 0.2}s` }">
     
+      <a href="https://shiwei93.github.io/post/linkblock-iOS" class="feature-image-wrapper bg-gray-100 rounded-lg flex-shrink-0 mr-8 w-full h-56 h-32 md:w-56 md:h-40">
+        <div class="post-feature-image lazy w-full h-56 h-32 md:w-56 md:h-40" data-bg="'https://shiwei93.github.io/post-images/linkblock-iOS.jpg'">
+        </div>
+      </a>
+    
     <div class="content">
       <a href="https://shiwei93.github.io/post/linkblock-iOS">
         <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">Swift &amp; Objective-C 中的链式调用</h2>
       </a>
       <div class="post-abstract text-gray-700 font-light my-4">
-        <div class="gallery">
-![sky](https://res.cloudinary.com/dxe4zc5py/image/upload/v1533545660/Blog/sky_blog.jpg)
-</div>
-</br>
-<p>在 <a href="https://github.com/shiwei93/Goku">Goku</a> 的实现中，尝试了使用类似于 <strong>SnapKit</strong> 中，链式调用的方式，来构建 <em>AlertView</em> 的样式。具体使用如下</p>
+        <p>在 <a href="https://github.com/shiwei93/Goku">Goku</a> 的实现中，尝试了使用类似于 <strong>SnapKit</strong> 中，链式调用的方式，来构建 <em>AlertView</em> 的样式。具体使用如下</p>
 <pre><code class="language-swift">self.goku.presentAlert(animated: true, closure: { (make) in
 	make.theme
 	   .actionSheet
@@ -250,6 +251,11 @@ dictionary[&quot;firstName&quot;] // 输出 &quot;Steve&quot;
   </section>
 
   <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${5 * 0.2}s` }">
+    
+      <a href="https://shiwei93.github.io/post/update-fork-git-repository" class="feature-image-wrapper bg-gray-100 rounded-lg flex-shrink-0 mr-8 w-full h-56 h-32 md:w-56 md:h-40">
+        <div class="post-feature-image lazy w-full h-56 h-32 md:w-56 md:h-40" data-bg="'https://shiwei93.github.io/post-images/update-fork-git-repository.jpg'">
+        </div>
+      </a>
     
     <div class="content">
       <a href="https://shiwei93.github.io/post/update-fork-git-repository">
