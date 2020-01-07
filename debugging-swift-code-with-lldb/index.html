@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>二十七</title>
 <meta name="description" content="浪花有意千重雪，桃李无言一队春" />
-<link rel="shortcut icon" href="https://shiwei93.github.io/favicon.ico?v=1578401360701">
+<link rel="shortcut icon" href="https://shiwei93.github.io/favicon.ico?v=1578401828034">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
@@ -24,7 +24,7 @@
       <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
         <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
         <a href="https://shiwei93.github.io">
-          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://shiwei93.github.io/images/avatar.png?v=1578401360701" alt="">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://shiwei93.github.io/images/avatar.png?v=1578401828034" alt="">
         </a>
         <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">二十七</h1>
       </div>
@@ -80,7 +80,7 @@
       
     
       
-        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+        <a href="https://shiwei93.github.io/about" class="menu" style="animation-delay: 0.6000000000000001s">
           关于
         </a>
       
@@ -145,10 +145,10 @@
 <pre><code>(lldb) e &lt;expression&gt;
 </code></pre>
 <figure data-type="image" tabindex="5"><img src="https://cdn-images-1.medium.com/max/1600/1*MCBw_pKgO2N5uPZKYmS0fQ.png" alt="lldb" loading="lazy"></figure>
-<pre><code>(lldb) e sum 
+<pre><code>(lldb) e sum
 (Int) $R0 = 6 // 可以使用 $R0 在当前调试会话中调用这个变量
 (lldb) e sum = 4 // 修改 sum 变量
-(lldb) e sum 
+(lldb) e sum
 (Int) $R2 = 4 // sum 变量的值在当前的调试中都会是 '4'
 </code></pre>
 <p><code>expression</code> 指令也提供了一些标记。为了区分标记和表达式，LLDB 使用 <code>--</code> 来做区分：</p>
@@ -281,7 +281,7 @@ Breakpoint 3: where = LLDB-Debugger-Exploration`LLDB_Debugger_Exploration.ViewCo
 
 Breakpoint 2: where = LLDB-Debugger-Exploration`LLDB_Debugger_Exploration.ViewController.valueOfLifeWithoutSumOf (Swift.Int, and : Swift.Int) -&gt; Swift.Int + 45 at ViewController.swift:96, address = 0x000000010c555b4d
 
-(lldb) breakpoint command add 2 // 设置一些指令 
+(lldb) breakpoint command add 2 // 设置一些指令
 
 Enter your debugger command(s).  Type 'DONE' to end.
 &gt; p sum // 打印 &quot;sum&quot; 的值
@@ -305,7 +305,7 @@ p a + b
 (Int) $R1 = 4
 </code></pre>
 <p>这正是我们想要的。可以在指令最后添加 <code>continue</code> 指令，这样就不会在这个断点处停下来。</p>
-<pre><code>(lldb) breakpoint command add 2 // 设置一些指令 
+<pre><code>(lldb) breakpoint command add 2 // 设置一些指令
 
 Enter your debugger command(s).  Type 'DONE' to end.
 &gt; p sum // 打印 &quot;sum&quot; 的值
@@ -337,7 +337,7 @@ Command #3 'continue' continued the target.
 (lldb) s // 与 &quot;step&quot; 相同
 </code></pre>
 <p>可以通过 <code>info</code> 指令来获取当前线程的信息</p>
-<pre><code>(lldb) thread info 
+<pre><code>(lldb) thread info
 
 thread #1: tid = 0x17de17, 0x0000000109429a90 LLDB-Debugger-Exploration`ViewController.sumOf(a=2, b=2, self=0x00007fe775507390) -&gt; Int at ViewController.swift:90, queue = 'com.apple.main-thread', stop reason = step in
 </code></pre>
@@ -349,9 +349,9 @@ Process 50693 stopped
 * thread #1: tid = 0x17de17, 0x0000000109429a90 LLDB-Debugger-Exploration`ViewController.sumOf(a=2, b=2, self=0x00007fe775507390) -&gt; Int at ViewController.swift:90, queue = 'com.apple.main-thread', stop reason = step in
 
   thread #2: tid = 0x17df4a, 0x000000010daa4dc6  libsystem_kernel.dylib`kevent_qos + 10, queue = 'com.apple.libdispatch-manager'
-  
+
   thread #3: tid = 0x17df4b, 0x000000010daa444e libsystem_kernel.dylib`__workq_kernreturn + 10
-  
+
   thread #5: tid = 0x17df4e, 0x000000010da9c34a libsystem_kernel.dylib`mach_msg_trap + 10, name = 'com.apple.uikit.eventfetch-thread'
 </code></pre>
 <h3 id="其他">其他</h3>
@@ -380,7 +380,7 @@ Current breakpoints:
 
 def print_hello(debugger, command, result, internal_dict):
 	print &quot;Hello Debugger!&quot;
-    
+
 def __lldb_init_module(debugger, internal_dict):
 	debugger.HandleCommand('command script add -f script.print_hello print_hello') // Handle script initialization and add command from this module
 	print 'The &quot;print_hello&quot; python command has been installed and is ready for use.' // Print confirmation that everything works
