@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shiwei93.github.io</id>
     <title>二十七</title>
-    <updated>2020-01-07T13:00:44.240Z</updated>
+    <updated>2020-01-07T13:21:35.472Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shiwei93.github.io"/>
     <link rel="self" href="https://shiwei93.github.io/atom.xml"/>
@@ -10,6 +10,49 @@
     <logo>https://shiwei93.github.io/images/avatar.png</logo>
     <icon>https://shiwei93.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 二十七</rights>
+    <entry>
+        <title type="html"><![CDATA[LeetCode Daily Question 19]]></title>
+        <id>https://shiwei93.github.io/leetcode-daily-Q-19</id>
+        <link href="https://shiwei93.github.io/leetcode-daily-Q-19">
+        </link>
+        <updated>2020-01-07T12:54:51.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="题目">题目</h2>
+<p><a href="https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/">19. Remove Nth Node From End of List</a><br>
+给定一个链表，删除链表的倒数第 <em>n</em> 个节点，<strong>只遍历一次</strong>。</p>
+<h2 id="思路">思路</h2>
+<h3 id="初见">初见</h3>
+<p>在不考虑只遍历一次的进阶条件下，使用两个指针，第一次遍历完整个链表取到链表中总计 <em>x</em> 个元素。第二次遍历到第 <em>x - n - 1</em> 个链表元素，假设为 node，执行 <code>node.next = node.next.next</code>，得解。</p>
+<h3 id="再看">再看</h3>
+<p>考虑只遍历一次这个条件，同样使用两个指针，但不能在一个指针遍历完成之后，再重新遍历，那么就需要两个指针同时工作。<br>
+思路如下:</p>
+<ol>
+<li>定义两个指针 <em>fast</em> 和 <em>sow</em></li>
+<li><em>fast</em> 指针先走 <em>n</em> 个元素</li>
+<li>之后当 <em>fast</em> 的 next 节点不为 <em>nil</em> 时，<em>fast</em> 和 <em>slow</em> 同时往前</li>
+<li>此时 <code>slow</code> 指针指向的就是倒数第 <em>n + 1</em> 的链表元素<br>
+到这里，看似只要执行 <code>slow.next = slow.next.next</code> 就可以得到正确结果，然而在跑了测试用例之后发现，<code>[1, 2] / 2</code> 和 <code>[1] / 1</code> 的输入无法通过。如果当 <em>fast</em> 先走了 <em>n</em> 步时，恰好走到了最后一个节点，此时 <em>slow</em> 节点还没有移动，则说明链表中需要移除倒数第 <em>n</em> 个节点恰好是第一个节点。实现代码如下</li>
+</ol>
+<pre><code class="language-swift">func removeNthFromEnd(_ head: ListNode?, _ n: Int) -&gt; ListNode? {
+    var fast = head, slow: ListNode? = nil, n: Int = n
+    while let nd = fast {
+        if n != 0 {
+            fast = nd.next
+            n -= 1
+            continue
+        }
+        fast = fast?.next
+        slow = slow == nil ? head : slow?.next
+    }
+    if slow == nil {
+        return head?.next
+    } else {
+        slow?.next = slow?.next?.next
+        return head
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[中西文中间添加 Thin space U+2009]]></title>
         <id>https://shiwei93.github.io/thin-space</id>
@@ -245,45 +288,6 @@ three.addEventListener('click', (e) =&gt; { console.log(&quot;three bubble mode&
 </code></pre>
 <p><code>String.prototype.replace()</code> 接收两个参数，第一个参数可以是一个 <em>正则表达式</em> 或者 <em>待替换的子字符串</em>，第二个参数为 <em>新字符串</em> 或者 <em>函数</em>，返回替换后的新的字符串。</p>
 <p>通过 <code>Array.prototype.sort()</code> 排序后，通过 map 方法，转换为 HTML 代码字符串，插入 HTML 代码中。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[JavaScript30 Day 16]]></title>
-        <id>https://shiwei93.github.io/javascript30-day-16</id>
-        <link href="https://shiwei93.github.io/javascript30-day-16">
-        </link>
-        <updated>2019-05-03T05:07:33.000Z</updated>
-        <content type="html"><![CDATA[<p><a href="https://github.com/shiwei93/JavaScript30/tree/master/16%20-%20CSS%20Text%20Shadow%20Mouse%20Move%20Effect">GitHub 地址</a></p>
-<p>今天的练习实现了一个鼠标移动修改文字阴影的效果。通过添加 <code>'mousemove'</code> 监听鼠标移动事件，计算鼠标移动的距离与阴影偏移的关系，修改文字阴影样式即可。</p>
-<!--- more --->
-<p>代码实现如下</p>
-<pre><code class="language-javascript">const hero = document.querySelector('.hero');
-const text = hero.querySelector('h1');
-const walk = 500; // 100px
-
-function shadow(e) {
-    const { offsetWidth: width, offsetHeight: height } = hero;
-    let { offsetX: x, offsetY: y } = e;
-
-    if (this !== e.target) {
-        x += e.target.offsetLeft;
-        y += y + e.target.offsetTop;
-    }
-
-    const xWalk = Math.round((x / width * walk) - (walk / 2));
-    const yWalk = Math.round((y / height * walk) - (walk / 2));
-
-    text.style.textShadow = `
-        ${xWalk}px ${yWalk}px 0 rgba(255, 0, 255, 0.7),
-        ${xWalk * -1}px ${yWalk}px 0 rgba(0, 255, 255, 0.7),
-        ${yWalk}px ${xWalk * -1}px 0 rgba(0, 255, 0, 0.7),
-        ${yWalk * -1}px ${xWalk}px 0 rgba(0, 0, 255, 0.7)
-    `;
-}
-
-hero.addEventListener('mousemove', shadow);
-</code></pre>
-<p>实现代码中 <code>const { offsetWidth: width, offsetHeight: height } = hero;</code> 这样的实现，被称之为解构赋值，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">参考文档</a>。</p>
 ]]></content>
     </entry>
 </feed>
