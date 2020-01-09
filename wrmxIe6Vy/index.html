@@ -31,38 +31,19 @@
       
         <div class="animated fadeInLeft" style="animation-delay: 0.4s">
           <p class="my-4 text-gray-600 font-light hidden lg:block">
-            浪花有意千重雪，桃李无言一队春
+            文章目录
           </p>
-          <div class="animated fadeInLeft social-container hidden lg:block" style="animation-delay: 0.6s">
-            
-              
-                <a href="https://github.com/shiwei93" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-github-line"></i>
-                </a>
-              
-            
-              
-                <a href="https://twitter.com/swmagicswift" target="_blank" class="mr-4 text-xl text-gray-400 font-light hover:text-gray-900">
-                  <i class="remixicon-twitter-line"></i>
-                </a>
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
-              
-            
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE">题目</a></li>
+<li><a href="#%E8%A7%A3%E6%B3%95-1-%E6%9A%B4%E5%8A%9B%E6%B3%95">解法 1 暴力法</a></li>
+<li><a href="#%E8%A7%A3%E6%B3%95-2-%E4%B8%89%E6%AC%A1%E5%8F%8D%E8%BD%AC">解法 2 三次反转</a></li>
+</ul>
+</li>
+</ul>
+
           </div>
         </div>
       
@@ -106,57 +87,91 @@
 </div>
 <div class="mask" onclick="closeMenu()">
 </div>
-      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4">
-        <h2 class="text-lg text-gray-700 mb-8">
-          <i class="remixicon-bookmark-line"></i> Swift
-        </h2>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">LeetCode Daily Question 189</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-01-09 / 2 min read
+        </div>
         
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${0 * 0.2}s` }">
-    
-      <a href="https://shiwei93.github.io/whats-new-in-swift-5-0" class="feature-image-wrapper bg-gray-100 rounded-lg flex-shrink-0 mr-8 w-full h-56 h-32 md:w-56 md:h-40">
-        <div class="post-feature-image lazy w-full h-56 h-32 md:w-56 md:h-40" data-bg="'https://shiwei93.github.io/post-images/whats-new-in-swift-5-0.jpg'">
+        <div class="post-content yue">
+          <h2 id="题目">题目</h2>
+<p><a href="https://leetcode-cn.com/problems/rotate-array/">189. Rotate Array</a></p>
+<h2 id="解法-1-暴力法">解法 1 暴力法</h2>
+<p>每次旋转 1 个元素，总计旋转 k 次</p>
+<pre><code class="language-swift">func rotate(_ nums: inout [Int], _ k: Int) {
+    if k == 0 { return }
+    for i in stride(from: 0, to: nums.count - 1, by: 1) {
+        // 交换下标 i 与 nums.count - 1 的两个数
+        nums[i] = nums[i] ^ nums[nums.count - 1]
+        nums[nums.count - 1] = nums[i] ^ nums[nums.count - 1]
+        nums[i] = nums[i] ^ nums[nums.count - 1]
+    }
+    rotate(&amp;nums, k - 1)
+}
+</code></pre>
+<p>um... 完美的超出时间限制了<br>
+<img src="https://shiwei93.github.io/post-images/1578578319385.png" alt="" loading="lazy"></p>
+<h2 id="解法-2-三次反转">解法 2 三次反转</h2>
+<p>对于给定的数组长度 <em>n</em> 反转次数 <em>k</em>，会有 <em>k%n</em> 个尾部元素被移动到最前面。</p>
+<p>以题干中的 Example 为例，按照 <em>k=3, n=7</em> 将原数组 <code>[1,2,3,4,5,6,7]</code> 分为 <code>[1,2,3,4]</code> 和 <code>[5,6,7]</code> 两个部分。</p>
+<p><strong>第一次反转</strong></p>
+<p>反转第一部分得到结果 <code>[4,3,2,1,5,6,7]</code></p>
+<p><strong>第二次反转</strong></p>
+<p>反转第二部分得到结果 <code>[4,3,2,1,7,6,5]</code></p>
+<p><strong>第三次反转</strong></p>
+<p>反转全部得到答案 <code>[5,6,7,1,2,3,4]</code></p>
+<pre><code class="language-swift">func rotate3Times(_ nums: inout [Int], _ k: Int) {
+    var k = k
+    k %= nums.count
+    func reverse(_ start: Int, _ end: Int) {
+        var start = start
+        var end = end
+        while start &lt; end {
+            nums[start] = nums[start] ^ nums[end]
+            nums[end] = nums[start] ^ nums[end]
+            nums[start] = nums[start] ^ nums[end]
+            start += 1
+            end -= 1
+        }
+    }
+    // 第一次反转
+    reverse(0, nums.count - 1 - k)
+    // 第二次反转
+    reverse(nums.count - k, nums.count - 1)
+    // 第三次反转
+    reverse(0, nums.count - 1)
+}
+</code></pre>
+
         </div>
-      </a>
-    
-    <div class="content">
-      <a href="https://shiwei93.github.io/whats-new-in-swift-5-0">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">Swift 5.0 语言新特性</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        <p><a href="https://www.hackingwithswift.com/articles/126/whats-new-in-swift-5-0">原文地址</a></p>
-<h2 id="raw-string-原始字符串">Raw String (原始字符串)</h2>
-<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0200-raw-string-escaping.md">SE-0200</a></p>
 
-      </div>
-      <div class="text-gray-400 text-sm font-light">2019-01-29 / 9 min read</div>
-    </div>
-  </section>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/OkfFfQF6c7">
+            <span class="flex-auto">Algorithm</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/ESxWhbNlV">
+            <span class="flex-auto">LeetCode</span>
+          </a>
+        
 
-  <section class="post-item md:flex pb-12 animated fadeIn" :style="{ 'animation-delay': `${1 * 0.2}s` }">
-    
-      <a href="https://shiwei93.github.io/swift-algorithm-hash-table" class="feature-image-wrapper bg-gray-100 rounded-lg flex-shrink-0 mr-8 w-full h-56 h-32 md:w-56 md:h-40">
-        <div class="post-feature-image lazy w-full h-56 h-32 md:w-56 md:h-40" data-bg="'https://shiwei93.github.io/post-images/swift-algorithm-hash-table.jpg'">
+
+        <div class="flex justify-between py-8">
+          
+
+          
+            <div class="next-post">
+              <a href="https://shiwei93.github.io/1fT08jmOJ">
+                <h3 class="post-title">
+                  layoutSubviews 的简单小结
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
         </div>
-      </a>
-    
-    <div class="content">
-      <a href="https://shiwei93.github.io/swift-algorithm-hash-table">
-        <h2 class="post-title text-xl font-extrabold mt-5 md:mt-0">【译】Swift 算法 - 哈希表</h2>
-      </a>
-      <div class="post-abstract text-gray-700 font-light my-4">
-        <p><a href="https://www.raywenderlich.com/206-swift-algorithm-club-hash-tables">原文地址</a></p>
-<h2 id="准备工作">准备工作</h2>
-<p>作为 Swift 开发者，一定对 <code>Dictionary (字典)</code> 非常熟悉。如果你也是一个 Kotlin 开发者，那会对 <code>HashMap</code> 有所了解。这两种数据结构的本质都是 <strong>hash table (哈希表)</strong>。</p>
 
-      </div>
-      <div class="text-gray-400 text-sm font-light">2018-08-22 / 9 min read</div>
-    </div>
-  </section>
-
-        <div class="pagination-container animated fadeIn">
-  
-  
-</div>
+        
 
       </div>
     </div>
