@@ -37,7 +37,8 @@
             <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#key-point">Key Point</a></li>
+<li><a href="#layoutsubviews-%E4%BD%95%E6%97%B6%E8%A2%AB%E8%B0%83%E7%94%A8">layoutSubviews 何时被调用</a></li>
+<li><a href="#%E4%B8%BB%E5%8A%A8%E8%A7%A6%E5%8F%91-layoutsubviews">主动触发 layoutSubviews</a></li>
 </ul>
 </li>
 </ul>
@@ -86,92 +87,56 @@
 <div class="mask" onclick="closeMenu()">
 </div>
       <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
-        <h1 class="text-3xl font-bold lg:mt-16">Javascript30 Day 13</h1>
+        <h1 class="text-3xl font-bold lg:mt-16">layoutSubviews 的简单小结</h1>
         <div class="text-sm text-gray-700 lg:my-8">
-          2019-04-30 / 2 min read
+          2020-01-09 / 1 min read
         </div>
         
         <div class="post-content yue">
-          <div class="day-10">
-![day-13](https://res.cloudinary.com/dxe4zc5py/image/upload/v1556516410/Blog/day-13.png)
-</div>
-</br>
-<p>第十三天的练习是实现页面滚动过程中，滑动到图片位置时，图片从左右伴随动画进入。</p>
-<p><a href="http://htmlpreview.github.io/?https://github.com/shiwei93/JavaScript30/blob/master/13%20-%20Slide%20in%20on%20Scroll/index.html">Preview</a></p>
-<h2 id="key-point">Key Point</h2>
-<ul>
-<li>监听滚动事件</li>
-<li>计算图片出现的位置，添加动画</li>
-</ul>
-<!--- more --->
-<p>详细代码如下</p>
-<pre><code class="language-javascript">const sliderImages = document.querySelectorAll('.slide-in');
-
-function checkSlide(e) {
-    sliderImages.forEach((sliderImage) =&gt; {
-        // half way through the image
-        const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2;
-        // bottom of the image
-        const imageBottom = sliderImage.offsetTop + sliderImage.height;
-        const isHalfShown = slideInAt &gt; sliderImage.offsetTop;
-        const isNotScrolledPast = window.scrollY &lt; imageBottom;
-        if (isHalfShown &amp;&amp; isNotScrolledPast) {
-            sliderImage.classList.add('active');
-        } else {
-            sliderImage.classList.remove('active');
-        }
-    });
-}
-
-window.addEventListener('scroll', debounce(checkSlide));
-</code></pre>
-<p>本次练习的难点在于图片滑动出现的计算。</p>
-<p>首先在滚动到图片一半的位置时，出发显示动画，<code>const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2;</code></p>
-<ul>
-<li><code>window.innerHeight</code> 表示浏览器内部视图窗口的高度</li>
-<li><code>window.scrollY</code> 表示当前页面在 Y 轴的滚动距离。</li>
-</ul>
-<p>接下来获取图片底部到页面文本顶端的距离 <code>const imageBottom = sliderImage.offsetTop + sliderImage.height;</code>。<code>sliderImage.offsetTop</code> 表示图片最顶端的值，加上图片高度，就是图片底部到页面文档顶端的距离了</p>
-<pre><code class="language-javascript">const isHalfShown = slideInAt &gt; sliderImage.offsetTop;
-const isNotScrolledPast = window.scrollY &lt; imageBottom;
-if (isHalfShown &amp;&amp; isNotScrolledPast) {
-    sliderImage.classList.add('active');
-} else {
-    sliderImage.classList.remove('active');
-}
-</code></pre>
-<p>设置两个变量，分别表示图片是否显示一半和图片是否已经全部滚动出去，当两个条件都满足时，添加图片出现动画，否则从 img 元素的 <code>classList</code> 中移除动画。</p>
+          <h2 id="layoutsubviews-何时被调用">layoutSubviews 何时被调用</h2>
+<p><code>layoutSubviews</code> 在什么样的场景下会触发，一直是个困扰我的问题。Google 的结果也是众说纷纭，在总结一下查询结果，加上自己做的一些实验，得出了如下结论。</p>
+<ol>
+<li>调用 init <strong>[包括 init(frame:)]</strong> 时不会触发</li>
+<li>调用 <code>addSubview(_:)</code> 时会触发</li>
+<li><s>修改 frame 并不会触发 <code>layoutSubviews</code> 而修改 bounds, 且新值和旧值不同时会触发</s> 修改 frame 或 bounds 只要新值不等于旧值，就会触发</li>
+<li>UIScrollView 滑动时，会调用 UIScrollView 的 <code>layoutSubviews</code></li>
+<li>移除视图时，只有被移除视图的父视图才会触发</li>
+<li>旋转设备时，只会触发 parent 视图，一般只 UIViewController 的根视图</li>
+<li>修改子视图的 size，同时也会触发父视图</li>
+</ol>
+<h2 id="主动触发-layoutsubviews">主动触发 layoutSubviews</h2>
+<p>主动触发 <code>layoutSubviews</code> UIKit 提供了两个方法 <code>setNeedsLayout()</code> 和 <code>layoutIfNeeded()</code></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">方法</th>
+<th style="text-align:center">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>setNeedsLayout()</code></td>
+<td style="text-align:center">将在下一个更新周期中更新布局</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>layoutIfNeeded()</code></td>
+<td style="text-align:center">立即更新子视图</td>
+</tr>
+</tbody>
+</table>
 
         </div>
 
         
-          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/gdhVsG-eO2">
-            <span class="flex-auto">FrontEnd</span>
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tcA3M53tk">
+            <span class="flex-auto">iOS</span>
           </a>
         
 
 
         <div class="flex justify-between py-8">
           
-            <div class="prev-post">
-              <a href="https://shiwei93.github.io/javascript30-day-14">
-                <h3 class="post-title">
-                  <i class="remixicon-arrow-left-line"></i>
-                  JavaScript30 Day 14
-                </h3>
-              </a>
-            </div>
-          
 
-          
-            <div class="next-post">
-              <a href="https://shiwei93.github.io/javascript30-day-12">
-                <h3 class="post-title">
-                  JavaScript30 Day 12
-                  <i class="remixicon-arrow-right-line"></i>
-                </h3>
-              </a>
-            </div>
           
         </div>
 
