@@ -1,22 +1,109 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://shiwei93.github.io</id>
-    <title>二十七</title>
-    <updated>2020-02-12T11:59:11.703Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://shiwei93.github.io"/>
-    <link rel="self" href="https://shiwei93.github.io/atom.xml"/>
-    <subtitle>浪花有意千重雪，桃李无言一队春</subtitle>
-    <logo>https://shiwei93.github.io/images/avatar.png</logo>
-    <icon>https://shiwei93.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, 二十七</rights>
-    <entry>
-        <title type="html"><![CDATA[理解 RunLoop]]></title>
-        <id>https://shiwei93.github.io/rGMrTwpM3</id>
-        <link href="https://shiwei93.github.io/rGMrTwpM3">
-        </link>
-        <updated>2020-01-20T02:13:39.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="理解-runloop">理解 RunLoop</h1>
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>二十七</title>
+<meta name="description" content="浪花有意千重雪，桃李无言一队春" />
+<link rel="shortcut icon" href="https://shiwei93.github.io/favicon.ico?v=1581508748773">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.remixicon.com/releases/v1.3.1/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://shiwei93.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="二十七 - Atom Feed" href="https://shiwei93.github.io/atom.xml">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="remixicon-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://shiwei93.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://shiwei93.github.io/images/avatar.png?v=1581508748773" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">二十七</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            文章目录
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#%E7%90%86%E8%A7%A3-runloop">理解 RunLoop</a>
+<ul>
+<li><a href="#runloop">RunLoop</a></li>
+<li><a href="#runloop-%E4%B8%8E%E7%BA%BF%E7%A8%8B">RunLoop 与线程</a></li>
+<li><a href="#runloop-%E7%9A%84%E7%BB%93%E6%9E%84">RunLoop 的结构</a>
+<ul>
+<li><a href="#__cfrunloopsource">__CFRunLoopSource</a></li>
+<li><a href="#__cfrunloopobserver">__CFRunLoopObserver</a></li>
+<li><a href="#__cfrunlooptimer">__CFRunLoopTimer</a></li>
+</ul>
+</li>
+<li><a href="#runloop-%E7%9A%84%E8%BF%90%E8%A1%8C">RunLoop 的运行</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="remixicon-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.2s">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.4s">
+          标签
+        </a>
+      
+    
+      
+        <a href="/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></div>
+    <a class="rss" href="https://shiwei93.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">理解 RunLoop</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2020-01-20 / 12 min read
+        </div>
+        
+          <img class="post-feature-image rounded-lg mx-auto my-4" src="https://shiwei93.github.io/post-images/apple.png" alt="">
+        
+        <div class="post-content yue">
+          <h1 id="理解-runloop">理解 RunLoop</h1>
 <p>前几天和同事讨论问题，讨论到 RunLoop 时，发现这个基础概念已经快忘光了，这两天趁着需求完结的空档，整理重温一下。下面的源码来源于 <a href="https://opensource.apple.com/tarballs/CF/">Apple Source Browser CF-1153.18</a>。</p>
 <h2 id="runloop">RunLoop</h2>
 <p>RunLoop 从字面直译<strong>运行循环</strong>，摘录苹果官方的<a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Multithreading/RunLoopManagement/RunLoopManagement.html">介绍</a></p>
@@ -289,197 +376,134 @@ static int32_t __CFRunLoopRun(CFRunLoopRef rl, CFRunLoopModeRef rlm, CFTimeInter
 }
 </code></pre>
 <p><code>__CFRunLoopRun</code> 方法内部维护了一个 do-while 循环。线程一直停留在这个循环中，直到超时或者被手动停止，函数才会返回。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[LeetCode Daily Question 189]]></title>
-        <id>https://shiwei93.github.io/wrmxIe6Vy</id>
-        <link href="https://shiwei93.github.io/wrmxIe6Vy">
-        </link>
-        <updated>2020-01-09T13:53:56.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="题目">题目</h2>
-<p><a href="https://leetcode-cn.com/problems/rotate-array/">189. Rotate Array</a></p>
-<h2 id="解法-1-暴力法">解法 1 暴力法</h2>
-<p>每次旋转 1 个元素，总计旋转 k 次</p>
-<pre><code class="language-swift">func rotate(_ nums: inout [Int], _ k: Int) {
-    if k == 0 { return }
-    for i in stride(from: 0, to: nums.count - 1, by: 1) {
-        // 交换下标 i 与 nums.count - 1 的两个数
-        nums[i] = nums[i] ^ nums[nums.count - 1]
-        nums[nums.count - 1] = nums[i] ^ nums[nums.count - 1]
-        nums[i] = nums[i] ^ nums[nums.count - 1]
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://shiwei93.github.io/tcA3M53tk">
+            <span class="flex-auto">iOS</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+
+          
+            <div class="next-post">
+              <a href="https://shiwei93.github.io/wrmxIe6Vy">
+                <h3 class="post-title">
+                  LeetCode Daily Question 189
+                  <i class="remixicon-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+
+      </div>
+    </div>
+
+    <script src="https://shiwei93.github.io/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
     }
-    rotate(&amp;nums, k - 1)
-}
-</code></pre>
-<p>um... 完美的超出时间限制了<br>
-<img src="https://shiwei93.github.io/post-images/1578578319385.png" alt="" loading="lazy"></p>
-<h2 id="解法-2-三次反转">解法 2 三次反转</h2>
-<p>对于给定的数组长度 <em>n</em> 反转次数 <em>k</em>，会有 <em>k%n</em> 个尾部元素被移动到最前面。</p>
-<p>以题干中的 Example 为例，按照 <em>k=3, n=7</em> 将原数组 <code>[1,2,3,4,5,6,7]</code> 分为 <code>[1,2,3,4]</code> 和 <code>[5,6,7]</code> 两个部分。</p>
-<p><strong>第一次反转</strong></p>
-<p>反转第一部分得到结果 <code>[4,3,2,1,5,6,7]</code></p>
-<p><strong>第二次反转</strong></p>
-<p>反转第二部分得到结果 <code>[4,3,2,1,7,6,5]</code></p>
-<p><strong>第三次反转</strong></p>
-<p>反转全部得到答案 <code>[5,6,7,1,2,3,4]</code></p>
-<pre><code class="language-swift">func rotate3Times(_ nums: inout [Int], _ k: Int) {
-    var k = k
-    k %= nums.count
-    func reverse(_ start: Int, _ end: Int) {
-        var start = start
-        var end = end
-        while start &lt; end {
-            nums[start] = nums[start] ^ nums[end]
-            nums[end] = nums[start] ^ nums[end]
-            nums[start] = nums[start] ^ nums[end]
-            start += 1
-            end -= 1
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
         }
-    }
-    // 第一次反转
-    reverse(0, nums.count - 1 - k)
-    // 第二次反转
-    reverse(nums.count - k, nums.count - 1)
-    // 第三次反转
-    reverse(0, nums.count - 1)
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[layoutSubviews 的简单小结]]></title>
-        <id>https://shiwei93.github.io/1fT08jmOJ</id>
-        <link href="https://shiwei93.github.io/1fT08jmOJ">
-        </link>
-        <updated>2020-01-09T07:23:40.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="layoutsubviews-何时被调用">layoutSubviews 何时被调用</h2>
-<p><code>layoutSubviews</code> 在什么样的场景下会触发，一直是个困扰我的问题。Google 的结果也是众说纷纭，在总结一下查询结果，加上自己做的一些实验，得出了如下结论。</p>
-<ol>
-<li>调用 init <strong>[包括 init(frame:)]</strong> 时不会触发</li>
-<li>调用 <code>addSubview(_:)</code> 时会触发</li>
-<li><s>修改 frame 并不会触发 <code>layoutSubviews</code> 而修改 bounds, 且新值和旧值不同时会触发</s> 修改 frame 或 bounds 只要新值不等于旧值，就会触发</li>
-<li>UIScrollView 滑动时，会调用 UIScrollView 的 <code>layoutSubviews</code></li>
-<li>移除视图时，只有被移除视图的父视图才会触发</li>
-<li>旋转设备时，只会触发 parent 视图，一般只 UIViewController 的根视图</li>
-<li>修改子视图的 size，同时也会触发父视图</li>
-</ol>
-<h2 id="主动触发-layoutsubviews">主动触发 layoutSubviews</h2>
-<p>主动触发 <code>layoutSubviews</code> UIKit 提供了两个方法 <code>setNeedsLayout()</code> 和 <code>layoutIfNeeded()</code></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">方法</th>
-<th style="text-align:center">备注</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><code>setNeedsLayout()</code></td>
-<td style="text-align:center">将在下一个更新周期中更新布局</td>
-</tr>
-<tr>
-<td style="text-align:center"><code>layoutIfNeeded()</code></td>
-<td style="text-align:center">立即更新子视图</td>
-</tr>
-</tbody>
-</table>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[LeetCode Daily Question 19]]></title>
-        <id>https://shiwei93.github.io/leetcode-daily-Q-19</id>
-        <link href="https://shiwei93.github.io/leetcode-daily-Q-19">
-        </link>
-        <updated>2020-01-07T12:54:51.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="题目">题目</h2>
-<p><a href="https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/">19. Remove Nth Node From End of List</a><br>
-给定一个链表，删除链表的倒数第 <em>n</em> 个节点，<strong>只遍历一次</strong>。</p>
-<h2 id="思路">思路</h2>
-<h3 id="初见">初见</h3>
-<p>在不考虑只遍历一次的进阶条件下，使用两个指针，第一次遍历完整个链表取到链表中总计 <em>x</em> 个元素。第二次遍历到第 <em>x - n - 1</em> 个链表元素，假设为 node，执行 <code>node.next = node.next.next</code>，得解。</p>
-<h3 id="再看">再看</h3>
-<p>考虑只遍历一次这个条件，同样使用两个指针，但不能在一个指针遍历完成之后，再重新遍历，那么就需要两个指针同时工作。<br>
-思路如下:</p>
-<ol>
-<li>定义两个指针 <em>fast</em> 和 <em>sow</em></li>
-<li><em>fast</em> 指针先走 <em>n</em> 个元素</li>
-<li>之后当 <em>fast</em> 的 next 节点不为 <em>nil</em> 时，<em>fast</em> 和 <em>slow</em> 同时往前</li>
-<li>此时 <em>slow</em> 指针指向的就是倒数第 <em>n + 1</em> 的链表元素<br>
-到这里，看似只要执行 <code>slow.next = slow.next.next</code> 就可以得到正确结果，然而在跑了测试用例之后发现，<code>[1, 2] / 2</code> 和 <code>[1] / 1</code> 的输入无法通过。如果当 <em>fast</em> 先走了 <em>n</em> 步时，恰好走到了最后一个节点，此时 <em>slow</em> 节点还没有移动，则说明链表中需要移除倒数第 <em>n</em> 个节点恰好是第一个节点。实现代码如下</li>
-</ol>
-<pre><code class="language-swift">func removeNthFromEnd(_ head: ListNode?, _ n: Int) -&gt; ListNode? {
-    var fast = head, slow: ListNode? = nil, n: Int = n
-    while let nd = fast {
-        if n != 0 {
-            fast = nd.next
-            n -= 1
-            continue
-        }
-        fast = fast?.next
-        slow = slow == nil ? head : slow?.next
-    }
-    if slow == nil {
-        return head?.next
+      } else {
+        link.classList.add("current");
+      }
     } else {
-        slow?.next = slow?.next?.next
-        return head
+      link.classList.remove("current");
     }
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[中西文中间添加 Thin space U+2009]]></title>
-        <id>https://shiwei93.github.io/thin-space</id>
-        <link href="https://shiwei93.github.io/thin-space">
-        </link>
-        <updated>2019-06-20T02:30:29.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="前言">前言</h2>
-<p>在平时的文字输入时，我总会在中文和英文，中文和数字中间添加一个普通空格 (U+0020)。在文本布局时不会显得那么拥挤，也一定程度上提升了阅读体验。前一段时间即刻 App 添加了一个中西文之前默认添加一个特殊空格的特性，体验之后发现，这样的宽度短于普通空格的<strong>特殊</strong>空格，即不会出现没有空格时过于拥挤的布局，也不会出现普通空格间距过大的问题。查阅了一些资料后，找到一篇关于 <a href="http://jkorpela.fi/chars/spaces.html">Sapce 的 Unicode 表</a>，想不到空格还有这么多的种类。</p>
-<p>之前的开发工作中，出现过一些，长文本在 iOS 设备中不换行的 Bug，这个问题曾经困扰了我许久，后来无意中发现了一个叫 <em>NO-BREAK SPACE</em> 的空格，其 Unicode 为 <code>U+00A0</code>。在 App 中的表现就是，设置了 UILabel 的 numberOfLines 属性为 0 同时 breakMode 设置为 byWords，含有该空格的文本也不会换行，即使限制了 UILabel 的宽度，换行时仍然会拆开单词换行。</p>
-<p>鉴于即刻 App 这个新需求带来的完美效果，着手简单实现一下。不过不知道即刻选用的空格种类，这里经过多次比较之后，我使用了 <code>U+2009</code>，被称为 <em>THIN SPACE</em> 的空格。</p>
-<h2 id="实现">实现</h2>
-<p>这个需求，我的第一反应就是使用正则来匹配给定字符串的如下情况</p>
-<ul>
-<li>中文+英文</li>
-<li>英文+中文</li>
-<li>中文+数字</li>
-<li>数字+中文</li>
-<li>中文+符号</li>
-<li>符号+中文</li>
-<li>忽略英文和数字的组合，即计量单位，如 10TB</li>
-</ul>
-<p>想到用 Swift 来实现正则表达式，就会有点头皮发麻。先不说 NSRegularExpression 的部分 API 中还带有 NSRange。就是正则表达式里面，还需要添加 / 转义符，就是一个噩梦，可读性大大降低。不过，好在 Swift 5 新增的 Raw String 可以完美解决这个问题。用到的所有正则表达式如下</p>
-<pre><code class="language-swift">let chinese = #&quot;[\u2E80-\u2FFF\u31C0-\u31EF\u3300-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\uFE30-\uFE4F]&quot;# // 匹配中文
+  });
+});
 
-// 使用 tuple
-// base 基础符号。单一符号，不成对
-// open 与 close 成对出现的符号
-let punc = (
-    base: #&quot;[@&amp;=_\,\.\?\!\$\%\^\*\-\+\/]&quot;#,
-    open: #&quot;[\(\[\{\'&quot;&lt;‘“]&quot;#,
-    close: #&quot;[\)\]\}\'&quot;&gt;’”]&quot;#
-)
 
-// 拉丁字符。数字、字母等
-let latin = #&quot;[A-Za-z0-9\u00C0-\u00FF\u0100-\u017F\u0180-\u024F\u1E00-\u1EFF]|\#(punc.base)&quot;#
-</code></pre>
-<p>由于需要匹配的情况有前后之分，下面用一个数组，将上述的正则表达式组合成两个完整的正则表达式。通过 compactMap 获取到最后的 NSRegularExpression 实例数组。</p>
-<pre><code class="language-swift">let patterns = [
-    #&quot;(\#(chinese))(\#(latin)|\#(punc.open))&quot;#,
-    #&quot;(\#(latin)|\#(punc.close))(\#(chinese))&quot;#
-].compactMap { try? NSRegularExpression(pattern: $0) }
-</code></pre>
-<p>最后，就可以通过 <code>stringByReplacingMatches(in:options:range:withTemplate:)</code> 方法，通过 template 替换原有的字符串了。</p>
-<pre><code class="language-swift">let unicode = &quot;\u{2009}&quot;
-patterns.forEach { (regex) in
-    result = regex.stringByReplacingMatches(in: result, options: [], range: NSMakeRange(0, result.count), withTemplate: &quot;$1\(unicode)$2&quot;)
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
 }
-return result
-</code></pre>
-<p>下面的 Gif 比较了不添加空格、添加普通空格和 <code>U+2009</code> 空格的区别。</p>
-<figure data-type="image" tabindex="1"><img src="https://res.cloudinary.com/dxe4zc5py/image/upload/v1561000680/Blog/2019-06-20_11.16.23.gif" alt="Gif" loading="lazy"></figure>
-]]></content>
-    </entry>
-</feed>
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>
