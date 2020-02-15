@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shiwei93.github.io</id>
     <title>二十七</title>
-    <updated>2020-02-15T05:55:13.637Z</updated>
+    <updated>2020-02-15T06:17:41.106Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shiwei93.github.io"/>
     <link rel="self" href="https://shiwei93.github.io/atom.xml"/>
@@ -290,6 +290,7 @@ static int32_t __CFRunLoopRun(CFRunLoopRef rl, CFRunLoopModeRef rlm, CFTimeInter
 </code></pre>
 <p><code>__CFRunLoopRun</code> 方法内部维护了一个 do-while 循环。线程一直停留在这个循环中，直到超时或者被手动停止，函数才会返回。</p>
 <h2 id="基于-runloop-实现的功能">基于 RunLoop 实现的功能</h2>
+<p>在平时的开发工作中，有许多功能的实现都是基于 RunLoop 实现的，例如 AutoReleasePool，事件响应，手势识别等等，这些后面日后再来补充吧。</p>
 ]]></content>
     </entry>
     <entry>
